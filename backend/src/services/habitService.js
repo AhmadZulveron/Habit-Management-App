@@ -8,7 +8,7 @@ class HabitService {
   /**
    * Create a new habit with optional schedule
    * @param {number} userId
-   * @param {object} habitData - { name, description, category, priorityLevel, scheduleDays, reminderTime }
+   * @param {object} habitData
    * @returns {object} Created habit
    */
   async createHabit(userId, habitData) {
@@ -17,30 +17,34 @@ class HabitService {
     try {
       await connection.beginTransaction();
 
-      const { name, description, category, priorityLevel, scheduleDays, reminderTime } = habitData;
+      const { title, description, categoryId, priority, target, status, scheduleDays } = habitData;
+
+      // Check if category exists
+      const [categories] = await connection.query('SELECT id FROM categories WHERE id = ?', [categoryId]);
+      if (categories.length === 0) {
+        throw { status: 400, message: 'Invalid category ID' };
+      }
 
       // Insert habit
       const [result] = await connection.query(
-        `INSERT INTO habits (user_id, name, description, category, priority_level)
-         VALUES (?, ?, ?, ?, ?)`,
-        [userId, name, description || null, category || null, priorityLevel || 'medium']
+        `INSERT INTO habits (user_id, category_id, title, description, priority, target, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [userId, categoryId, title, description || null, priority || 'medium', target || 1, status || 'active']
       );
 
       const habitId = result.insertId;
 
       // Insert schedule days if provided
-      // scheduleDays is an array of integers (0-6), e.g. [1, 2, 3, 4, 5] for weekdays
       if (scheduleDays && scheduleDays.length > 0) {
-        const scheduleValues = scheduleDays.map((day) => [habitId, day, reminderTime || null]);
+        const scheduleValues = scheduleDays.map((day) => [habitId, day]);
         await connection.query(
-          'INSERT INTO habit_schedules (habit_id, day_of_week, reminder_time) VALUES ?',
+          'INSERT INTO habit_schedules (habit_id, day_of_week) VALUES ?',
           [scheduleValues]
         );
       }
 
       await connection.commit();
 
-      // Return the created habit with schedule
       return this.getHabitById(userId, habitId);
     } catch (error) {
       await connection.rollback();
@@ -58,9 +62,10 @@ class HabitService {
   async getHabits(userId) {
     const [habits] = await pool.query(
       `SELECT h.*, 
-              GROUP_CONCAT(hs.day_of_week ORDER BY hs.day_of_week) AS schedule_days,
-              hs.reminder_time
+              c.name AS category_name, c.icon AS category_icon, c.color AS category_color,
+              GROUP_CONCAT(hs.day_of_week ORDER BY hs.day_of_week) AS schedule_days
        FROM habits h
+       LEFT JOIN categories c ON h.category_id = c.id
        LEFT JOIN habit_schedules hs ON h.id = hs.habit_id
        WHERE h.user_id = ?
        GROUP BY h.id
@@ -73,7 +78,7 @@ class HabitService {
 
   /**
    * Get today's active habits for a user
-   * Filters by: is_active = true AND scheduled for today's day_of_week
+   * Filters by: status = 'active' AND scheduled for today's day_of_week
    * @param {number} userId
    * @returns {Array} Today's habits
    */
@@ -82,16 +87,17 @@ class HabitService {
 
     const [habits] = await pool.query(
       `SELECT h.*, 
+              c.name AS category_name, c.icon AS category_icon, c.color AS category_color,
               GROUP_CONCAT(hs2.day_of_week ORDER BY hs2.day_of_week) AS schedule_days,
-              hs2.reminder_time,
               CASE WHEN hc.id IS NOT NULL THEN 1 ELSE 0 END AS is_completed_today
        FROM habits h
        INNER JOIN habit_schedules hs ON h.id = hs.habit_id AND hs.day_of_week = ?
+       LEFT JOIN categories c ON h.category_id = c.id
        LEFT JOIN habit_schedules hs2 ON h.id = hs2.habit_id
-       LEFT JOIN habit_completions hc ON h.id = hc.habit_id AND hc.completed_date = CURDATE()
-       WHERE h.user_id = ? AND h.is_active = 1
+       LEFT JOIN habit_completions hc ON h.id = hc.habit_id AND DATE(hc.completed_at) = CURDATE()
+       WHERE h.user_id = ? AND h.status = 'active'
        GROUP BY h.id
-       ORDER BY FIELD(h.priority_level, 'high', 'medium', 'low'), h.name`,
+       ORDER BY h.title`,
       [todayDayOfWeek, userId]
     );
 
@@ -107,9 +113,10 @@ class HabitService {
   async getHabitById(userId, habitId) {
     const [habits] = await pool.query(
       `SELECT h.*, 
-              GROUP_CONCAT(hs.day_of_week ORDER BY hs.day_of_week) AS schedule_days,
-              hs.reminder_time
+              c.name AS category_name, c.icon AS category_icon, c.color AS category_color,
+              GROUP_CONCAT(hs.day_of_week ORDER BY hs.day_of_week) AS schedule_days
        FROM habits h
+       LEFT JOIN categories c ON h.category_id = c.id
        LEFT JOIN habit_schedules hs ON h.id = hs.habit_id
        WHERE h.id = ? AND h.user_id = ?
        GROUP BY h.id`,
@@ -146,17 +153,25 @@ class HabitService {
         throw { status: 404, message: 'Habit not found' };
       }
 
-      const { name, description, category, priorityLevel, isActive, scheduleDays, reminderTime } = habitData;
+      const { title, description, categoryId, priority, target, status, scheduleDays } = habitData;
+
+      if (categoryId !== undefined) {
+        const [categories] = await connection.query('SELECT id FROM categories WHERE id = ?', [categoryId]);
+        if (categories.length === 0) {
+          throw { status: 400, message: 'Invalid category ID' };
+        }
+      }
 
       // Build update query dynamically
       const updates = [];
       const values = [];
 
-      if (name !== undefined) { updates.push('name = ?'); values.push(name); }
+      if (title !== undefined) { updates.push('title = ?'); values.push(title); }
       if (description !== undefined) { updates.push('description = ?'); values.push(description); }
-      if (category !== undefined) { updates.push('category = ?'); values.push(category); }
-      if (priorityLevel !== undefined) { updates.push('priority_level = ?'); values.push(priorityLevel); }
-      if (isActive !== undefined) { updates.push('is_active = ?'); values.push(isActive ? 1 : 0); }
+      if (categoryId !== undefined) { updates.push('category_id = ?'); values.push(categoryId); }
+      if (priority !== undefined) { updates.push('priority = ?'); values.push(priority); }
+      if (target !== undefined) { updates.push('target = ?'); values.push(target); }
+      if (status !== undefined) { updates.push('status = ?'); values.push(status); }
 
       if (updates.length > 0) {
         values.push(habitId, userId);
@@ -168,14 +183,12 @@ class HabitService {
 
       // Update schedule if provided
       if (scheduleDays !== undefined) {
-        // Remove existing schedule
         await connection.query('DELETE FROM habit_schedules WHERE habit_id = ?', [habitId]);
 
-        // Insert new schedule
         if (scheduleDays.length > 0) {
-          const scheduleValues = scheduleDays.map((day) => [habitId, day, reminderTime || null]);
+          const scheduleValues = scheduleDays.map((day) => [habitId, day]);
           await connection.query(
-            'INSERT INTO habit_schedules (habit_id, day_of_week, reminder_time) VALUES ?',
+            'INSERT INTO habit_schedules (habit_id, day_of_week) VALUES ?',
             [scheduleValues]
           );
         }
@@ -193,14 +206,13 @@ class HabitService {
   }
 
   /**
-   * Delete (deactivate) a habit
-   * Soft delete by setting is_active = 0
+   * Delete a habit (hard delete)
    * @param {number} userId
    * @param {number} habitId
    */
   async deleteHabit(userId, habitId) {
     const [result] = await pool.query(
-      'UPDATE habits SET is_active = 0 WHERE id = ? AND user_id = ?',
+      'DELETE FROM habits WHERE id = ? AND user_id = ?',
       [habitId, userId]
     );
 
@@ -208,47 +220,78 @@ class HabitService {
       throw { status: 404, message: 'Habit not found' };
     }
 
-    return { message: 'Habit deactivated successfully' };
+    return { message: 'Habit deleted successfully' };
   }
 
   /**
    * Mark a habit as completed for today
    * @param {number} userId
    * @param {number} habitId
-   * @param {string} notes - Optional notes
    */
-  async completeHabit(userId, habitId, notes) {
-    // Verify ownership
-    const [habits] = await pool.query(
-      'SELECT id FROM habits WHERE id = ? AND user_id = ?',
-      [habitId, userId]
-    );
-
-    if (habits.length === 0) {
-      throw { status: 404, message: 'Habit not found' };
-    }
-
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  async completeHabit(userId, habitId) {
+    const connection = await pool.getConnection();
 
     try {
-      const [result] = await pool.query(
-        `INSERT INTO habit_completions (habit_id, user_id, completed_date, notes)
-         VALUES (?, ?, ?, ?)`,
-        [habitId, userId, today, notes || null]
+      await connection.beginTransaction();
+
+      // Verify ownership, active status, and scheduled for today
+      const todayDayOfWeek = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+      const [habits] = await connection.query(
+        `SELECT h.id, h.status, hs.id AS schedule_id
+         FROM habits h
+         LEFT JOIN habit_schedules hs ON h.id = hs.habit_id AND hs.day_of_week = ?
+         WHERE h.id = ? AND h.user_id = ?`,
+        [todayDayOfWeek, habitId, userId]
       );
+
+      if (habits.length === 0) {
+        throw { status: 404, message: 'Habit not found' };
+      }
+      
+      const habit = habits[0];
+      if (habit.status !== 'active') {
+        throw { status: 400, message: 'Habit is inactive and cannot be completed' };
+      }
+      if (!habit.schedule_id) {
+        throw { status: 400, message: 'Habit is not scheduled for today' };
+      }
+
+      // Check if already completed today
+      const [completions] = await connection.query(
+        'SELECT id FROM habit_completions WHERE habit_id = ? AND DATE(completed_at) = CURDATE()',
+        [habitId]
+      );
+
+      if (completions.length > 0) {
+        throw { status: 409, message: 'Habit already completed for today' };
+      }
+
+      const pointsToAward = 10;
+
+      // Insert completion
+      const [result] = await connection.query(
+        'INSERT INTO habit_completions (habit_id, points_earned) VALUES (?, ?)',
+        [habitId, pointsToAward]
+      );
+
+      // Award points to user
+      await connection.query(
+        'UPDATE users SET total_points = total_points + ? WHERE id = ?',
+        [pointsToAward, userId]
+      );
+
+      await connection.commit();
 
       return {
         id: result.insertId,
         habitId,
-        completedDate: today,
-        notes: notes || null,
+        pointsEarned: pointsToAward,
       };
     } catch (error) {
-      // Duplicate entry means already completed today
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw { status: 409, message: 'Habit already completed for today' };
-      }
+      await connection.rollback();
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -260,15 +303,18 @@ class HabitService {
     return {
       id: habit.id,
       userId: habit.user_id,
-      name: habit.name,
+      title: habit.title,
       description: habit.description,
-      category: habit.category,
-      priorityLevel: habit.priority_level,
-      isActive: habit.is_active === 1,
+      categoryId: habit.category_id,
+      categoryName: habit.category_name,
+      categoryIcon: habit.category_icon,
+      categoryColor: habit.category_color,
+      priority: habit.priority,
+      target: habit.target,
+      status: habit.status,
       scheduleDays: habit.schedule_days
         ? habit.schedule_days.split(',').map(Number)
         : [],
-      reminderTime: habit.reminder_time || null,
       isCompletedToday: habit.is_completed_today === 1 || false,
       createdAt: habit.created_at,
       updatedAt: habit.updated_at,

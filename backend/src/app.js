@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const habitRoutes = require('./routes/habitRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // ================================
 app.use('/api/auth', authRoutes);
 app.use('/api/habits', habitRoutes);
+app.use('/api/categories', categoryRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/reports', reportRoutes);

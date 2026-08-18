@@ -33,13 +33,13 @@ class AuthService {
 
   /// Register a new user
   /// Returns UserModel on success, throws on failure
-  Future<UserModel> signup(String email, String password, String fullName) async {
+  Future<UserModel> signup(String email, String password, String name) async {
     final response = await _apiService.post(
       ApiConstants.signup,
       body: {
         'email': email,
         'password': password,
-        'fullName': fullName,
+        'name': name,
       },
       requireAuth: false,
     );
@@ -54,6 +54,17 @@ class AuthService {
   /// Logout - remove stored token
   Future<void> logout() async {
     await _apiService.removeToken();
+  }
+
+  /// Get Profile to restore auth state
+  Future<UserModel> getProfile() async {
+    final response = await _apiService.get(ApiConstants.profile);
+
+    if (response.success && response.data != null) {
+      return UserModel.fromJson(response.data['profile']);
+    } else {
+      throw Exception(response.message.isNotEmpty ? response.message : 'Failed to retrieve profile');
+    }
   }
 
   /// Check if user is logged in (has stored token)

@@ -13,7 +13,16 @@ class HabitController {
   async createHabit(req, res) {
     try {
       const userId = req.user.id;
-      const habit = await habitService.createHabit(userId, req.body);
+      const { title, description, categoryId, priority, target, status, scheduleDays } = req.body;
+      const habit = await habitService.createHabit(userId, {
+        title,
+        description,
+        categoryId,
+        priority,
+        target,
+        status,
+        scheduleDays,
+      });
       return sendSuccess(res, 'Habit created successfully', { habit }, 201);
     } catch (error) {
       console.error('Create Habit Error:', error);
@@ -79,7 +88,16 @@ class HabitController {
     try {
       const userId = req.user.id;
       const habitId = parseInt(req.params.id);
-      const habit = await habitService.updateHabit(userId, habitId, req.body);
+      const { title, description, categoryId, priority, target, status, scheduleDays } = req.body;
+      const habit = await habitService.updateHabit(userId, habitId, {
+        title,
+        description,
+        categoryId,
+        priority,
+        target,
+        status,
+        scheduleDays,
+      });
       return sendSuccess(res, 'Habit updated successfully', { habit });
     } catch (error) {
       console.error('Update Habit Error:', error);
@@ -91,14 +109,14 @@ class HabitController {
 
   /**
    * DELETE /api/habits/:id
-   * Deactivate a habit (soft delete)
+   * Delete a habit (hard delete)
    */
   async deleteHabit(req, res) {
     try {
       const userId = req.user.id;
       const habitId = parseInt(req.params.id);
       await habitService.deleteHabit(userId, habitId);
-      return sendSuccess(res, 'Habit deactivated successfully');
+      return sendSuccess(res, 'Habit deleted successfully');
     } catch (error) {
       console.error('Delete Habit Error:', error);
       const status = error.status || 500;
@@ -115,8 +133,7 @@ class HabitController {
     try {
       const userId = req.user.id;
       const habitId = parseInt(req.params.id);
-      const { notes } = req.body;
-      const completion = await habitService.completeHabit(userId, habitId, notes);
+      const completion = await habitService.completeHabit(userId, habitId);
       return sendSuccess(res, 'Habit completed successfully', { completion }, 201);
     } catch (error) {
       console.error('Complete Habit Error:', error);

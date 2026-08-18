@@ -15,13 +15,9 @@ class ProfileController {
       const userId = req.user.id;
 
       const [profiles] = await pool.query(
-        `SELECT u.id, u.email, u.created_at AS member_since,
-                up.full_name, up.date_of_birth, up.gender, up.avatar_url,
-                upt.total_points, upt.current_streak, upt.longest_streak
-         FROM users u
-         LEFT JOIN user_profiles up ON u.id = up.user_id
-         LEFT JOIN user_points upt ON u.id = upt.user_id
-         WHERE u.id = ?`,
+        `SELECT id, name, email, total_points, created_at AS member_since
+         FROM users
+         WHERE id = ?`,
         [userId]
       );
 
@@ -34,14 +30,9 @@ class ProfileController {
       return sendSuccess(res, 'Profile retrieved successfully', {
         profile: {
           id: profile.id,
+          name: profile.name,
           email: profile.email,
-          fullName: profile.full_name,
-          dateOfBirth: profile.date_of_birth,
-          gender: profile.gender,
-          avatarUrl: profile.avatar_url,
           totalPoints: profile.total_points,
-          currentStreak: profile.current_streak,
-          longestStreak: profile.longest_streak,
           memberSince: profile.member_since,
         },
       });
@@ -58,15 +49,13 @@ class ProfileController {
   async updateProfile(req, res) {
     try {
       const userId = req.user.id;
-      const { fullName, dateOfBirth, gender, avatarUrl } = req.body;
+      const { name, email } = req.body;
 
       const updates = [];
       const values = [];
 
-      if (fullName !== undefined) { updates.push('full_name = ?'); values.push(fullName); }
-      if (dateOfBirth !== undefined) { updates.push('date_of_birth = ?'); values.push(dateOfBirth); }
-      if (gender !== undefined) { updates.push('gender = ?'); values.push(gender); }
-      if (avatarUrl !== undefined) { updates.push('avatar_url = ?'); values.push(avatarUrl); }
+      if (name !== undefined) { updates.push('name = ?'); values.push(name); }
+      if (email !== undefined) { updates.push('email = ?'); values.push(email); }
 
       if (updates.length === 0) {
         return sendError(res, 'No fields to update', 400);
@@ -74,7 +63,7 @@ class ProfileController {
 
       values.push(userId);
       await pool.query(
-        `UPDATE user_profiles SET ${updates.join(', ')} WHERE user_id = ?`,
+        `UPDATE users SET ${updates.join(', ')} WHERE id = ?`,
         values
       );
 

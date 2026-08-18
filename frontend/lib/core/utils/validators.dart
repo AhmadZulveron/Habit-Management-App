@@ -43,13 +43,13 @@ class Validators {
     return null;
   }
 
-  /// Validate full name
-  static String? validateFullName(String? value) {
+  /// Validate name
+  static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Full name is required';
+      return 'Name is required';
     }
     if (value.trim().length < 2) {
-      return 'Full name must be at least 2 characters';
+      return 'Name must be at least 2 characters';
     }
     return null;
   }

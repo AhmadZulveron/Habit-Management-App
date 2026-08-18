@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/providers/category_provider.dart';
+import 'package:frontend/widgets/common_widgets.dart';
 
 /// Add Habit Screen
 /// Form to create a new habit
@@ -13,10 +15,12 @@ class AddHabitScreen extends StatefulWidget {
 
 class _AddHabitScreenState extends State<AddHabitScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _categoryController = TextEditingController();
-  String _priorityLevel = 'medium';
+  final _targetController = TextEditingController(text: '1');
+  
+  int? _categoryId;
+  String _priority = 'medium';
   final List<int> _selectedDays = [];
 
   static const List<String> _dayLabels = [
@@ -24,27 +28,58 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    });
+  }
+
+  @override
   void dispose() {
-    _nameController.dispose();
+    _titleController.dispose();
     _descriptionController.dispose();
-    _categoryController.dispose();
+    _targetController.dispose();
     super.dispose();
   }
 
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_categoryId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a category')),
+      );
+      return;
+    }
 
     final habitProvider = Provider.of<HabitProvider>(context, listen: false);
     final success = await habitProvider.createHabit({
-      'name': _nameController.text.trim(),
+      'title': _titleController.text.trim(),
       'description': _descriptionController.text.trim(),
-      'category': _categoryController.text.trim(),
-      'priorityLevel': _priorityLevel,
+      'categoryId': _categoryId,
+      'priority': _priority,
+      'target': int.tryParse(_targetController.text.trim()) ?? 1,
+      'status': 'inactive', // default for new habits
       'scheduleDays': _selectedDays,
     });
 
-    if (success && mounted) {
-      Navigator.pop(context);
+    if (!context.mounted) return;
+    
+    if (success) {
+      // ignore: use_build_context_synchronously
+      await showResultPopup(context, true, 'Habit Created Successfully!');
+      if (context.mounted) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      }
+    } else {
+      await showResultPopup(
+        // ignore: use_build_context_synchronously
+        context,
+        false,
+        'Failed to Create Habit',
+        subtitle: habitProvider.error,
+      );
     }
   }
 
@@ -54,8 +89,8 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       appBar: AppBar(
         title: const Text('Add Habit'),
       ),
-      body: Consumer<HabitProvider>(
-        builder: (context, habitProvider, child) {
+      body: Consumer2<HabitProvider, CategoryProvider>(
+        builder: (context, habitProvider, categoryProvider, child) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Form(
@@ -63,16 +98,16 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Name
+                  // Title
                   TextFormField(
-                    controller: _nameController,
+                    controller: _titleController,
                     decoration: const InputDecoration(
-                      labelText: 'Habit Name',
+                      labelText: 'Habit Title',
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Habit name is required';
+                        return 'Habit title is required';
                       }
                       return null;
                     },
@@ -90,19 +125,34 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Category
-                  TextFormField(
-                    controller: _categoryController,
+                  // Category Dropdown
+                  DropdownButtonFormField<int>(
+                    value: _categoryId,
                     decoration: const InputDecoration(
-                      labelText: 'Category (optional)',
+                      labelText: 'Category',
                       border: OutlineInputBorder(),
                     ),
+                    items: categoryProvider.categories.map((category) {
+                      return DropdownMenuItem<int>(
+                        value: category.id,
+                        child: Text(category.name),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() => _categoryId = value);
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Category is required';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
 
                   // Priority
                   DropdownButtonFormField<String>(
-                    value: _priorityLevel,
+                    value: _priority,
                     decoration: const InputDecoration(
                       labelText: 'Priority Level',
                       border: OutlineInputBorder(),
@@ -113,7 +163,28 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                       DropdownMenuItem(value: 'low', child: Text('Low')),
                     ],
                     onChanged: (value) {
-                      setState(() => _priorityLevel = value ?? 'medium');
+                      setState(() => _priority = value ?? 'medium');
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Target
+                  TextFormField(
+                    controller: _targetController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Target',
+                      border: OutlineInputBorder(),
+                      helperText: 'Descriptive target quantity (e.g. 1)',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Target is required';
+                      }
+                      if (int.tryParse(value) == null) {
+                        return 'Please enter a valid number';
+                      }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 16),

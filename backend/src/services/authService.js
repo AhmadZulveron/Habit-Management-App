@@ -12,10 +12,10 @@ const SALT_ROUNDS = 10;
 class AuthService {
   /**
    * Register a new user
-   * @param {object} userData - { email, password, fullName }
+   * @param {object} userData - { email, password, name }
    * @returns {object} Created user data (without password)
    */
-  async signup({ email, password, fullName }) {
+  async signup({ email, password, name }) {
     const connection = await pool.getConnection();
 
     try {
@@ -36,30 +36,18 @@ class AuthService {
 
       // Insert user
       const [userResult] = await connection.query(
-        'INSERT INTO users (email, password_hash) VALUES (?, ?)',
-        [email, passwordHash]
+        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+        [name, email, passwordHash]
       );
 
       const userId = userResult.insertId;
-
-      // Create user profile
-      await connection.query(
-        'INSERT INTO user_profiles (user_id, full_name) VALUES (?, ?)',
-        [userId, fullName]
-      );
-
-      // Initialize user points
-      await connection.query(
-        'INSERT INTO user_points (user_id) VALUES (?)',
-        [userId]
-      );
 
       await connection.commit();
 
       return {
         id: userId,
         email,
-        fullName,
+        name,
       };
     } catch (error) {
       await connection.rollback();
@@ -77,11 +65,9 @@ class AuthService {
   async login({ email, password }) {
     // Find user by email
     const [users] = await pool.query(
-      `SELECT u.id, u.email, u.password_hash, u.is_active, 
-              up.full_name, up.avatar_url
-       FROM users u
-       LEFT JOIN user_profiles up ON u.id = up.user_id
-       WHERE u.email = ?`,
+      `SELECT id, name, email, password, total_points 
+       FROM users 
+       WHERE email = ?`,
       [email]
     );
 
@@ -91,12 +77,8 @@ class AuthService {
 
     const user = users[0];
 
-    if (!user.is_active) {
-      throw { status: 403, message: 'Account is deactivated' };
-    }
-
     // Compare password
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw { status: 401, message: 'Invalid email or password' };
     }
@@ -115,9 +97,9 @@ class AuthService {
       token,
       user: {
         id: user.id,
+        name: user.name,
         email: user.email,
-        fullName: user.full_name,
-        avatarUrl: user.avatar_url,
+        totalPoints: user.total_points,
       },
     };
   }

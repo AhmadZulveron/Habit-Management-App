@@ -70,7 +70,7 @@ class HabitService {
     }
   }
 
-  /// Delete (deactivate) a habit
+  /// Delete a habit (hard delete)
   Future<void> deleteHabit(int id) async {
     final response = await _apiService.delete(ApiConstants.habitById(id));
 
@@ -80,10 +80,10 @@ class HabitService {
   }
 
   /// Mark a habit as completed for today
-  Future<void> completeHabit(int id, {String? notes}) async {
+  Future<void> completeHabit(int id) async {
     final response = await _apiService.post(
       ApiConstants.completeHabit(id),
-      body: notes != null ? {'notes': notes} : {},
+      body: {},
     );
 
     if (!response.success) {

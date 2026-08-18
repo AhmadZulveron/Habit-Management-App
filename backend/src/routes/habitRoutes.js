@@ -16,24 +16,32 @@ router.use(authenticate);
 router.post(
   '/',
   [
-    body('name')
+    body('title')
       .trim()
       .notEmpty()
-      .withMessage('Habit name is required')
-      .isLength({ max: 255 })
-      .withMessage('Habit name must be at most 255 characters'),
+      .withMessage('Habit title is required')
+      .isLength({ max: 150 })
+      .withMessage('Habit title must be at most 150 characters'),
     body('description')
       .optional()
       .trim(),
-    body('category')
-      .optional()
-      .trim()
-      .isLength({ max: 100 })
-      .withMessage('Category must be at most 100 characters'),
-    body('priorityLevel')
+    body('categoryId')
+      .notEmpty()
+      .withMessage('Category is required')
+      .isInt()
+      .withMessage('Category must be a valid ID'),
+    body('priority')
       .optional()
       .isIn(['high', 'medium', 'low'])
       .withMessage('Priority level must be high, medium, or low'),
+    body('target')
+      .optional()
+      .isInt({ min: 1 })
+      .withMessage('Target must be at least 1'),
+    body('status')
+      .optional()
+      .isIn(['active', 'inactive'])
+      .withMessage('Status must be active or inactive'),
     body('scheduleDays')
       .optional()
       .isArray()
@@ -73,21 +81,29 @@ router.get('/:id', habitController.getHabitById);
 router.put(
   '/:id',
   [
-    body('name')
+    body('title')
       .optional()
       .trim()
       .notEmpty()
-      .withMessage('Habit name cannot be empty')
-      .isLength({ max: 255 })
-      .withMessage('Habit name must be at most 255 characters'),
-    body('priorityLevel')
+      .withMessage('Habit title cannot be empty')
+      .isLength({ max: 150 })
+      .withMessage('Habit title must be at most 150 characters'),
+    body('categoryId')
+      .optional()
+      .isInt()
+      .withMessage('Category must be a valid ID'),
+    body('priority')
       .optional()
       .isIn(['high', 'medium', 'low'])
       .withMessage('Priority level must be high, medium, or low'),
-    body('isActive')
+    body('target')
       .optional()
-      .isBoolean()
-      .withMessage('isActive must be a boolean'),
+      .isInt({ min: 1 })
+      .withMessage('Target must be at least 1'),
+    body('status')
+      .optional()
+      .isIn(['active', 'inactive'])
+      .withMessage('Status must be active or inactive'),
     body('scheduleDays')
       .optional()
       .isArray()
@@ -103,7 +119,7 @@ router.put(
 
 /**
  * DELETE /api/habits/:id
- * Deactivate a habit (soft delete)
+ * Delete a habit (hard delete)
  */
 router.delete('/:id', habitController.deleteHabit);
 
@@ -113,11 +129,7 @@ router.delete('/:id', habitController.deleteHabit);
  */
 router.post(
   '/:id/complete',
-  [
-    body('notes')
-      .optional()
-      .trim(),
-  ],
+  [],
   validate,
   habitController.completeHabit
 );

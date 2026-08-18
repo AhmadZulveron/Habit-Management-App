@@ -22,21 +22,18 @@ router.get('/', profileController.getProfile);
 router.put(
   '/',
   [
-    body('fullName')
+    body('name')
       .optional()
       .trim()
       .notEmpty()
-      .withMessage('Full name cannot be empty')
+      .withMessage('Name cannot be empty')
       .isLength({ min: 2, max: 255 })
-      .withMessage('Full name must be between 2 and 255 characters'),
-    body('dateOfBirth')
+      .withMessage('Name must be between 2 and 255 characters'),
+    body('email')
       .optional()
-      .isDate()
-      .withMessage('Date of birth must be a valid date (YYYY-MM-DD)'),
-    body('gender')
-      .optional()
-      .isIn(['male', 'female', 'other'])
-      .withMessage('Gender must be male, female, or other'),
+      .trim()
+      .isEmail()
+      .withMessage('Must be a valid email address'),
   ],
   validate,
   profileController.updateProfile

@@ -26,8 +26,17 @@ class AuthProvider with ChangeNotifier {
 
     try {
       final isLoggedIn = await _authService.isLoggedIn();
-      _isAuthenticated = isLoggedIn;
+      if (isLoggedIn) {
+        // Fetch profile to restore user state
+        _user = await _authService.getProfile();
+        _isAuthenticated = true;
+      } else {
+        _isAuthenticated = false;
+      }
     } catch (e) {
+      // Token might be expired or invalid
+      await _authService.logout();
+      _user = null;
       _isAuthenticated = false;
     }
 
@@ -58,13 +67,13 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// Register a new user
-  Future<bool> signup(String email, String password, String fullName) async {
+  Future<bool> signup(String email, String password, String name) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      final user = await _authService.signup(email, password, fullName);
+      final user = await _authService.signup(email, password, name);
       _user = user;
       _isLoading = false;
       notifyListeners();

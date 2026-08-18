@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/widgets/common_widgets.dart';
 
 /// Home Screen
 /// Main screen showing today's habits and navigation to other sections
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  final Set<int> _processingCompletions = {};
 
   @override
   void initState() {
@@ -24,73 +25,95 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _confirmCompletion(HabitProvider habitProvider, int habitId, String title) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Complete Habit?'),
+        content: Text('Have you completed $title today?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      if (_processingCompletions.contains(habitId)) return;
+      setState(() => _processingCompletions.add(habitId));
+
+      final success = await habitProvider.completeHabit(habitId);
+
+      if (!mounted) return;
+      
+      if (mounted) {
+        setState(() => _processingCompletions.remove(habitId));
+        if (success) {
+          await showResultPopup(
+            // ignore: use_build_context_synchronously
+            context,
+            true,
+            'Habit Completed!',
+            subtitle: '+10 Points',
+          );
+        } else {
+          await showResultPopup(
+            // ignore: use_build_context_synchronously
+            context,
+            false,
+            'Failed to Complete Habit',
+            subtitle: habitProvider.error,
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Habit Tracker'),
+        title: Consumer<AuthProvider>(
+          builder: (context, authProvider, child) {
+            final name = authProvider.user?.name ?? 'User';
+            return Text('Hello, $name!');
+          },
+        ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.person_outlined),
-            onPressed: () => Navigator.pushNamed(context, '/profile'),
-            tooltip: 'Profile',
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.pushNamed(context, '/settings'),
-            tooltip: 'Settings',
+            icon: const Icon(Icons.lightbulb_outline),
+            onPressed: () => Navigator.pushNamed(context, '/recommendations'),
+            tooltip: 'Recommendations',
           ),
         ],
       ),
       body: _buildBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() => _currentIndex = index);
-          // Navigate to corresponding screen
-          switch (index) {
-            case 0:
-              break; // Already on home
-            case 1:
-              Navigator.pushNamed(context, '/habits');
-              break;
-            case 2:
-              Navigator.pushNamed(context, '/recommendations');
-              break;
-            case 3:
-              Navigator.pushNamed(context, '/reports');
-              break;
-          }
-        },
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: FloatingActionButton.extended(
+            onPressed: () => Navigator.pushNamed(context, '/habits'),
+            icon: const Icon(Icons.add),
+            label: const Text(
+              'Add New Habits',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            elevation: 4,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.checklist_outlined),
-            activeIcon: Icon(Icons.checklist),
-            label: 'Habits',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.lightbulb_outline),
-            activeIcon: Icon(Icons.lightbulb),
-            label: 'Recommend',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart_outlined),
-            activeIcon: Icon(Icons.bar_chart),
-            label: 'Report',
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/add-habit'),
-        child: const Icon(Icons.add),
-        tooltip: 'Add Habit',
+        ),
       ),
     );
   }
@@ -106,27 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Greeting
-                Consumer<AuthProvider>(
-                  builder: (context, authProvider, child) {
-                    final name = authProvider.user?.fullName ?? 'User';
-                    return Text(
-                      'Hello, $name!',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "Here are today's habits",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey,
-                      ),
-                ),
-                const SizedBox(height: 24),
-
                 // Today's Habits section
                 Text(
                   "Today's Habits",
@@ -185,11 +187,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             onChanged: habit.isCompletedToday
                                 ? null
                                 : (value) {
-                                    habitProvider.completeHabit(habit.id);
+                                    _confirmCompletion(habitProvider, habit.id, habit.title);
                                   },
                           ),
                           title: Text(
-                            habit.name,
+                            habit.title,
                             style: TextStyle(
                               decoration: habit.isCompletedToday
                                   ? TextDecoration.lineThrough
@@ -197,7 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           subtitle: Text(
-                            '${habit.category ?? 'Uncategorized'} • ${habit.priorityLevel}',
+                            habit.isCompletedToday
+                                ? '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}\nCompleted (+10 Points)'
+                                : '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}',
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () {

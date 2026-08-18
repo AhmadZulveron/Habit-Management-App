@@ -8,8 +8,8 @@ const { quickSort } = require('../engines/quickSort');
  * 
  * Orchestrates the recommendation pipeline:
  * 1. Fetch user context (habits, completions, profile, points)
- * 2. Fetch available recommendations
- * 3. Rule Engine: filter applicable recommendations
+ * 2. Fetch available recommendation templates
+ * 3. Rule Engine: filter applicable templates
  * 4. Scoring Engine: calculate relevance scores
  * 5. QuickSort: sort by relevance score descending
  * 6. Return sorted recommendations
@@ -28,13 +28,13 @@ class RecommendationService {
     // Step 1: Fetch user context
     const userContext = await this._getUserContext(userId);
 
-    // Step 2: Fetch all active recommendations
-    const [recommendations] = await pool.query(
-      'SELECT * FROM recommendations WHERE is_active = 1'
+    // Step 2: Fetch all recommendation candidates from habit_templates
+    const [templates] = await pool.query(
+      'SELECT * FROM habit_templates'
     );
 
     // Step 3: Rule Engine - filter applicable recommendations
-    const filteredRecommendations = evaluateRules(userContext, recommendations);
+    const filteredRecommendations = evaluateRules(userContext, templates);
 
     // Step 4: Scoring Engine - calculate relevance scores
     const scoredRecommendations = calculateScores(
@@ -59,27 +59,22 @@ class RecommendationService {
   async _getUserContext(userId) {
     // Fetch user habits
     const [habits] = await pool.query(
-      'SELECT * FROM habits WHERE user_id = ? AND is_active = 1',
+      "SELECT * FROM habits WHERE user_id = ? AND status = 'active'",
       [userId]
     );
 
     // Fetch recent completions (last 30 days)
     const [completions] = await pool.query(
-      `SELECT * FROM habit_completions 
-       WHERE user_id = ? AND completed_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-       ORDER BY completed_date DESC`,
+      `SELECT hc.* FROM habit_completions hc
+       JOIN habits h ON hc.habit_id = h.id
+       WHERE h.user_id = ? AND hc.completed_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+       ORDER BY hc.completed_at DESC`,
       [userId]
     );
 
-    // Fetch user profile
-    const [profiles] = await pool.query(
-      'SELECT * FROM user_profiles WHERE user_id = ?',
-      [userId]
-    );
-
-    // Fetch user points
-    const [points] = await pool.query(
-      'SELECT * FROM user_points WHERE user_id = ?',
+    // Fetch user profile & points
+    const [users] = await pool.query(
+      'SELECT id, name, email, total_points, created_at FROM users WHERE id = ?',
       [userId]
     );
 
@@ -87,8 +82,7 @@ class RecommendationService {
       userId,
       habits,
       completionHistory: completions,
-      profile: profiles[0] || null,
-      points: points[0] || null,
+      profile: users[0] || null,
     };
   }
 }

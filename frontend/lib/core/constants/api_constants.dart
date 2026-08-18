@@ -20,6 +20,9 @@ class ApiConstants {
   static String habitById(int id) => '/habits/$id';
   static String completeHabit(int id) => '/habits/$id/complete';
 
+  // Category endpoints
+  static const String categories = '/categories';
+
   // Recommendation endpoints
   static const String recommendations = '/recommendations';
 

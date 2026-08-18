@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/providers/category_provider.dart';
 
 // Import Screens
 import 'package:frontend/screens/auth/login_screen.dart';
 import 'package:frontend/screens/auth/signup_screen.dart';
-import 'package:frontend/screens/home/home_screen.dart';
+import 'package:frontend/screens/main_navigation_screen.dart';
 import 'package:frontend/screens/habit/habit_list_screen.dart';
 import 'package:frontend/screens/habit/add_habit_screen.dart';
 import 'package:frontend/screens/habit/habit_detail_screen.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()..checkAuthStatus()),
         ChangeNotifierProvider(create: (_) => HabitProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: MaterialApp(
         title: 'Habit Tracker Base',
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
               );
             }
             return authProvider.isAuthenticated
-                ? const HomeScreen()
+                ? const MainNavigationScreen()
                 : const LoginScreen();
           },
         ),
@@ -66,7 +68,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (context) => const LoginScreen(),
           '/signup': (context) => const SignupScreen(),
-          '/home': (context) => const HomeScreen(),
+          '/home': (context) => const MainNavigationScreen(),
           '/habits': (context) => const HabitListScreen(),
           '/add-habit': (context) => const AddHabitScreen(),
           '/habit-detail': (context) => const HabitDetailScreen(),

@@ -12,9 +12,9 @@ class AuthController {
    */
   async signup(req, res) {
     try {
-      const { email, password, fullName } = req.body;
+      const { email, password, name } = req.body;
 
-      const user = await authService.signup({ email, password, fullName });
+      const user = await authService.signup({ email, password, name });
 
       return sendSuccess(res, 'User registered successfully', { user }, 201);
     } catch (error) {

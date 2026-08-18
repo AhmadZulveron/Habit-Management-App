@@ -3,13 +3,16 @@
 class HabitModel {
   final int id;
   final int userId;
-  final String name;
+  final String title;
   final String? description;
-  final String? category;
-  final String priorityLevel;
-  final bool isActive;
+  final int categoryId;
+  final String? categoryName;
+  final String? categoryIcon;
+  final String? categoryColor;
+  final String priority;
+  final int target;
+  final String status;
   final List<int> scheduleDays;
-  final String? reminderTime;
   final bool isCompletedToday;
   final String? createdAt;
   final String? updatedAt;
@@ -17,13 +20,16 @@ class HabitModel {
   HabitModel({
     required this.id,
     required this.userId,
-    required this.name,
+    required this.title,
     this.description,
-    this.category,
-    required this.priorityLevel,
-    required this.isActive,
+    required this.categoryId,
+    this.categoryName,
+    this.categoryIcon,
+    this.categoryColor,
+    required this.priority,
+    required this.target,
+    required this.status,
     required this.scheduleDays,
-    this.reminderTime,
     this.isCompletedToday = false,
     this.createdAt,
     this.updatedAt,
@@ -33,15 +39,18 @@ class HabitModel {
     return HabitModel(
       id: json['id'],
       userId: json['userId'],
-      name: json['name'],
+      title: json['title'],
       description: json['description'],
-      category: json['category'],
-      priorityLevel: json['priorityLevel'] ?? 'medium',
-      isActive: json['isActive'] ?? true,
+      categoryId: json['categoryId'],
+      categoryName: json['categoryName'],
+      categoryIcon: json['categoryIcon'],
+      categoryColor: json['categoryColor'],
+      priority: json['priority'] ?? 'medium',
+      target: json['target'] ?? 1,
+      status: json['status'] ?? 'active',
       scheduleDays: json['scheduleDays'] != null
           ? List<int>.from(json['scheduleDays'])
           : [],
-      reminderTime: json['reminderTime'],
       isCompletedToday: json['isCompletedToday'] ?? false,
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
@@ -50,13 +59,21 @@ class HabitModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'id': id,
+      'userId': userId,
+      'title': title,
       'description': description,
-      'category': category,
-      'priorityLevel': priorityLevel,
-      'isActive': isActive,
+      'categoryId': categoryId,
+      'categoryName': categoryName,
+      'categoryIcon': categoryIcon,
+      'categoryColor': categoryColor,
+      'priority': priority,
+      'target': target,
+      'status': status,
       'scheduleDays': scheduleDays,
-      'reminderTime': reminderTime,
+      'isCompletedToday': isCompletedToday,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 

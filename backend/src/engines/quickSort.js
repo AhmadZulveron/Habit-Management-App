@@ -87,7 +87,7 @@ function quickSortRecursive(arr, low, high, compareFn) {
  * 
  * // Sort habits by priority (high > medium > low)
  * const priorityOrder = { high: 3, medium: 2, low: 1 };
- * quickSort(habits, (a, b) => priorityOrder[b.priorityLevel] - priorityOrder[a.priorityLevel]);
+ * quickSort(habits, (a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
  * 
  * // Sort recommendations by relevance score (descending)
  * quickSort(recommendations, (a, b) => b.relevanceScore - a.relevanceScore);

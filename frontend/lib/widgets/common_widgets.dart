@@ -29,7 +29,7 @@ class PlaceholderScreen extends StatelessWidget {
             Icon(
               icon,
               size: 64,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
@@ -114,5 +114,60 @@ class ErrorWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// Helper function to show a centered automatic result popup
+Future<void> showResultPopup(
+  BuildContext context,
+  bool success,
+  String message, {
+  String? subtitle,
+}) async {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                success ? Icons.check_circle_outline : Icons.close,
+                color: success ? Colors.green : Colors.red,
+                size: 64,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              if (subtitle != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  subtitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
+  // Wait 1.5 seconds then dismiss automatically
+  await Future.delayed(const Duration(milliseconds: 1500));
+  if (context.mounted) {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 }

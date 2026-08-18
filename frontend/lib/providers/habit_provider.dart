@@ -112,7 +112,7 @@ class HabitProvider with ChangeNotifier {
     }
   }
 
-  /// Delete (deactivate) a habit
+  /// Delete a habit (hard delete)
   Future<bool> deleteHabit(int id) async {
     _isLoading = true;
     _error = null;
@@ -121,6 +121,10 @@ class HabitProvider with ChangeNotifier {
     try {
       await _habitService.deleteHabit(id);
       _habits.removeWhere((h) => h.id == id);
+      _todayHabits.removeWhere((h) => h.id == id);
+      if (_selectedHabit?.id == id) {
+        _selectedHabit = null;
+      }
       _isLoading = false;
       notifyListeners();
       return true;
@@ -133,9 +137,9 @@ class HabitProvider with ChangeNotifier {
   }
 
   /// Complete a habit for today
-  Future<bool> completeHabit(int id, {String? notes}) async {
+  Future<bool> completeHabit(int id) async {
     try {
-      await _habitService.completeHabit(id, notes: notes);
+      await _habitService.completeHabit(id);
       // Refresh today's habits to update completion status
       await fetchTodayHabits();
       return true;
