@@ -1,0 +1,224 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-19T09:01:05.541Z",
+    "description": "Validated statistical summary of QuickSort empirical performance."
+  },
+  "data": [
+    {
+      "size": 10,
+      "distribution": "Random",
+      "comparisons": 34,
+      "swaps": 21,
+      "medianTimeMs": 0.00035000000000096065,
+      "meanTimeMs": 0.0004639999999999134
+    },
+    {
+      "size": 10,
+      "distribution": "Ascending",
+      "comparisons": 34,
+      "swaps": 21,
+      "medianTimeMs": 0.00030000000000285354,
+      "meanTimeMs": 0.0003540000000000987
+    },
+    {
+      "size": 10,
+      "distribution": "Descending",
+      "comparisons": 37,
+      "swaps": 12,
+      "medianTimeMs": 0.00030000000000285354,
+      "meanTimeMs": 0.0003479999999996153
+    },
+    {
+      "size": 10,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 72,
+      "swaps": 11,
+      "medianTimeMs": 0.0004000000000061732,
+      "meanTimeMs": 0.0004779999999998097
+    },
+    {
+      "size": 50,
+      "distribution": "Random",
+      "comparisons": 309,
+      "swaps": 174,
+      "medianTimeMs": 0.0013999999999967372,
+      "meanTimeMs": 0.0016259999999998342
+    },
+    {
+      "size": 50,
+      "distribution": "Ascending",
+      "comparisons": 326,
+      "swaps": 169,
+      "medianTimeMs": 0.0013999999999967372,
+      "meanTimeMs": 0.0013959999999995888
+    },
+    {
+      "size": 50,
+      "distribution": "Descending",
+      "comparisons": 286,
+      "swaps": 62,
+      "medianTimeMs": 0.0012000000000043087,
+      "meanTimeMs": 0.0013740000000008479
+    },
+    {
+      "size": 50,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 1268,
+      "swaps": 90,
+      "medianTimeMs": 0.004100000000001103,
+      "meanTimeMs": 0.004087999999998999
+    },
+    {
+      "size": 100,
+      "distribution": "Random",
+      "comparisons": 681,
+      "swaps": 345,
+      "medianTimeMs": 0.0025000000000048317,
+      "meanTimeMs": 0.002656000000000773
+    },
+    {
+      "size": 100,
+      "distribution": "Ascending",
+      "comparisons": 868,
+      "swaps": 420,
+      "medianTimeMs": 0.0031000000000034333,
+      "meanTimeMs": 0.0031700000000004992
+    },
+    {
+      "size": 100,
+      "distribution": "Descending",
+      "comparisons": 669,
+      "swaps": 126,
+      "medianTimeMs": 0.002300000000005298,
+      "meanTimeMs": 0.002354000000000269
+    },
+    {
+      "size": 100,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 4184,
+      "swaps": 163,
+      "medianTimeMs": 0.01190000000000424,
+      "meanTimeMs": 0.011889999999999788
+    },
+    {
+      "size": 500,
+      "distribution": "Random",
+      "comparisons": 5072,
+      "swaps": 2344,
+      "medianTimeMs": 0.01764999999999972,
+      "meanTimeMs": 0.01900000000000006
+    },
+    {
+      "size": 500,
+      "distribution": "Ascending",
+      "comparisons": 6790,
+      "swaps": 3040,
+      "medianTimeMs": 0.023099999999999454,
+      "meanTimeMs": 0.02389000000000024
+    },
+    {
+      "size": 500,
+      "distribution": "Descending",
+      "comparisons": 4263,
+      "swaps": 510,
+      "medianTimeMs": 0.013499999999996959,
+      "meanTimeMs": 0.014090000000000486
+    },
+    {
+      "size": 500,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 104788,
+      "swaps": 1060,
+      "medianTimeMs": 0.27284999999999826,
+      "meanTimeMs": 0.2762039999999999
+    },
+    {
+      "size": 1000,
+      "distribution": "Random",
+      "comparisons": 11533,
+      "swaps": 5727,
+      "medianTimeMs": 0.052300000000002456,
+      "meanTimeMs": 0.056202000000000536
+    },
+    {
+      "size": 1000,
+      "distribution": "Ascending",
+      "comparisons": 15849,
+      "swaps": 6970,
+      "medianTimeMs": 0.04829999999999757,
+      "meanTimeMs": 0.04922999999999916
+    },
+    {
+      "size": 1000,
+      "distribution": "Descending",
+      "comparisons": 9520,
+      "swaps": 1022,
+      "medianTimeMs": 0.026200000000002888,
+      "meanTimeMs": 0.02635599999999954
+    },
+    {
+      "size": 1000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 409648,
+      "swaps": 2201,
+      "medianTimeMs": 1.0157999999999987,
+      "meanTimeMs": 1.0309420000000005
+    },
+    {
+      "size": 5000,
+      "distribution": "Random",
+      "comparisons": 66640,
+      "swaps": 34499,
+      "medianTimeMs": 0.46844999999999004,
+      "meanTimeMs": 0.48217399999999944
+    },
+    {
+      "size": 5000,
+      "distribution": "Ascending",
+      "comparisons": 106182,
+      "swaps": 45496,
+      "medianTimeMs": 0.32535000000000025,
+      "meanTimeMs": 0.3354839999999962
+    },
+    {
+      "size": 5000,
+      "distribution": "Descending",
+      "comparisons": 60678,
+      "swaps": 5904,
+      "medianTimeMs": 0.16870000000000118,
+      "meanTimeMs": 0.1755760000000032
+    },
+    {
+      "size": 5000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 10138001,
+      "swaps": 11666,
+      "medianTimeMs": 22.921100000000024,
+      "meanTimeMs": 23.157949999999985
+    },
+    {
+      "size": 10000,
+      "distribution": "Random",
+      "comparisons": 146010,
+      "swaps": 72167,
+      "medianTimeMs": 1.0387000000000626,
+      "meanTimeMs": 1.0803279999999722
+    },
+    {
+      "size": 10000,
+      "distribution": "Ascending",
+      "comparisons": 234923,
+      "swaps": 99730,
+      "medianTimeMs": 0.6604500000000826,
+      "meanTimeMs": 0.6773340000000325
+    },
+    {
+      "size": 10000,
+      "distribution": "Descending",
+      "comparisons": 131343,
+      "swaps": 11808,
+      "medianTimeMs": 0.3523500000000013,
+      "meanTimeMs": 0.3598679999999831
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-19T08:55:59.106Z",
+    "environment": {
+      "node": "v22.11.0",
+      "os": "win32",
+      "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+      "definition": "executionTimeMs strictly EXCLUDES array cloning and input generation, capturing only the actual QuickSort sorting operation."
+    }
+  },
+  "summaryResults": [
+    {
+      "size": 10,
+      "distribution": "Random",
+      "comparisons": 34,
+      "swaps": 21,
+      "executionTimeMs_min": 0.0002999999999957481,
+      "executionTimeMs_max": 0.004300000000000637,
+      "executionTimeMs_mean": 0.0004639999999999134,
+      "executionTimeMs_median": 0.00035000000000096065
+    },
+    {
+      "size": 10,
+      "distribution": "Ascending",
+      "comparisons": 34,
+      "swaps": 21,
+      "executionTimeMs_min": 0.0002999999999957481,
+      "executionTimeMs_max": 0.0007999999999981355,
+      "executionTimeMs_mean": 0.0003540000000000987,
+      "executionTimeMs_median": 0.00030000000000285354
+    },
+    {
+      "size": 10,
+      "distribution": "Descending",
+      "comparisons": 37,
+      "swaps": 12,
+      "executionTimeMs_min": 0.0002999999999957481,
+      "executionTimeMs_max": 0.0007000000000019213,
+      "executionTimeMs_mean": 0.0003479999999996153,
+      "executionTimeMs_median": 0.00030000000000285354
+    },
+    {
+      "size": 10,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 72,
+      "swaps": 11,
+      "executionTimeMs_min": 0.00039999999999906777,
+      "executionTimeMs_max": 0.0016000000000033765,
+      "executionTimeMs_mean": 0.0004779999999998097,
+      "executionTimeMs_median": 0.0004000000000061732
+    },
+    {
+      "size": 50,
+      "distribution": "Random",
+      "comparisons": 309,
+      "swaps": 174,
+      "executionTimeMs_min": 0.0011999999999972033,
+      "executionTimeMs_max": 0.006000000000000227,
+      "executionTimeMs_mean": 0.0016259999999998342,
+      "executionTimeMs_median": 0.0013999999999967372
+    },
+    {
+      "size": 50,
+      "distribution": "Ascending",
+      "comparisons": 326,
+      "swaps": 169,
+      "executionTimeMs_min": 0.0012999999999934175,
+      "executionTimeMs_max": 0.002200000000001978,
+      "executionTimeMs_mean": 0.0013959999999995888,
+      "executionTimeMs_median": 0.0013999999999967372
+    },
+    {
+      "size": 50,
+      "distribution": "Descending",
+      "comparisons": 286,
+      "swaps": 62,
+      "executionTimeMs_min": 0.001100000000000989,
+      "executionTimeMs_max": 0.003500000000002501,
+      "executionTimeMs_mean": 0.0013740000000008479,
+      "executionTimeMs_median": 0.0012000000000043087
+    },
+    {
+      "size": 50,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 1268,
+      "swaps": 90,
+      "executionTimeMs_min": 0.003999999999997783,
+      "executionTimeMs_max": 0.0045000000000001705,
+      "executionTimeMs_mean": 0.004087999999998999,
+      "executionTimeMs_median": 0.004100000000001103
+    },
+    {
+      "size": 100,
+      "distribution": "Random",
+      "comparisons": 681,
+      "swaps": 345,
+      "executionTimeMs_min": 0.002400000000001512,
+      "executionTimeMs_max": 0.0058000000000006935,
+      "executionTimeMs_mean": 0.002656000000000773,
+      "executionTimeMs_median": 0.0025000000000048317
+    },
+    {
+      "size": 100,
+      "distribution": "Ascending",
+      "comparisons": 868,
+      "swaps": 420,
+      "executionTimeMs_min": 0.0030000000000001137,
+      "executionTimeMs_max": 0.0045000000000001705,
+      "executionTimeMs_mean": 0.0031700000000004992,
+      "executionTimeMs_median": 0.0031000000000034333
+    },
+    {
+      "size": 100,
+      "distribution": "Descending",
+      "comparisons": 669,
+      "swaps": 126,
+      "executionTimeMs_min": 0.002200000000001978,
+      "executionTimeMs_max": 0.00269999999999726,
+      "executionTimeMs_mean": 0.002354000000000269,
+      "executionTimeMs_median": 0.002300000000005298
+    },
+    {
+      "size": 100,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 4184,
+      "swaps": 163,
+      "executionTimeMs_min": 0.011399999999994748,
+      "executionTimeMs_max": 0.012199999999999989,
+      "executionTimeMs_mean": 0.011889999999999788,
+      "executionTimeMs_median": 0.01190000000000424
+    },
+    {
+      "size": 500,
+      "distribution": "Random",
+      "comparisons": 5072,
+      "swaps": 2344,
+      "executionTimeMs_min": 0.016200000000004877,
+      "executionTimeMs_max": 0.036899999999995714,
+      "executionTimeMs_mean": 0.01900000000000006,
+      "executionTimeMs_median": 0.01764999999999972
+    },
+    {
+      "size": 500,
+      "distribution": "Ascending",
+      "comparisons": 6790,
+      "swaps": 3040,
+      "executionTimeMs_min": 0.022700000000000387,
+      "executionTimeMs_max": 0.04299999999999926,
+      "executionTimeMs_mean": 0.02389000000000024,
+      "executionTimeMs_median": 0.023099999999999454
+    },
+    {
+      "size": 500,
+      "distribution": "Descending",
+      "comparisons": 4263,
+      "swaps": 510,
+      "executionTimeMs_min": 0.012599999999999056,
+      "executionTimeMs_max": 0.03030000000000399,
+      "executionTimeMs_mean": 0.014090000000000486,
+      "executionTimeMs_median": 0.013499999999996959
+    },
+    {
+      "size": 500,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 104788,
+      "swaps": 1060,
+      "executionTimeMs_min": 0.26069999999999993,
+      "executionTimeMs_max": 0.3404000000000025,
+      "executionTimeMs_mean": 0.2762039999999999,
+      "executionTimeMs_median": 0.27284999999999826
+    },
+    {
+      "size": 1000,
+      "distribution": "Random",
+      "comparisons": 11533,
+      "swaps": 5727,
+      "executionTimeMs_min": 0.0478999999999985,
+      "executionTimeMs_max": 0.08229999999998938,
+      "executionTimeMs_mean": 0.056202000000000536,
+      "executionTimeMs_median": 0.052300000000002456
+    },
+    {
+      "size": 1000,
+      "distribution": "Ascending",
+      "comparisons": 15849,
+      "swaps": 6970,
+      "executionTimeMs_min": 0.04739999999999611,
+      "executionTimeMs_max": 0.06029999999999802,
+      "executionTimeMs_mean": 0.04922999999999916,
+      "executionTimeMs_median": 0.04829999999999757
+    },
+    {
+      "size": 1000,
+      "distribution": "Descending",
+      "comparisons": 9520,
+      "swaps": 1022,
+      "executionTimeMs_min": 0.02580000000000382,
+      "executionTimeMs_max": 0.03109999999999502,
+      "executionTimeMs_mean": 0.02635599999999954,
+      "executionTimeMs_median": 0.026200000000002888
+    },
+    {
+      "size": 1000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 409648,
+      "swaps": 2201,
+      "executionTimeMs_min": 0.9979999999999905,
+      "executionTimeMs_max": 1.2713999999999999,
+      "executionTimeMs_mean": 1.0309420000000005,
+      "executionTimeMs_median": 1.0157999999999987
+    },
+    {
+      "size": 5000,
+      "distribution": "Random",
+      "comparisons": 66640,
+      "swaps": 34499,
+      "executionTimeMs_min": 0.44299999999998363,
+      "executionTimeMs_max": 0.5895999999999901,
+      "executionTimeMs_mean": 0.48217399999999944,
+      "executionTimeMs_median": 0.46844999999999004
+    },
+    {
+      "size": 5000,
+      "distribution": "Ascending",
+      "comparisons": 106182,
+      "swaps": 45496,
+      "executionTimeMs_min": 0.3059999999999832,
+      "executionTimeMs_max": 0.5018000000000029,
+      "executionTimeMs_mean": 0.3354839999999962,
+      "executionTimeMs_median": 0.32535000000000025
+    },
+    {
+      "size": 5000,
+      "distribution": "Descending",
+      "comparisons": 60678,
+      "swaps": 5904,
+      "executionTimeMs_min": 0.15440000000000964,
+      "executionTimeMs_max": 0.30060000000000286,
+      "executionTimeMs_mean": 0.1755760000000032,
+      "executionTimeMs_median": 0.16870000000000118
+    },
+    {
+      "size": 5000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 10138001,
+      "swaps": 11666,
+      "executionTimeMs_min": 22.150599999999997,
+      "executionTimeMs_max": 26.533999999999878,
+      "executionTimeMs_mean": 23.157949999999985,
+      "executionTimeMs_median": 22.921100000000024
+    },
+    {
+      "size": 10000,
+      "distribution": "Random",
+      "comparisons": 146010,
+      "swaps": 72167,
+      "executionTimeMs_min": 0.9827000000000226,
+      "executionTimeMs_max": 1.6517999999998665,
+      "executionTimeMs_mean": 1.0803279999999722,
+      "executionTimeMs_median": 1.0387000000000626
+    },
+    {
+      "size": 10000,
+      "distribution": "Ascending",
+      "comparisons": 234923,
+      "swaps": 99730,
+      "executionTimeMs_min": 0.6515000000001692,
+      "executionTimeMs_max": 0.791700000000219,
+      "executionTimeMs_mean": 0.6773340000000325,
+      "executionTimeMs_median": 0.6604500000000826
+    },
+    {
+      "size": 10000,
+      "distribution": "Descending",
+      "comparisons": 131343,
+      "swaps": 11808,
+      "executionTimeMs_min": 0.3408999999999196,
+      "executionTimeMs_max": 0.42869999999993524,
+      "executionTimeMs_mean": 0.3598679999999831,
+      "executionTimeMs_median": 0.3523500000000013
+    },
+    {
+      "size": 10000,
+      "distribution": "Duplicate-Heavy",
+      "error": "RangeError: Maximum call stack size exceeded"
+    },
+    {
+      "size": 6,
+      "distribution": "Realistic Recommendation DB Trace",
+      "comparisons": 30,
+      "swaps": 5,
+      "executionTimeMs": 0.025900000000092405
+    }
+  ]
+}

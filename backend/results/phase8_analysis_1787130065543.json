@@ -1,0 +1,870 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-19T09:01:05.540Z",
+    "sourceFile": "D:\\flutterAhmadZulveron\\Try\\backend\\results\\raw_benchmark_1787129759106.json"
+  },
+  "completenessAudit": [
+    {
+      "size": 10,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 50,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 50,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 50,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 50,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 100,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 100,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 100,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 100,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 500,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 500,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 500,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 500,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 1000,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 1000,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 1000,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 1000,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 5000,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 5000,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 5000,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 5000,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10000,
+      "distribution": "Random",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10000,
+      "distribution": "Ascending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10000,
+      "distribution": "Descending",
+      "expectedRuns": 50,
+      "actualRuns": 50,
+      "status": "COMPLETE"
+    },
+    {
+      "size": 10000,
+      "distribution": "Duplicate-Heavy",
+      "expectedRuns": 50,
+      "actualRuns": 0,
+      "status": "FAILED"
+    }
+  ],
+  "discrepancies": [],
+  "recomputedSummary": [
+    {
+      "size": 10,
+      "distribution": "Random",
+      "comparisons": 34,
+      "swaps": 21,
+      "min": 0.0002999999999957481,
+      "max": 0.004300000000000637,
+      "mean": 0.0004639999999999134,
+      "median": 0.00035000000000096065,
+      "stddev": 0.0006025811148717055,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10,
+      "distribution": "Ascending",
+      "comparisons": 34,
+      "swaps": 21,
+      "min": 0.0002999999999957481,
+      "max": 0.0007999999999981355,
+      "mean": 0.0003540000000000987,
+      "median": 0.00030000000000285354,
+      "stddev": 0.00008296987405048543,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10,
+      "distribution": "Descending",
+      "comparisons": 37,
+      "swaps": 12,
+      "min": 0.0002999999999957481,
+      "max": 0.0007000000000019213,
+      "mean": 0.0003479999999996153,
+      "median": 0.00030000000000285354,
+      "stddev": 0.00006997142273829736,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 72,
+      "swaps": 11,
+      "min": 0.00039999999999906777,
+      "max": 0.0016000000000033765,
+      "mean": 0.0004779999999998097,
+      "median": 0.0004000000000061732,
+      "stddev": 0.00017582946283319293,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 50,
+      "distribution": "Random",
+      "comparisons": 309,
+      "swaps": 174,
+      "min": 0.0011999999999972033,
+      "max": 0.006000000000000227,
+      "mean": 0.0016259999999998342,
+      "median": 0.0013999999999967372,
+      "stddev": 0.0008211723327047448,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 50,
+      "distribution": "Ascending",
+      "comparisons": 326,
+      "swaps": 169,
+      "min": 0.0012999999999934175,
+      "max": 0.002200000000001978,
+      "mean": 0.0013959999999995888,
+      "median": 0.0013999999999967372,
+      "stddev": 0.00012800000000023456,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 50,
+      "distribution": "Descending",
+      "comparisons": 286,
+      "swaps": 62,
+      "min": 0.001100000000000989,
+      "max": 0.003500000000002501,
+      "mean": 0.0013740000000008479,
+      "median": 0.0012000000000043087,
+      "stddev": 0.0005066793858047541,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 50,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 1268,
+      "swaps": 90,
+      "min": 0.003999999999997783,
+      "max": 0.0045000000000001705,
+      "mean": 0.004087999999998999,
+      "median": 0.004100000000001103,
+      "stddev": 0.0000840000000003456,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 100,
+      "distribution": "Random",
+      "comparisons": 681,
+      "swaps": 345,
+      "min": 0.002400000000001512,
+      "max": 0.0058000000000006935,
+      "mean": 0.002656000000000773,
+      "median": 0.0025000000000048317,
+      "stddev": 0.0005048405688926186,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 100,
+      "distribution": "Ascending",
+      "comparisons": 868,
+      "swaps": 420,
+      "min": 0.0030000000000001137,
+      "max": 0.0045000000000001705,
+      "mean": 0.0031700000000004992,
+      "median": 0.0031000000000034333,
+      "stddev": 0.00021470910553554696,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 100,
+      "distribution": "Descending",
+      "comparisons": 669,
+      "swaps": 126,
+      "min": 0.002200000000001978,
+      "max": 0.00269999999999726,
+      "mean": 0.002354000000000269,
+      "median": 0.002300000000005298,
+      "stddev": 0.00008296987405008118,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 100,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 4184,
+      "swaps": 163,
+      "min": 0.011399999999994748,
+      "max": 0.012199999999999989,
+      "mean": 0.011889999999999788,
+      "median": 0.01190000000000424,
+      "stddev": 0.0002032240143287065,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 500,
+      "distribution": "Random",
+      "comparisons": 5072,
+      "swaps": 2344,
+      "min": 0.016200000000004877,
+      "max": 0.036899999999995714,
+      "mean": 0.01900000000000006,
+      "median": 0.01764999999999972,
+      "stddev": 0.003610761692496422,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 500,
+      "distribution": "Ascending",
+      "comparisons": 6790,
+      "swaps": 3040,
+      "min": 0.022700000000000387,
+      "max": 0.04299999999999926,
+      "mean": 0.02389000000000024,
+      "median": 0.023099999999999454,
+      "stddev": 0.003025177680731888,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 500,
+      "distribution": "Descending",
+      "comparisons": 4263,
+      "swaps": 510,
+      "min": 0.012599999999999056,
+      "max": 0.03030000000000399,
+      "mean": 0.014090000000000486,
+      "median": 0.013499999999996959,
+      "stddev": 0.0026534694269958743,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 500,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 104788,
+      "swaps": 1060,
+      "min": 0.26069999999999993,
+      "max": 0.3404000000000025,
+      "mean": 0.2762039999999999,
+      "median": 0.27284999999999826,
+      "stddev": 0.01338041793069295,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 1000,
+      "distribution": "Random",
+      "comparisons": 11533,
+      "swaps": 5727,
+      "min": 0.0478999999999985,
+      "max": 0.08229999999998938,
+      "mean": 0.056202000000000536,
+      "median": 0.052300000000002456,
+      "stddev": 0.008917589136083013,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 1000,
+      "distribution": "Ascending",
+      "comparisons": 15849,
+      "swaps": 6970,
+      "min": 0.04739999999999611,
+      "max": 0.06029999999999802,
+      "mean": 0.04922999999999916,
+      "median": 0.04829999999999757,
+      "stddev": 0.002481551933770233,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 1000,
+      "distribution": "Descending",
+      "comparisons": 9520,
+      "swaps": 1022,
+      "min": 0.02580000000000382,
+      "max": 0.03109999999999502,
+      "mean": 0.02635599999999954,
+      "median": 0.026200000000002888,
+      "stddev": 0.0007555554248357086,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 1000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 409648,
+      "swaps": 2201,
+      "min": 0.9979999999999905,
+      "max": 1.2713999999999999,
+      "mean": 1.0309420000000005,
+      "median": 1.0157999999999987,
+      "stddev": 0.05053014581415651,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 5000,
+      "distribution": "Random",
+      "comparisons": 66640,
+      "swaps": 34499,
+      "min": 0.44299999999998363,
+      "max": 0.5895999999999901,
+      "mean": 0.48217399999999944,
+      "median": 0.46844999999999004,
+      "stddev": 0.033001689714317835,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 5000,
+      "distribution": "Ascending",
+      "comparisons": 106182,
+      "swaps": 45496,
+      "min": 0.3059999999999832,
+      "max": 0.5018000000000029,
+      "mean": 0.3354839999999962,
+      "median": 0.32535000000000025,
+      "stddev": 0.03209321647950002,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 5000,
+      "distribution": "Descending",
+      "comparisons": 60678,
+      "swaps": 5904,
+      "min": 0.15440000000000964,
+      "max": 0.30060000000000286,
+      "mean": 0.1755760000000032,
+      "median": 0.16870000000000118,
+      "stddev": 0.02317804616442201,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 5000,
+      "distribution": "Duplicate-Heavy",
+      "comparisons": 10138001,
+      "swaps": 11666,
+      "min": 22.150599999999997,
+      "max": 26.533999999999878,
+      "mean": 23.157949999999985,
+      "median": 22.921100000000024,
+      "stddev": 0.7842219385480059,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10000,
+      "distribution": "Random",
+      "comparisons": 146010,
+      "swaps": 72167,
+      "min": 0.9827000000000226,
+      "max": 1.6517999999998665,
+      "mean": 1.0803279999999722,
+      "median": 1.0387000000000626,
+      "stddev": 0.13938151389619047,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10000,
+      "distribution": "Ascending",
+      "comparisons": 234923,
+      "swaps": 99730,
+      "min": 0.6515000000001692,
+      "max": 0.791700000000219,
+      "mean": 0.6773340000000325,
+      "median": 0.6604500000000826,
+      "stddev": 0.034509034237438285,
+      "observations": 50,
+      "isDeterministic": true
+    },
+    {
+      "size": 10000,
+      "distribution": "Descending",
+      "comparisons": 131343,
+      "swaps": 11808,
+      "min": 0.3408999999999196,
+      "max": 0.42869999999993524,
+      "mean": 0.3598679999999831,
+      "median": 0.3523500000000013,
+      "stddev": 0.019276269763612984,
+      "observations": 50,
+      "isDeterministic": true
+    }
+  ],
+  "outlierAnalysis": [
+    {
+      "size": 10,
+      "distribution": "Random",
+      "min": 0.0002999999999957481,
+      "median": 0.00035000000000096065,
+      "mean": 0.0004639999999999134,
+      "max": 0.004300000000000637,
+      "range": 0.0040000000000048885,
+      "cv": 1.2986661958444354,
+      "impact": 0.3257142857103995
+    },
+    {
+      "size": 10,
+      "distribution": "Ascending",
+      "min": 0.0002999999999957481,
+      "median": 0.00030000000000285354,
+      "mean": 0.0003540000000000987,
+      "max": 0.0007999999999981355,
+      "range": 0.0005000000000023874,
+      "cv": 0.2343781752837918,
+      "impact": 0.1799999999891051
+    },
+    {
+      "size": 10,
+      "distribution": "Descending",
+      "min": 0.0002999999999957481,
+      "median": 0.00030000000000285354,
+      "mean": 0.0003479999999996153,
+      "max": 0.0007000000000019213,
+      "range": 0.0004000000000061732,
+      "cv": 0.20106730671946757,
+      "impact": 0.15999999998768388
+    },
+    {
+      "size": 10,
+      "distribution": "Duplicate-Heavy",
+      "min": 0.00039999999999906777,
+      "median": 0.0004000000000061732,
+      "mean": 0.0004779999999998097,
+      "max": 0.0016000000000033765,
+      "range": 0.0012000000000043087,
+      "cv": 0.36784406450473417,
+      "impact": 0.1949999999810818
+    },
+    {
+      "size": 50,
+      "distribution": "Random",
+      "min": 0.0011999999999972033,
+      "median": 0.0013999999999967372,
+      "mean": 0.0016259999999998342,
+      "max": 0.006000000000000227,
+      "range": 0.004800000000003024,
+      "cv": 0.5050260348738184,
+      "impact": 0.1614285714311598
+    },
+    {
+      "size": 50,
+      "distribution": "Ascending",
+      "min": 0.0012999999999934175,
+      "median": 0.0013999999999967372,
+      "mean": 0.0013959999999995888,
+      "max": 0.002200000000001978,
+      "range": 0.0009000000000085606,
+      "cv": 0.09169054441280249,
+      "impact": 0.0028571428551126795
+    },
+    {
+      "size": 50,
+      "distribution": "Descending",
+      "min": 0.001100000000000989,
+      "median": 0.0012000000000043087,
+      "mean": 0.0013740000000008479,
+      "max": 0.003500000000002501,
+      "range": 0.002400000000001512,
+      "cv": 0.3687622895228832,
+      "impact": 0.1449999999965953
+    },
+    {
+      "size": 50,
+      "distribution": "Duplicate-Heavy",
+      "min": 0.003999999999997783,
+      "median": 0.004100000000001103,
+      "mean": 0.004087999999998999,
+      "max": 0.0045000000000001705,
+      "range": 0.0005000000000023874,
+      "cv": 0.020547945205569025,
+      "impact": 0.0029268292688050855
+    },
+    {
+      "size": 100,
+      "distribution": "Random",
+      "min": 0.002400000000001512,
+      "median": 0.0025000000000048317,
+      "mean": 0.002656000000000773,
+      "max": 0.0058000000000006935,
+      "range": 0.0033999999999991815,
+      "cv": 0.19007551539626188,
+      "impact": 0.062399999998256
+    },
+    {
+      "size": 100,
+      "distribution": "Ascending",
+      "min": 0.0030000000000001137,
+      "median": 0.0031000000000034333,
+      "mean": 0.0031700000000004992,
+      "max": 0.0045000000000001705,
+      "range": 0.0015000000000000568,
+      "cv": 0.0677315790332849,
+      "impact": 0.02258064516031883
+    },
+    {
+      "size": 100,
+      "distribution": "Descending",
+      "min": 0.002200000000001978,
+      "median": 0.002300000000005298,
+      "mean": 0.002354000000000269,
+      "max": 0.00269999999999726,
+      "range": 0.000499999999995282,
+      "cv": 0.03524633562025136,
+      "impact": 0.02347826086732473
+    },
+    {
+      "size": 100,
+      "distribution": "Duplicate-Heavy",
+      "min": 0.011399999999994748,
+      "median": 0.01190000000000424,
+      "mean": 0.011889999999999788,
+      "max": 0.012199999999999989,
+      "range": 0.000800000000005241,
+      "cv": 0.0170920112976207,
+      "impact": 0.0008403361348276524
+    },
+    {
+      "size": 500,
+      "distribution": "Random",
+      "min": 0.016200000000004877,
+      "median": 0.01764999999999972,
+      "mean": 0.01900000000000006,
+      "max": 0.036899999999995714,
+      "range": 0.020699999999990837,
+      "cv": 0.19004008907875847,
+      "impact": 0.0764872521246662
+    },
+    {
+      "size": 500,
+      "distribution": "Ascending",
+      "min": 0.022700000000000387,
+      "median": 0.023099999999999454,
+      "mean": 0.02389000000000024,
+      "max": 0.04299999999999926,
+      "range": 0.020299999999998875,
+      "cv": 0.1266294550327274,
+      "impact": 0.03419913419916906
+    },
+    {
+      "size": 500,
+      "distribution": "Descending",
+      "min": 0.012599999999999056,
+      "median": 0.013499999999996959,
+      "mean": 0.014090000000000486,
+      "max": 0.03030000000000399,
+      "range": 0.017700000000004934,
+      "cv": 0.18832288339217762,
+      "impact": 0.043703703703974806
+    },
+    {
+      "size": 500,
+      "distribution": "Duplicate-Heavy",
+      "min": 0.26069999999999993,
+      "median": 0.27284999999999826,
+      "mean": 0.2762039999999999,
+      "max": 0.3404000000000025,
+      "range": 0.07970000000000255,
+      "cv": 0.04844396869955886,
+      "impact": 0.012292468389230914
+    },
+    {
+      "size": 1000,
+      "distribution": "Random",
+      "min": 0.0478999999999985,
+      "median": 0.052300000000002456,
+      "mean": 0.056202000000000536,
+      "max": 0.08229999999998938,
+      "range": 0.03439999999999088,
+      "cv": 0.15867031664501136,
+      "impact": 0.07460803059269402
+    },
+    {
+      "size": 1000,
+      "distribution": "Ascending",
+      "min": 0.04739999999999611,
+      "median": 0.04829999999999757,
+      "mean": 0.04922999999999916,
+      "max": 0.06029999999999802,
+      "range": 0.01290000000000191,
+      "cv": 0.05040731126894729,
+      "impact": 0.019254658385127185
+    },
+    {
+      "size": 1000,
+      "distribution": "Descending",
+      "min": 0.02580000000000382,
+      "median": 0.026200000000002888,
+      "mean": 0.02635599999999954,
+      "max": 0.03109999999999502,
+      "range": 0.005299999999991201,
+      "cv": 0.02866730250552898,
+      "impact": 0.005954198473153995
+    },
+    {
+      "size": 1000,
+      "distribution": "Duplicate-Heavy",
+      "min": 0.9979999999999905,
+      "median": 1.0157999999999987,
+      "mean": 1.0309420000000005,
+      "max": 1.2713999999999999,
+      "range": 0.2734000000000094,
+      "cv": 0.04901356799330757,
+      "impact": 0.014906477653083072
+    },
+    {
+      "size": 5000,
+      "distribution": "Random",
+      "min": 0.44299999999998363,
+      "median": 0.46844999999999004,
+      "mean": 0.48217399999999944,
+      "max": 0.5895999999999901,
+      "range": 0.1466000000000065,
+      "cv": 0.06844352809217807,
+      "impact": 0.02929661650124813
+    },
+    {
+      "size": 5000,
+      "distribution": "Ascending",
+      "min": 0.3059999999999832,
+      "median": 0.32535000000000025,
+      "mean": 0.3354839999999962,
+      "max": 0.5018000000000029,
+      "range": 0.19580000000001974,
+      "cv": 0.09566243540526637,
+      "impact": 0.03114799446748399
+    },
+    {
+      "size": 5000,
+      "distribution": "Descending",
+      "min": 0.15440000000000964,
+      "median": 0.16870000000000118,
+      "mean": 0.1755760000000032,
+      "max": 0.30060000000000286,
+      "range": 0.14619999999999322,
+      "cv": 0.13201147175252648,
+      "impact": 0.04075874333136913
+    },
+    {
+      "size": 5000,
+      "distribution": "Duplicate-Heavy",
+      "min": 22.150599999999997,
+      "median": 22.921100000000024,
+      "mean": 23.157949999999985,
+      "max": 26.533999999999878,
+      "range": 4.383399999999881,
+      "cv": 0.03386404835263943,
+      "impact": 0.010333273708502694
+    },
+    {
+      "size": 10000,
+      "distribution": "Random",
+      "min": 0.9827000000000226,
+      "median": 1.0387000000000626,
+      "mean": 1.0803279999999722,
+      "max": 1.6517999999998665,
+      "range": 0.6690999999998439,
+      "cv": 0.12901777413544224,
+      "impact": 0.04007701935102254
+    },
+    {
+      "size": 10000,
+      "distribution": "Ascending",
+      "min": 0.6515000000001692,
+      "median": 0.6604500000000826,
+      "mean": 0.6773340000000325,
+      "max": 0.791700000000219,
+      "range": 0.14020000000004984,
+      "cv": 0.050948327173058826,
+      "impact": 0.0255643879172501
+    },
+    {
+      "size": 10000,
+      "distribution": "Descending",
+      "min": 0.3408999999999196,
+      "median": 0.3523500000000013,
+      "mean": 0.3598679999999831,
+      "max": 0.42869999999993524,
+      "range": 0.08780000000001564,
+      "cv": 0.05356483422703294,
+      "impact": 0.021336739037836783
+    }
+  ],
+  "duplicateHeavyFailure": {
+    "size": 10000,
+    "distribution": "Duplicate-Heavy",
+    "error": "RangeError: Maximum call stack size exceeded",
+    "actualRunsRecorded": 0
+  },
+  "realisticTrace": {
+    "size": 6,
+    "distribution": "Realistic Recommendation DB Trace",
+    "comparisons": 30,
+    "swaps": 5,
+    "executionTimeMs": 0.025900000000092405
+  }
+}

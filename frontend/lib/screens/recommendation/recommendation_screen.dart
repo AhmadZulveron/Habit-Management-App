@@ -1,26 +1,6 @@
 import 'package:flutter/material.dart';
-
-/// Temporary data structure for the UI phase.
-/// Real recommendation logic will be integrated in a later phase.
-class MockRecommendation {
-  final String title;
-  final String description;
-  final String categoryName;
-  final String priority;
-  final String reason;
-  final IconData icon;
-  final Color color;
-
-  MockRecommendation({
-    required this.title,
-    required this.description,
-    required this.categoryName,
-    required this.priority,
-    required this.reason,
-    required this.icon,
-    required this.color,
-  });
-}
+import 'package:provider/provider.dart';
+import 'package:frontend/providers/recommendation_provider.dart';
 
 class RecommendationScreen extends StatefulWidget {
   const RecommendationScreen({super.key});
@@ -30,29 +10,15 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-  // Mock presentation data
-  final List<MockRecommendation> _mockRecommendations = [
-    MockRecommendation(
-      title: 'Morning Stretching',
-      description: 'Start your day with a 10-minute stretch to improve flexibility.',
-      categoryName: 'Health',
-      priority: 'High',
-      reason: 'Since you often exercise in the evening, morning stretching balances your physical activity.',
-      icon: Icons.fitness_center,
-      color: Colors.blue,
-    ),
-    MockRecommendation(
-      title: 'Read 15 Pages',
-      description: 'Read a non-fiction book before sleeping.',
-      categoryName: 'Education',
-      priority: 'Medium',
-      reason: 'You have a habit of working late; reading can help you disconnect and improve sleep quality.',
-      icon: Icons.menu_book,
-      color: Colors.orange,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<RecommendationProvider>(context, listen: false).fetchRecommendations();
+    });
+  }
 
-  Future<void> _handleApproveRecommendation(MockRecommendation rec) async {
+  Future<void> _handleApproveRecommendation(RecommendationModel rec) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -72,9 +38,9 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     );
 
     if (confirmed == true && mounted) {
-      // Per user instructions, in this UI-only phase, we do NOT show a success 
-      // popup or falsely indicate creation since no backend is connected yet.
-      // Logic for adding a habit goes here in the future phase.
+      // Per user instructions, Add-to-Habit functionality is not implemented yet.
+      // Pressing Add must not create a real habit and no database write must occur.
+      // Logic for adding a habit goes here in a future phase.
     }
   }
 
@@ -84,31 +50,56 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       appBar: AppBar(
         title: const Text('Recommendations'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            const SizedBox(height: 24),
-            Text(
-              'Recommended for You',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+      body: Consumer<RecommendationProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (provider.error.isNotEmpty) {
+            return Center(child: Text(provider.error, style: const TextStyle(color: Colors.red)));
+          }
+
+          final recommendations = provider.recommendations;
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 24),
+                Text(
+                  'Recommendation Candidates',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Candidates evaluated using Rule Engine conditions',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                ),
+                const SizedBox(height: 16),
+                if (recommendations.isEmpty)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(32.0),
+                      child: Text(
+                        'Belum ada rekomendasi baru untuk saat ini. Tetap konsisten dengan habitmu!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ),
+                  )
+                else
+                  ...recommendations.map((rec) => _buildRecommendationCard(context, rec)),
+                const SizedBox(height: 40),
+              ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Based on your habits and activity',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-            ),
-            const SizedBox(height: 16),
-            ..._mockRecommendations.map((rec) => _buildRecommendationCard(context, rec)),
-            const SizedBox(height: 40),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -147,7 +138,12 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     );
   }
 
-  Widget _buildRecommendationCard(BuildContext context, MockRecommendation rec) {
+  Widget _buildRecommendationCard(BuildContext context, RecommendationModel rec) {
+    final categoryColor = rec.categoryColor != null 
+        ? Color(int.parse(rec.categoryColor!.replaceFirst('#', '0xFF'))) 
+        : Colors.blue;
+    final categoryIcon = Icons.category; // Provide a default icon map or use standard icons
+
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 2,
@@ -164,10 +160,10 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: rec.color.withValues(alpha: 0.1),
+                    color: categoryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(rec.icon, color: rec.color, size: 28),
+                  child: Icon(categoryIcon, color: categoryColor, size: 28),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -207,26 +203,47 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             ),
             const Divider(height: 32),
 
-            // Bottom Section: Reason
-            const Text(
-              'Why this recommendation?',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
+            // Reason Section
+            if (rec.reason != null && rec.reason!.isNotEmpty) ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.blue[100]!),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.lightbulb_outline, size: 16, color: Colors.blue[700]),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Why this recommendation?',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      rec.reason!,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.blue[900],
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              rec.reason,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[700],
-                fontStyle: FontStyle.italic,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
 
             // Action Button
             Align(

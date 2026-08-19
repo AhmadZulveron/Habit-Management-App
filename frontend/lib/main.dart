@@ -4,6 +4,7 @@ import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
 import 'package:frontend/providers/category_provider.dart';
 import 'package:frontend/providers/report_provider.dart';
+import 'package:frontend/providers/recommendation_provider.dart';
 
 // Import Screens
 import 'package:frontend/screens/auth/login_screen.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HabitProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ReportProvider()),
+        ChangeNotifierProvider(create: (_) => RecommendationProvider()),
       ],
       child: MaterialApp(
         title: 'Habit Tracker Base',

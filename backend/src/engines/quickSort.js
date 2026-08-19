@@ -9,98 +9,111 @@
  * - Algorithm: QuickSort
  * - Pivot Strategy: Median-of-Three
  * - Partition Scheme: Lomuto
- * 
- * IMPORTANT: Do NOT replace this with Array.sort() or SQL ORDER BY
- * for features that are specifically designed to use QuickSort.
- * 
- * This module is intentionally a placeholder structure.
- * Full implementation will be completed in the next development phase.
  */
 
 /**
- * Select pivot using Median-of-Three strategy
- * Compares the first, middle, and last elements,
- * and returns the index of the median value.
- * 
- * @param {Array} arr - The array to select pivot from
- * @param {number} low - Starting index
- * @param {number} high - Ending index
- * @param {Function} compareFn - Comparison function (a, b) => number
- * @returns {number} Index of the median-of-three pivot
- * 
- * TODO: Implement median-of-three pivot selection
+ * Helper to swap elements in an array and track metrics
  */
-function medianOfThree(arr, low, high, compareFn) {
-  // Placeholder: will be implemented in next phase
-  // Should compare arr[low], arr[mid], arr[high]
-  // and return the index of the median value
+function swap(arr, i, j, metrics) {
+  if (i !== j) {
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+    metrics.swaps++;
+  }
+}
+
+/**
+ * Select pivot using Median-of-Three strategy
+ */
+function medianOfThree(arr, low, high, compareFn, metrics) {
   const mid = Math.floor((low + high) / 2);
-  return mid;
+
+  // Compare and swap low and mid
+  metrics.comparisons++;
+  if (compareFn(arr[mid], arr[low]) < 0) {
+    swap(arr, low, mid, metrics);
+  }
+
+  // Compare and swap low and high
+  metrics.comparisons++;
+  if (compareFn(arr[high], arr[low]) < 0) {
+    swap(arr, low, high, metrics);
+  }
+
+  // Compare and swap mid and high
+  metrics.comparisons++;
+  if (compareFn(arr[high], arr[mid]) < 0) {
+    swap(arr, mid, high, metrics);
+  }
+
+  // Pivot is now at mid. Swap it with high to prep for Lomuto partition
+  swap(arr, mid, high, metrics);
+
+  return arr[high]; // return the pivot value
 }
 
 /**
  * Lomuto Partition Scheme
- * Partitions the array around the pivot element.
- * Elements less than pivot go to the left,
- * elements greater go to the right.
- * 
- * @param {Array} arr - The array to partition
- * @param {number} low - Starting index
- * @param {number} high - Ending index
- * @param {Function} compareFn - Comparison function (a, b) => number
- * @returns {number} Final position of the pivot
- * 
- * TODO: Implement Lomuto partition scheme
  */
-function lomutoPartition(arr, low, high, compareFn) {
-  // Placeholder: will be implemented in next phase
-  // Should use Lomuto partition scheme with median-of-three pivot
-  return low;
+function lomutoPartition(arr, low, high, compareFn, metrics) {
+  const pivot = medianOfThree(arr, low, high, compareFn, metrics);
+  let i = low;
+
+  for (let j = low; j < high; j++) {
+    metrics.comparisons++;
+    if (compareFn(arr[j], pivot) <= 0) {
+      swap(arr, i, j, metrics);
+      i++;
+    }
+  }
+  swap(arr, i, high, metrics);
+  return i;
 }
 
 /**
  * QuickSort recursive function
- * 
- * @param {Array} arr - The array to sort (modified in place)
- * @param {number} low - Starting index
- * @param {number} high - Ending index
- * @param {Function} compareFn - Comparison function (a, b) => number
- * 
- * TODO: Implement recursive quicksort
  */
-function quickSortRecursive(arr, low, high, compareFn) {
-  // Placeholder: will be implemented in next phase
-  // Should call lomutoPartition and recurse on sub-arrays
+function quickSortRecursive(arr, low, high, compareFn, metrics) {
+  if (low < high) {
+    const pi = lomutoPartition(arr, low, high, compareFn, metrics);
+    quickSortRecursive(arr, low, pi - 1, compareFn, metrics);
+    quickSortRecursive(arr, pi + 1, high, compareFn, metrics);
+  }
 }
 
 /**
  * QuickSort - Main entry point
- * Sorts an array using QuickSort with Median-of-Three pivot
- * and Lomuto partition scheme.
  * 
  * @param {Array} arr - The array to sort
  * @param {Function} compareFn - Comparison function (a, b) => number
- *   Returns negative if a < b, zero if a === b, positive if a > b
- * @returns {Array} The sorted array (same reference, sorted in place)
- * 
- * Usage examples (to be used after implementation):
- * 
- * // Sort habits by priority (high > medium > low)
- * const priorityOrder = { high: 3, medium: 2, low: 1 };
- * quickSort(habits, (a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
- * 
- * // Sort recommendations by relevance score (descending)
- * quickSort(recommendations, (a, b) => b.relevanceScore - a.relevanceScore);
+ * @returns {Object} { sortedArray, metrics }
  */
 function quickSort(arr, compareFn) {
-  if (!arr || arr.length <= 1) {
-    return arr;
+  const metrics = {
+    comparisons: 0,
+    swaps: 0,
+    executionTimeMs: 0
+  };
+
+  if (!arr) {
+    return { sortedArray: [], metrics };
   }
 
-  // TODO: Call quickSortRecursive with proper parameters
-  // quickSortRecursive(arr, 0, arr.length - 1, compareFn);
+  // Work on a shallow copy to prevent original array mutation
+  const sortedArray = [...arr];
 
-  return arr;
+  if (sortedArray.length <= 1) {
+    return { sortedArray, metrics };
+  }
+
+  const start = performance.now();
+  quickSortRecursive(sortedArray, 0, sortedArray.length - 1, compareFn, metrics);
+  const end = performance.now();
+
+  metrics.executionTimeMs = end - start;
+
+  return { sortedArray, metrics };
 }
 
 module.exports = {
