@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/models/habit_model.dart';
 import 'package:frontend/widgets/common_widgets.dart';
 
 /// Habit Detail Screen
@@ -44,33 +46,49 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
       ),
       body: Consumer<HabitProvider>(
         builder: (context, habitProvider, child) {
-          if (habitProvider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final habit = habitProvider.selectedHabit;
-          if (habit == null) {
+          final isLoading = habitProvider.isLoading;
+          final realHabit = habitProvider.selectedHabit;
+          
+          if (!isLoading && realHabit == null) {
             return const Center(child: Text('Habit not found'));
           }
 
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildSummaryCard(context, habit),
-                if (habit.description != null && habit.description!.trim().isNotEmpty) ...[
+          final habit = isLoading
+              ? HabitModel(
+                  id: 0,
+                  userId: 1,
+                  title: 'Loading Habit Title Placeholder',
+                  description: 'This is a placeholder description for the skeleton loading state.',
+                  categoryId: 1,
+                  categoryName: 'Category',
+                  priority: 'High',
+                  target: 1,
+                  status: 'active',
+                  scheduleDays: [1, 2, 3],
+                )
+              : realHabit!;
+
+          return Skeletonizer(
+            enabled: isLoading,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildSummaryCard(context, habit),
+                  if (habit.description != null && habit.description!.trim().isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _buildDescriptionCard(context, habit.description!),
+                  ],
                   const SizedBox(height: 16),
-                  _buildDescriptionCard(context, habit.description!),
+                  _buildHabitInformationCard(context, habit),
+                  const SizedBox(height: 16),
+                  _buildScheduleCard(context, habit),
+                  const SizedBox(height: 16),
+                  _buildTargetCard(context, habit),
+                  const SizedBox(height: 80),
                 ],
-                const SizedBox(height: 16),
-                _buildHabitInformationCard(context, habit),
-                const SizedBox(height: 16),
-                _buildScheduleCard(context, habit),
-                const SizedBox(height: 16),
-                _buildTargetCard(context, habit),
-                const SizedBox(height: 80),
-              ],
+              ),
             ),
           );
         },
@@ -78,30 +96,47 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Consumer<HabitProvider>(
         builder: (context, habitProvider, child) {
-          final habit = habitProvider.selectedHabit;
-          if (habit == null) return const SizedBox.shrink();
+          final isLoading = habitProvider.isLoading;
+          final realHabit = habitProvider.selectedHabit;
+          
+          if (!isLoading && realHabit == null) return const SizedBox.shrink();
+
+          final habit = isLoading
+              ? HabitModel(
+                  id: 0,
+                  userId: 1,
+                  title: 'Loading',
+                  categoryId: 1,
+                  priority: 'high',
+                  target: 1,
+                  status: 'active',
+                  scheduleDays: [],
+                )
+              : realHabit!;
 
           final isActive = habit.status == 'active';
-          final isLoading = habitProvider.isLoading;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: FloatingActionButton.extended(
-                onPressed: isLoading ? null : () => _handleStatusToggle(context, habitProvider, habit),
-                backgroundColor: isActive ? Colors.orange : Colors.green,
-                icon: Icon(
-                  isActive ? Icons.pause_circle_outline : Icons.play_circle_outline,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  isActive ? 'Deactivate Habit' : 'Activate Habit',
-                  style: const TextStyle(
+          return Skeletonizer(
+            enabled: isLoading,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: FloatingActionButton.extended(
+                  onPressed: isLoading ? null : () => _handleStatusToggle(context, habitProvider, habit),
+                  backgroundColor: isActive ? Colors.orange : Colors.green,
+                  icon: Icon(
+                    isActive ? Icons.pause_circle_outline : Icons.play_circle_outline,
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  ),
+                  label: Text(
+                    isActive ? 'Deactivate Habit' : 'Activate Habit',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
