@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/models/habit_model.dart';
 import 'package:frontend/widgets/common_widgets.dart';
 
 /// Habit List Screen
@@ -22,7 +24,7 @@ class _HabitListScreenState extends State<HabitListScreen> {
     });
   }
 
-  Future<void> _confirmActivation(habitProvider, habit) async {
+  Future<void> _confirmActivation(HabitProvider habitProvider, HabitModel habit) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -92,11 +94,28 @@ class _HabitListScreenState extends State<HabitListScreen> {
       ),
       body: Consumer<HabitProvider>(
         builder: (context, habitProvider, child) {
-          if (habitProvider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+          final isLoading = habitProvider.isLoading;
+          final hasError = habitProvider.error != null && !isLoading;
+          final isEmpty = habitProvider.habits.isEmpty && !isLoading && !hasError;
 
-          if (habitProvider.error != null) {
+          final List<HabitModel> displayHabits = isLoading
+              ? List.generate(
+                  5,
+                  (index) => HabitModel(
+                    id: index,
+                    userId: 1,
+                    title: 'Loading Habit Title Placeholder',
+                    categoryId: 1,
+                    categoryName: 'Category',
+                    priority: 'High',
+                    target: 1,
+                    status: index % 2 == 0 ? 'active' : 'inactive',
+                    scheduleDays: [1, 2, 3],
+                  ),
+                )
+              : habitProvider.habits;
+
+          if (hasError) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +130,7 @@ class _HabitListScreenState extends State<HabitListScreen> {
             );
           }
 
-          if (habitProvider.habits.isEmpty) {
+          if (isEmpty) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -128,30 +147,37 @@ class _HabitListScreenState extends State<HabitListScreen> {
 
           return RefreshIndicator(
             onRefresh: () => habitProvider.fetchHabits(),
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: habitProvider.habits.length,
-              itemBuilder: (context, index) {
-                final habit = habitProvider.habits[index];
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: ListTile(
-                    title: Text(habit.title),
-                    subtitle: Text(
-                      '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority} • ${habit.status == 'active' ? 'Active' : 'Inactive'}',
+            child: Skeletonizer(
+              enabled: isLoading,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: displayHabits.length,
+                itemBuilder: (context, index) {
+                  final habit = displayHabits[index];
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      title: Text(habit.title),
+                      subtitle: Text(
+                        '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority} • ${habit.status == 'active' ? 'Active' : 'Inactive'}',
+                      ),
+                      trailing: habit.status == 'active'
+                          ? const Icon(Icons.check, color: Colors.green)
+                          : IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                if (isLoading) return;
+                                _confirmActivation(habitProvider, habit);
+                              },
+                            ),
+                      onTap: () {
+                        if (isLoading) return;
+                        Navigator.pushNamed(context, '/habit-detail', arguments: habit.id);
+                      },
                     ),
-                    trailing: habit.status == 'active'
-                        ? const Icon(Icons.check, color: Colors.green)
-                        : IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () => _confirmActivation(habitProvider, habit),
-                          ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/habit-detail', arguments: habit.id);
-                    },
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           );
         },
@@ -176,12 +202,6 @@ class _HabitListScreenState extends State<HabitListScreen> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () => Navigator.pushNamed(context, '/add-habit'),
-      //   icon: const Icon(Icons.add),
-      //   label: const Text('Create Habit'),
-      //   tooltip: 'Add Habit',
-      // ),
     );
   }
 }
