@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
+import 'package:frontend/models/habit_model.dart';
 import 'package:frontend/widgets/common_widgets.dart';
 
 /// Home Screen
@@ -121,6 +123,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBody() {
     return Consumer<HabitProvider>(
       builder: (context, habitProvider, child) {
+        final isLoading = habitProvider.isLoading;
+        final hasError = habitProvider.error != null && !isLoading;
+        final isEmpty = habitProvider.todayHabits.isEmpty && !isLoading && !hasError;
+        
+        // When loading, use dummy data to populate the Skeletonizer
+        final List<HabitModel> displayHabits = isLoading
+            ? List.generate(
+                3,
+                (index) => HabitModel(
+                  id: index,
+                  title: 'Loading Habit Title Placeholder',
+                  isCompletedToday: false,
+                  categoryName: 'Category',
+                  priority: 'High',
+                  userId: 1,
+                  categoryId: 1,
+                  target: 1,
+                  scheduleDays: [1, 2, 3],
+                  status: 'active',
+                ),
+              )
+            : habitProvider.todayHabits;
+
         return RefreshIndicator(
           onRefresh: () => habitProvider.fetchTodayHabits(),
           child: SingleChildScrollView(
@@ -129,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Today's Habits section
+                // Today's Habits section header
                 Text(
                   "Today's Habits",
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -138,9 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 12),
 
-                if (habitProvider.isLoading)
-                  const Center(child: CircularProgressIndicator())
-                else if (habitProvider.error != null)
+                if (hasError)
                   Center(
                     child: Column(
                       children: [
@@ -155,14 +178,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   )
-                else if (habitProvider.todayHabits.isEmpty)
+                else if (isEmpty)
                   const Center(
                     child: Padding(
                       padding: EdgeInsets.all(32),
                       child: Column(
                         children: [
-                          Icon(Icons.check_circle_outline,
-                              size: 48, color: Colors.grey),
+                          Icon(Icons.check_circle_outline, size: 48, color: Colors.grey),
                           SizedBox(height: 8),
                           Text(
                             'No habits scheduled for today',
@@ -173,47 +195,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 else
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: habitProvider.todayHabits.length,
-                    itemBuilder: (context, index) {
-                      final habit = habitProvider.todayHabits[index];
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: ListTile(
-                          leading: Checkbox(
-                            value: habit.isCompletedToday,
-                            onChanged: habit.isCompletedToday
-                                ? null
-                                : (value) {
-                                    _confirmCompletion(habitProvider, habit.id, habit.title);
-                                  },
-                          ),
-                          title: Text(
-                            habit.title,
-                            style: TextStyle(
-                              decoration: habit.isCompletedToday
-                                  ? TextDecoration.lineThrough
-                                  : null,
+                  Skeletonizer(
+                    enabled: isLoading,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: displayHabits.length,
+                      itemBuilder: (context, index) {
+                        final habit = displayHabits[index];
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: ListTile(
+                            leading: Checkbox(
+                              value: habit.isCompletedToday,
+                              onChanged: habit.isCompletedToday
+                                  ? null
+                                  : (value) {
+                                      // Do nothing if skeleton is active
+                                      if (isLoading) return;
+                                      _confirmCompletion(habitProvider, habit.id, habit.title);
+                                    },
                             ),
+                            title: Text(
+                              habit.title,
+                              style: TextStyle(
+                                decoration: habit.isCompletedToday ? TextDecoration.lineThrough : null,
+                              ),
+                            ),
+                            subtitle: Text(
+                              habit.isCompletedToday
+                                  ? '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}\nCompleted (+10 Points)'
+                                  : '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}',
+                            ),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              if (isLoading) return;
+                              Navigator.pushNamed(
+                                context,
+                                '/habit-detail',
+                                arguments: habit.id,
+                              );
+                            },
                           ),
-                          subtitle: Text(
-                            habit.isCompletedToday
-                                ? '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}\nCompleted (+10 Points)'
-                                : '${habit.categoryName ?? 'Uncategorized'} • ${habit.priority}',
-                          ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/habit-detail',
-                              arguments: habit.id,
-                            );
-                          },
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
               ],
             ),
