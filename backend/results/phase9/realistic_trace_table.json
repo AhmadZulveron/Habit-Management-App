@@ -1,0 +1,10 @@
+[
+  {
+    "Candidate Count": 6,
+    "Comparisons": 30,
+    "Swaps": 5,
+    "Sorting Time (ms)": 0.025900000000092405,
+    "Correctness": "Verified",
+    "Input Source": "Realistic Recommendation DB Trace"
+  }
+]

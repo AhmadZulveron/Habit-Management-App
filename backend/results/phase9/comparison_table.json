@@ -1,0 +1,51 @@
+[
+  {
+    "N": 10,
+    "Random": 34,
+    "Ascending": 34,
+    "Descending": 37,
+    "Duplicate-Heavy": 72
+  },
+  {
+    "N": 50,
+    "Random": 309,
+    "Ascending": 326,
+    "Descending": 286,
+    "Duplicate-Heavy": 1268
+  },
+  {
+    "N": 100,
+    "Random": 681,
+    "Ascending": 868,
+    "Descending": 669,
+    "Duplicate-Heavy": 4184
+  },
+  {
+    "N": 500,
+    "Random": 5072,
+    "Ascending": 6790,
+    "Descending": 4263,
+    "Duplicate-Heavy": 104788
+  },
+  {
+    "N": 1000,
+    "Random": 11533,
+    "Ascending": 15849,
+    "Descending": 9520,
+    "Duplicate-Heavy": 409648
+  },
+  {
+    "N": 5000,
+    "Random": 66640,
+    "Ascending": 106182,
+    "Descending": 60678,
+    "Duplicate-Heavy": 10138001
+  },
+  {
+    "N": 10000,
+    "Random": 146010,
+    "Ascending": 234923,
+    "Descending": 131343,
+    "Duplicate-Heavy": "N/A — Runtime Error"
+  }
+]

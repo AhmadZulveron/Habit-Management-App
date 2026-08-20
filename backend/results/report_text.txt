@@ -1,0 +1,1474 @@
+LAPORAN TUGAS AKHIR
+
+IMPLEMENTASI ALGORITMA QUICKSORT UNTUK
+
+APLIKASI MANAJEMEN KEBIASAAN HARIAN MENGGUNAKAN
+
+FLUTTER
+
+
+
+
+
+
+
+
+
+
+
+
+
+Diajukan sebagai syarat untuk memperoleh gelar Sarjana Terapan Komputer (S.Tr. Kom)
+
+
+
+
+
+
+
+AHMAD ZULVERON
+
+2111083003
+
+
+
+
+
+
+
+
+
+PROGRAM STUDI D4 TEKNOLOGI REKAYASA PERANGKAT LUNAK
+
+JURUSAN TEKNOLOGI INFORMASI POLITEKNIK NEGERI PADANG
+
+2026
+
+PERNYATAAN KEASLIAN TULISAN
+
+
+
+Saya yang bertanda tangan dibawah ini :
+
+Nama : Ahmad Zulveron
+
+NoBp : 2111083003
+
+
+
+Menyatakan bahwa Proyek Akhir saya yang berjudul :
+
+Implementasi Algoritma Quicksort untuk Aplikasi Manajemen Kebiasaan Harian Menggunakan Flutter
+
+
+
+Merupakan hasil karya saya sendiri. Apabila di kemudian hari terbukti atau dapat dibuktikan bahwa proyek akhir ini hasil karya orang lain, Saya bersedia menerima sanksi atas perbuatan Saya.
+
+
+
+
+
+
+
+Padang, 15 Maret 2026
+
+Yang membuat pernyataan
+
+
+
+
+
+
+
+Ahmad Zulveron
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IMPLEMENTASI ALGORITMA QUICKSORT UNTUK APLIKASI MANAJEMEN KEBIASAAN HARIAN MENGGUNAKAN FLUTTER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+KATA PENGANTAR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ABSTRAK
+
+
+
+Manajemen kebiasaan harian merupakan salah satu aspek penting dalam mendukung produktivitas dan konsistensi individu dalam membangun kebiasaan positif. Namun, aplikasi manajemen kebiasaan yang tersedia umumnya masih berfokus pada pencatatan aktivitas dan belum sepenuhnya menyediakan pengelolaan data serta rekomendasi yang disesuaikan dengan kondisi pengguna. Penelitian ini bertujuan untuk mengembangkan aplikasi manajemen kebiasaan harian berbasis mobile dengan menerapkan algoritma QuickSort pada proses pengurutan data. Aplikasi dibangun menggunakan Flutter sebagai mobile client, Express.js sebagai backend REST API, dan MySQL sebagai basis data.
+
+Algoritma QuickSort digunakan untuk mengurutkan data habit berdasarkan tingkat prioritas serta mengurutkan rekomendasi habit berdasarkan relevance score. Sistem rekomendasi menggunakan pendekatan rule-based untuk mengevaluasi kondisi pengguna berdasarkan tujuh jenis kondisi yang telah ditentukan. Selanjutnya, Scoring Engine menghitung relevance score berdasarkan faktor streak, tingkat penyelesaian, recency, dan preferensi kategori. Hasil penilaian tersebut kemudian diurutkan menggunakan QuickSort dengan strategi pemilihan pivot Median-of-Three dan skema partisi Lomuto untuk menghasilkan urutan rekomendasi berdasarkan skor relevansi.
+
+Selain fitur pengelolaan dan rekomendasi habit, aplikasi menyediakan pencatatan penyelesaian kebiasaan, laporan performa mingguan, serta gamifikasi berupa poin dan lencana. Pengujian dilakukan untuk memastikan proses pengurutan menghasilkan urutan yang sesuai, serta mengevaluasi kinerja algoritma menggunakan metrik jumlah perbandingan, jumlah pertukaran, dan waktu eksekusi. Hasil penelitian diharapkan menghasilkan aplikasi manajemen kebiasaan yang dapat membantu pengguna mengelola kebiasaan secara terstruktur serta menyajikan rekomendasi yang relevan berdasarkan kondisi pengguna.
+
+Kata kunci: manajemen kebiasaan, QuickSort, rule-based recommendation, Flutter, relevance score.
+
+DAFTAR ISI
+
+PERNYATAAN KEASLIAN TULISAN	ii
+
+IMPLEMENTASI ALGORITMA QUICKSORT UNTUK APLIKASI MANAJEMEN KEBIASAAN HARIAN MENGGUNAKAN FLUTTER	iii
+
+KATA PENGANTAR	iv
+
+ABSTRAK	v
+
+DAFTAR ISI	vi
+
+DAFTAR TABEL	viii
+
+DAFTAR GAMBAR	ix
+
+BAB I PENDAHULUAN	1
+
+1.1 Latar Belakang	1
+
+1.2 Rumusan Masalah	3
+
+1.3 Tujuan Penelitian	3
+
+1.4 Manfaat Penelitian	4
+
+1.5 Batasan Masalah	5
+
+BAB II LANDASAN TEORI	6
+
+2.1 Penelitian Terkait	6
+
+2.2 Algoritma Quicksort	6
+
+2.2.1 Konsep Dasar Quicksort	6
+
+2.2.2 Varian Median-of-three	8
+
+2.2.3 Analisis Kompleksitas	8
+
+2.3 Sistem Rekomendasi Berbasis Rule-Based	9
+
+2.4 Arsitektur Client-Server	10
+
+2.5 Manajemen Kebiasaan	10
+
+2.6 Gamifikasi	11
+
+2.7 Metode Waterfall	11
+
+BAB III METODOLOGI	12
+
+3.1 Analisis Sistem	12
+
+3.2 Perancangan Sistem	13
+
+3.2.1 Use Case Diagram	13
+
+3.2.2 Entity Relationship Diagram (ERD)	15
+
+3.2.3 Flowchart	17
+
+3.2.4 Sequence Diagram	19
+
+3.2.5 Activity Diagram	23
+
+3.2.6 Desain Tampilan	26
+
+BAB IV IMPLEMENTASI DAN PENGUJIAN	26
+
+4.1 Implementasi Sistem	26
+
+4.1.1 Spesifikasi Peralatan	26
+
+4.1.2 Hasil Implementasi	27
+
+4.2 Pengujian Sistem	27
+
+4.3 Pengujian Algoritma Quicksort	27
+
+BAB V PENUTUP	27
+
+5.1 Kesimpulan	27
+
+5.2 Saran	27
+
+DAFTAR PUSTAKA	28
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DAFTAR TABEL
+
+
+
+Table 2.2.1 Analisis Kompleksitas Algoritma Quicksort	8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DAFTAR GAMBAR
+
+
+
+Gambar 3.2.1 Use Case Diagram	14
+
+Gambar 3.2.2 Entity Relationship Diagram (ERD)	16
+
+Gambar 3.2.3 Flowchart Sistem	17
+
+Gambar 3.2.4 Flowchart Algoritma Quicksort	18
+
+Gambar 3.2.5 Sequence Diagram Pengelolaan Habit	19
+
+Gambar 3.2.6 Sequence Diagram Penyelesaian Habit	20
+
+Gambar 3.2.7 Sequence Diagram untuk Rekomendasi Habit	22
+
+Gambar 3.2.8 Activity Diagram untuk pengelolaan Habit	23
+
+Gambar 3.2.9 Activity Diagram untuk Penyelesaian Habit	24
+
+Gambar 3.2.10 Activity Diagram untuk Rekomendasi Habit	25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PENDAHULUAN
+
+Latar Belakang
+
+Di era digital saat ini, manajemen kebiasaan harian menjadi salah satu faktor kunci dalam meningkatkan produktivitas, kesehatan, dan kualitas hidup individu. Berdasarkan survei yang dilakukan oleh Statista (2023), sebanyak 43% pengguna smartphone di Indonesia menggunakan aplikasi produktivitas untuk mendukung aktivitas sehari-hari, namun tingkat retensi pengguna setelah 30 hari hanya mencapai 25%. Hal ini menunjukkan bahwa aplikasi yang tersedia belum mampu memberikan pengalaman yang cukup personal dan memotivasi agar pengguna tetap konsisten dalam membangun kebiasaan positif.
+
+Teori pembentukan kebiasaan yang diperkenalkan oleh Duhigg (2012) menjelaskan proses perubahan kebiasaan melalui siklus cue–routine–reward, di mana pencatatan aktivitas secara konsisten dan pemberian umpan balik yang tepat waktu berperan penting dalam memperkuat habit loop. Fogg (2020) dalam Tiny Habits memperkuat pandangan ini dengan menekankan bahwa perubahan perilaku yang berkelanjutan membutuhkan sistem yang mampu mengenali pola individu dan memberikan dorongan (nudge) yang relevan secara kontekstual.
+
+Dari sisi teknis, aplikasi manajemen kebiasaan yang ada di pasaran umumnya masih bersifat pasif, yaitu hanya mencatat aktivitas tanpa memberikan analisis mendalam atau rekomendasi yang personal. Aplikasi seperti Habitica menerapkan gamifikasi namun tidak memiliki sistem rekomendasi berbasis analisis perilaku. Sementara itu, Streaks dan Loop Habit Tracker menyediakan pencatatan yang baik namun tidak mengintegrasikan mekanisme rekomendasi yang mampu memprioritaskan saran berdasarkan relevansi terhadap kondisi masing-masing pengguna.
+
+Untuk mengatasi keterbatasan tersebut, diperlukan pendekatan yang menggabungkan pencatatan kebiasaan yang terstruktur dengan sistem rekomendasi yang mampu menghasilkan saran perbaikan berdasarkan analisis perilaku pengguna. Sistem rekomendasi berbasis rule-based menawarkan solusi yang tepat karena menggunakan aturan eksplisit yang telah ditentukan, seperti evaluasi streak, tingkat penyelesaian, dan tingkat aktivitas, untuk menghasilkan rekomendasi yang transparan dan dapat dijelaskan (explainable). Pendekatan ini sesuai untuk domain manajemen kebiasaan yang memerlukan saran yang jelas dan dapat dipahami oleh pengguna, berbeda dengan pendekatan machine learning yang bersifat black-box dan memerlukan volume data yang besar.
+
+Dalam aplikasi manajemen kebiasaan, proses pengurutan diperlukan untuk menyajikan data secara lebih terstruktur. Salah satu penerapannya adalah pengurutan daftar kebiasaan berdasarkan tingkat prioritas, seperti High, Medium, dan Low, sehingga kebiasaan dengan tingkat prioritas yang lebih tinggi dapat ditampilkan terlebih dahulu. Selain itu, pengurutan juga diperlukan pada sistem rekomendasi untuk menyusun kandidat rekomendasi berdasarkan skor relevansi yang diperoleh dari proses penilaian. Oleh karena itu, diperlukan algoritma pengurutan yang dapat diterapkan untuk mendukung kedua kebutuhan tersebut.
+
+Algoritma QuickSort dipilih sebagai metode pengurutan karena memiliki kompleksitas rata-rata O(n log n) dan efisien dalam penggunaan memori dengan kompleksitas ruang O(log n) untuk recursive stack. Dalam penelitian ini, QuickSort digunakan untuk mengurutkan data kebiasaan berdasarkan tingkat prioritas dan mengurutkan rekomendasi habit berdasarkan skor relevansi. Pada proses rekomendasi, pengurutan dilakukan setelah setiap kandidat rekomendasi memperoleh skor dari proses penilaian. Varian Median-of-Three dengan skema partisi Lomuto diterapkan untuk mengurangi kemungkinan terjadinya kasus terburuk O(n²) pada data yang sudah terurut atau hampir terurut, sehingga proses pengurutan dapat diterapkan pada berbagai kondisi data.
+
+Berdasarkan latar belakang tersebut, penelitian ini mengembangkan aplikasi mobile manajemen kebiasaan harian dengan arsitektur client–server yang menerapkan algoritma QuickSort pada proses pengurutan data. Sistem dibangun menggunakan Flutter sebagai mobile client, Express.js sebagai backend REST API, dan MySQL sebagai basis data relasional. QuickSort digunakan untuk mengurutkan daftar habit berdasarkan tingkat prioritas serta mengurutkan rekomendasi habit berdasarkan skor relevansi. Arsitektur sistem rekomendasi terdiri dari Rule Engine untuk mengevaluasi kondisi pengguna, Scoring Engine untuk menghitung skor relevansi, dan QuickSort untuk menyusun hasil rekomendasi berdasarkan skor yang diperoleh.
+
+
+
+Rumusan Masalah
+
+Berdasarkan latar belakang yang telah diuraikan, rumusan masalah dalam penelitian ini adalah:
+
+Bagaimana merancang dan membangun aplikasi manajemen kebiasaan harian berbasis mobile menggunakan Flutter sebagai frontend, Express.js sebagai backend REST API, dan MySQL sebagai basis data?
+
+Bagaimana menerapkan sistem rekomendasi kebiasaan berbasis rule-based untuk menghasilkan rekomendasi yang sesuai dengan kondisi dan aktivitas pengguna?
+
+Bagaimana menerapkan algoritma QuickSort untuk mengurutkan data habit berdasarkan tingkat prioritas serta mengurutkan rekomendasi habit berdasarkan relevance score pada aplikasi manajemen kebiasaan harian?
+
+Bagaimana menguji kebenaran hasil pengurutan dan mengevaluasi kinerja algoritma QuickSort berdasarkan jumlah perbandingan (comparisons), jumlah pertukaran (swaps), dan waktu eksekusi (execution time)?
+
+
+
+Tujuan Penelitian
+
+Tujuan penelitian ini adalah:
+
+Merancang dan membangun aplikasi manajemen kebiasaan harian berbasis mobile menggunakan Flutter sebagai frontend, Express.js sebagai backend REST API, dan MySQL sebagai basis data.
+
+Menerapkan sistem rekomendasi kebiasaan berbasis rule-based untuk menghasilkan rekomendasi yang sesuai dengan kondisi dan aktivitas pengguna.
+
+Menerapkan algoritma QuickSort untuk mengurutkan data habit berdasarkan tingkat prioritas serta mengurutkan rekomendasi habit berdasarkan relevance score pada aplikasi manajemen kebiasaan harian.
+
+Menguji kebenaran hasil pengurutan dan mengevaluasi kinerja algoritma QuickSort berdasarkan jumlah perbandingan (comparisons), jumlah pertukaran (swaps), dan waktu eksekusi (execution time).
+
+Manfaat Penelitian
+
+Manfaat Praktis:
+
+Menyediakan aplikasi manajemen kebiasaan harian yang mampu memberikan rekomendasi personal dinamis berdasarkan data pengguna saat permintaan rekomendasi dilakukan.
+
+Membantu pengguna mengelola dan mempertahankan kebiasaan positif melalui penyajian data kebiasaan yang terurut berdasarkan tingkat prioritas serta rekomendasi yang relevan berdasarkan kondisi pengguna.
+
+Meningkatkan keterlibatan pengguna melalui integrasi elemen gamifikasi berupa sistem poin dan lencana.
+
+Manfaat Akademis:
+
+Memberikan kontribusi berupa studi kasus implementasi algoritma QuickSort dalam konteks pengurutan data kebiasaan berdasarkan tingkat prioritas dan data rekomendasi berdasarkan skor relevansi pada aplikasi manajemen kebiasaan harian.
+
+Menyediakan referensi penerapan algoritma QuickSort dalam aplikasi mobile untuk pengurutan data habit berdasarkan tingkat prioritas serta pengurutan rekomendasi habit berdasarkan skor relevansi yang dihasilkan melalui pipeline Rule Engine dan Scoring Engine.
+
+Memberikan bukti empiris mengenai kinerja algoritma QuickSort varian Median-of-Three berdasarkan jumlah perbandingan, jumlah pertukaran, dan waktu eksekusi pada proses pengurutan data dengan berbagai ukuran dan distribusi.
+
+
+
+Batasan Masalah
+
+Batasan masalah dalam penelitian ini meliputi:
+
+Aplikasi dikembangkan dalam bentuk aplikasi mobile menggunakan Flutter sebagai frontend, Express.js sebagai backend REST API, dan MySQL sebagai basis data.
+
+Fitur utama aplikasi meliputi pengelolaan kebiasaan harian, pengaturan jadwal dan target kebiasaan, pencatatan penyelesaian kebiasaan, laporan performa mingguan, gamifikasi berupa poin dan lencana, serta sistem rekomendasi kebiasaan.
+
+Sistem rekomendasi menggunakan pendekatan rule-based dengan aturan yang telah ditentukan berdasarkan kondisi dan aktivitas pengguna.
+
+Perhitungan relevance score pada sistem rekomendasi menggunakan faktor yang telah ditentukan, yaitu streak, tingkat penyelesaian, recency, dan preferensi kategori.
+
+Algoritma QuickSort digunakan untuk mengurutkan data habit berdasarkan tingkat prioritas serta mengurutkan data rekomendasi berdasarkan relevance score.
+
+Implementasi QuickSort menggunakan strategi pemilihan pivot Median-of-Three dengan skema partisi Lomuto.
+
+Evaluasi algoritma QuickSort dibatasi pada pengujian kebenaran hasil pengurutan dan pengukuran jumlah perbandingan (comparisons), jumlah pertukaran (swaps), serta waktu eksekusi (execution time)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LANDASAN TEORI
+
+Penelitian Terkait
+
+Beberapa penelitian sebelumnya yang relevan dengan topik ini diuraikan sebagai berikut.
+
+Penelitian oleh Rosinda dkk. (2023) mengembangkan aplikasi mobile tracker kebiasaan harian menggunakan Flutter dengan fitur pencatatan dan pelacakan kebiasaan. Penelitian tersebut menunjukkan bahwa Flutter efektif sebagai framework pengembangan aplikasi mobile lintas platform. Namun, penelitian tersebut belum mengintegrasikan sistem rekomendasi ataupun algoritma pengurutan untuk memprioritaskan konten. Perbedaan dengan penelitian ini terletak pada penambahan sistem rekomendasi berbasis rule-based dan implementasi algoritma QuickSort untuk pengurutan rekomendasi.
+
+Penelitian oleh Hamari dkk. (2016) membahas pengaruh elemen gamifikasi terhadap keterlibatan pengguna dalam konteks pembelajaran berbasis permainan. Hasil penelitian menunjukkan bahwa sistem poin, lencana, dan tantangan meningkatkan motivasi intrinsik dan keterlibatan pengguna secara signifikan. Temuan ini menjadi dasar bagi implementasi fitur gamifikasi dalam penelitian ini sebagai komplemen dari sistem rekomendasi.
+
+Penelitian oleh Ricci dkk. (2015) dalam Recommender Systems Handbook memberikan tinjauan komprehensif mengenai berbagai pendekatan sistem rekomendasi, termasuk contentbased, collaborative filtering, dan knowledge-based. Pendekatan rule-based yang termasuk dalam kategori knowledge-based dipilih dalam penelitian ini karena transparansi logika dan kemampuannya bekerja tanpa memerlukan volume data training yang besar.
+
+Perbedaan utama penelitian ini dengan penelitian-penelitian sebelumnya adalah integrasi tiga komponen teknis secara simultan: (1) arsitektur client–server dengan pemisahan yang jelas antara Flutter dan Express.js, (2) sistem rekomendasi rule-based dengan arsitektur pipeline, dan (3) algoritma QuickSort varian Median-of-Three sebagai komponen pengurutan dalam pipeline rekomendasi.
+
+Algoritma Quicksort
+
+Konsep Dasar Quicksort
+
+QuickSort merupakan algoritma pengurutan yang dikembangkan oleh C.A.R. Hoare pada tahun 1961 dan menggunakan teknik divide and conquer. Prinsip kerja QuickSort adalah memilih sebuah elemen sebagai pivot, kemudian mempartisi array menjadi dua sub-array: elemen-elemen yang lebih kecil dari pivot dan elemen-elemen yang lebih besar dari pivot. Proses ini diterapkan secara rekursif pada kedua sub-array hingga seluruh elemen terurut (Cormen dkk., 2009). Secara formal, langkah-langkah algoritma QuickSort dapat dideskripsikan sebagai berikut:
+
+Pilih Pivot: Pilih sebuah elemen dari array sebagai pivot.
+
+Partisi: Susun ulang elemen-elemen array sehingga semua elemen dengan nilai lebih kecil dari pivot berada di sebelah kiri, dan semua elemen dengan nilai lebih besar berada di sebelah kanan. Pivot berada di posisi akhirnya (final sorted position).
+
+Rekursi: Terapkan langkah 1 dan 2 secara rekursif pada sub-array kiri dan sub-array kanan.
+
+Basis Rekursi: Rekursi berhenti ketika sub-array memiliki nol atau satu elemen.
+
+Pseudocode dasar algoritma QuickSort:
+
+FUNCTION QuickSort(arr, low, high):     IF low < high THEN         pivotIndex ← Partition(arr, low, high)         QuickSort(arr, low, pivotIndex - 1)         QuickSort(arr, pivotIndex + 1, high)
+
+    END IF
+
+END FUNCTION
+
+FUNCTION Partition(arr, low, high):
+
+    pivot ← arr[high]     i ← low - 1
+
+    FOR j ← low TO high - 1 DO         IF arr[j] ≤ pivot THEN             i ← i + 1
+
+            SWAP(arr[i], arr[j])
+
+        END IF
+
+    END FOR
+
+    SWAP(arr[i + 1], arr[high])
+
+    RETURN i + 1
+
+END FUNCTION
+
+
+
+Varian Median-of-three
+
+Pemilihan pivot merupakan salah satu faktor yang memengaruhi kinerja algoritma QuickSort. Pemilihan elemen pertama atau terakhir secara langsung sebagai pivot dapat menghasilkan partisi yang tidak seimbang, khususnya ketika data memiliki pola terurut atau hampir terurut. Kondisi tersebut dapat menyebabkan jumlah pembagian sub-array menjadi tidak seimbang dan meningkatkan jumlah operasi pengurutan.
+
+Pada penelitian ini digunakan strategi pemilihan pivot Median-of-Three. Strategi ini memilih pivot berdasarkan median dari tiga elemen, yaitu elemen pertama, elemen tengah, dan elemen terakhir pada bagian array yang sedang diproses. Tujuan penggunaan Median-of-Three adalah memperoleh pivot yang lebih representatif terhadap data sehingga dapat mengurangi kemungkinan terbentuknya partisi yang sangat tidak seimbang..
+
+Proses pemilihan pivot Median-of-Three dilakukan melalui tahapan berikut:
+
+1. Tentukan indeks tengah: mid = ⌊(low + high) / 2⌋.
+
+2. Mengambil tiga elemen, yaitu arr[low], arr[mid], dan arr[high].
+
+Membandingkan ketiga elemen tersebut untuk menentukan nilai median.
+
+Menempatkan elemen median pada posisi arr[high].
+
+Menggunakan elemen pada posisi high sebagai pivot pada proses partisi menggunakan skema Lomuto
+
+Dengan demikian, Median-of-Three pada penelitian ini berfungsi sebagai strategi pemilihan pivot, sedangkan Lomuto digunakan sebagai strategi partisi. Median-of-Three tidak menghilangkan kemungkinan terjadinya worst case O(n²), tetapi digunakan untuk mengurangi kemungkinan terjadinya partisi yang sangat tidak seimbang pada pola data tertentu.
+
+Proses Quicksort pada Penelitian
+
+Implementasi QuickSort pada penelitian ini menggunakan kombinasi strategi pemilihan pivot Median-of-Three dan skema partisi Lomuto. Proses pengurutan dimulai dengan menentukan tiga kandidat pivot, yaitu elemen pertama, elemen tengah, dan elemen terakhir. Median dari ketiga elemen tersebut dipilih sebagai pivot.
+
+Pivot yang telah dipilih kemudian dipindahkan ke posisi high. Setelah itu dilakukan proses partisi menggunakan skema Lomuto. Pada proses partisi, setiap elemen dibandingkan dengan pivot dan ditempatkan pada bagian yang sesuai berdasarkan arah pengurutan yang digunakan.
+
+Setelah proses partisi selesai, pivot ditempatkan pada posisi akhirnya dan diperoleh pivotIndex. Selanjutnya, algoritma QuickSort dipanggil secara rekursif terhadap sub-array di sebelah kiri dan kanan pivot. Proses tersebut terus dilakukan sampai setiap sub-array memiliki nol atau satu elemen.
+
+Pada pengurutan rekomendasi, proses dilakukan secara descending berdasarkan relevance score, sehingga kandidat dengan nilai relevansi yang lebih tinggi ditempatkan pada posisi awal daftar. Sementara itu, pengurutan habit berdasarkan prioritas dilakukan dengan urutan High, Medium, dan Low.
+
+Secara umum, alur QuickSort yang digunakan dalam penelitian ini adalah:
+
+Data → Median-of-Three → Pivot → Lomuto Partition → PivotIndex → QuickSort kiri dan kanan → Data terurut
+
+Pseudocode QuickSort yang Digunakan:
+
+FUNCTION QuickSort(arr, low, high):
+
+    IF low < high THEN
+
+
+
+        mid ← floor((low + high) / 2)
+
+
+
+        pivotIndex ← MedianOfThree(arr, low, mid, high)
+
+
+
+        SWAP(arr[pivotIndex], arr[high])
+
+
+
+        pivotIndex ← Partition(arr, low, high)
+
+
+
+        QuickSort(arr, low, pivotIndex - 1)
+
+        QuickSort(arr, pivotIndex + 1, high)
+
+
+
+    END IF
+
+END FUNCTION
+
+
+
+
+
+FUNCTION MedianOfThree(arr, low, mid, high):
+
+
+
+    IF arr[low] > arr[mid] THEN
+
+        SWAP(arr[low], arr[mid])
+
+    END IF
+
+
+
+    IF arr[low] > arr[high] THEN
+
+        SWAP(arr[low], arr[high])
+
+    END IF
+
+
+
+    IF arr[mid] > arr[high] THEN
+
+        SWAP(arr[mid], arr[high])
+
+    END IF
+
+
+
+    RETURN mid
+
+END FUNCTION
+
+
+
+
+
+FUNCTION Partition(arr, low, high):
+
+
+
+    pivot ← arr[high]
+
+    i ← low - 1
+
+
+
+    FOR j ← low TO high - 1 DO
+
+
+
+        IF arr[j] sesuai dengan kondisi pengurutan THEN
+
+            i ← i + 1
+
+            SWAP(arr[i], arr[j])
+
+        END IF
+
+
+
+    END FOR
+
+
+
+    SWAP(arr[i + 1], arr[high])
+
+
+
+    RETURN i + 1
+
+
+
+END FUNCTION
+
+
+
+Analisis kompleksitas
+
+QuickSort memiliki kompleksitas waktu terbaik O(n log n), rata-rata O(n log n), dan worst case O(n²). Kondisi O(n log n) terjadi ketika proses partisi menghasilkan pembagian sub-array yang relatif seimbang. Sebaliknya, O(n²) dapat terjadi ketika pivot menghasilkan partisi yang sangat tidak seimbang secara berulang.
+
+Penggunaan Median-of-Three bertujuan untuk mengurangi kemungkinan terbentuknya partisi yang sangat tidak seimbang, tetapi tidak menghilangkan kemungkinan worst case O(n²).
+
+Untuk penggunaan memori, QuickSort bersifat inplace karena proses pengurutan dilakukan pada array yang sama dengan penggunaan memori tambahan yang relatif kecil. Pada kondisi partisi yang seimbang, recursive call stack memiliki kompleksitas ruang O(log n). Namun, pada kondisi worst case, kedalaman rekursi dapat mencapai O(n).
+
+Sistem Rekomendasi Berbasis Rule-Based
+
+Sistem rekomendasi berbasis rule-based termasuk dalam kategori knowledge-based recommender systems, yaitu sistem yang menggunakan pengetahuan eksplisit tentang domain untuk menghasilkan rekomendasi (Ricci dkk., 2015). Berbeda dengan pendekatan collaborative filtering yang memerlukan data interaksi dari banyak pengguna, sistem rule-based menggunakan seperangkat aturan (rules) yang telah ditentukan oleh pakar domain. Setiap aturan dalam sistem rule-based terdiri dari dua komponen:
+
+Kondisi (Condition/Antecedent): Serangkaian predikat yang dievaluasi terhadap data pengguna. Contoh: "jika streak ≥ 7 hari" atau "jika tidak aktif ≥ 3 hari".
+
+Aksi (Action/Consequent): Rekomendasi yang dihasilkan jika kondisi terpenuhi. Contoh: mendorong user untuk meningkatkan streak atau mengingatkan tentang
+
+kebiasaan yang terlupakan.
+
+Keunggulan pendekatan rule-based meliputi:
+
+Transparansi: Logika rekomendasi dapat dijelaskan kepada pengguna (explainable AI).
+
+Kontrol: Pakar domain memiliki kontrol penuh terhadap aturan rekomendasi.
+
+Tidak bergantung pada data historis: Dapat berfungsi efektif bahkan untuk pengguna baru (cold start problem minimal).
+
+Deterministic: Hasil rekomendasi konsisten untuk kondisi yang sama.
+
+Arsitektur Client-Server
+
+Arsitektur client–server adalah model komputasi terdistribusi di mana tugas atau beban kerja dibagi antara penyedia layanan (server) dan pemohon layanan (client). Dalam konteks pengembangan aplikasi mobile, arsitektur ini memisahkan logika presentasi (frontend) dari logika bisnis dan akses data (backend), sehingga setiap komponen dapat dikembangkan, diuji, dan dimaintenance secara independen.
+
+Pada penelitian ini, arsitektur client–server diimplementasikan dengan:
+
+Client (Flutter): Aplikasi mobile yang bertanggung jawab atas antarmuka pengguna dan interaksi. Menggunakan pola BLoC (Business Logic Component) untuk
+
+pemisahan logika UI dan bisnis di sisi client.
+
+Server (Express.js): REST API server yang mengelola seluruh logika bisnis, autentikasi (JWT), dan akses basis data MySQL. Arsitektur berlapis (layered
+
+architecture): routes → controllers → services → repositories.
+
+Komunikasi: Menggunakan protokol HTTP/HTTPS dengan format data JSON.
+
+Autentikasi menggunakan JSON Web Token (JWT).
+
+Manajemen Kebiasaan
+
+Manajemen kebiasaan adalah proses sistematis untuk membentuk, memantau, dan mempertahankan pola perilaku positif. Duhigg (2012) menjelaskan bahwa kebiasaan beroperasi melalui habit loop yang terdiri dari tiga komponen: cue (pemicu), routine (rutinitas), dan reward (hadiah). Dengan mencatat aktivitas secara konsisten, individu dapat mengidentifikasi pola dan melakukan intervensi yang tepat pada tahapan yang sesuai.
+
+Fogg (2020) mengembangkan model B=MAP (Behavior = Motivation × Ability × Prompt) yang menekankan bahwa perubahan perilaku terjadi ketika motivasi, kemampuan, dan pemicu berada di level yang tepat secara bersamaan. Aplikasi manajemen kebiasaan berperan sebagai prompt (melalui notifikasi) sekaligus menyediakan reward (melalui gamifikasi dan laporan visual) untuk memperkuat motivasi.
+
+Gamifikasi
+
+Gamifikasi adalah penerapan elemen dan mekanisme permainan dalam konteks nonpermainan untuk meningkatkan keterlibatan, motivasi, dan partisipasi pengguna (Zichermann dan Cunningham, 2011). Dalam konteks manajemen kebiasaan, elemen gamifikasi yang umum
+
+diterapkan meliputi:
+
+Sistem Poin: Poin diberikan sebagai imbalan atas penyelesaian kebiasaan harian.
+
+Lencana (Badge): Penghargaan visual yang diberikan ketika pengguna mencapai milestone tertentu.
+
+Streak: Pencatatan hari berturut-turut pengguna menyelesaikan kebiasaan.
+
+Metode Waterfall
+
+Metode Waterfall adalah model pengembangan perangkat lunak linier dan berurutan yang diperkenalkan oleh Winston W. Royce pada tahun 1970. Model ini terdiri dari tahapan yang harus diselesaikan secara berurutan: analisis kebutuhan, perancangan sistem, implementasi,
+
+pengujian, dan pemeliharaan (Pressman, 2014).
+
+Metode Waterfall dipilih untuk penelitian ini karena:
+
+Kebutuhan sistem telah terdefinisi dengan jelas sejak awal perancangan.
+
+Menghasilkan dokumentasi lengkap pada setiap tahapan, sesuai dengan kebutuhan penulisan akademis. Memudahkan kontrol dan evaluasi pada setiap tahapan pengembangan.
+
+
+
+
+
+METODOLOGI
+
+Analisis Sistem
+
+Metode pengembangan sistem yang digunakan dalam penelitian ini adalah metode Waterfall. Metode Waterfall merupakan model pengembangan perangkat lunak yang dilakukan secara sistematis dan berurutan, di mana setiap tahapan pengembangan dilaksanakan berdasarkan hasil dari tahapan sebelumnya. Metode ini dipilih karena pengembangan aplikasi dilakukan melalui tahapan yang terstruktur, dimulai dari analisis kebutuhan sistem, perancangan, implementasi, pengujian, hingga pemeliharaan. Tahapan metode Waterfall yang diterapkan dalam pengembangan aplikasi manajemen kebiasaan harian ini adalah sebagai berikut
+
+Analisis Kebutuhan (Requirements)
+
+Pada tahap ini dilakukan identifikasi terhadap kebutuhan sistem berdasarkan permasalahan yang diangkat dalam penelitian. Analisis dilakukan untuk menentukan kebutuhan fungsional aplikasi, meliputi pengelolaan kebiasaan harian, pengaturan jadwal dan target penyelesaian, pencatatan penyelesaian kebiasaan, penyajian laporan performa mingguan, pemberian poin dan badge, serta penyediaan rekomendasi kebiasaan. Pada tahap ini juga ditentukan kebutuhan penerapan algoritma QuickSort untuk mengurutkan data kebiasaan berdasarkan tingkat prioritas dan data rekomendasi berdasarkan skor relevansi.
+
+Perancangan Sistem (Design)
+
+Tahap perancangan dilakukan berdasarkan hasil analisis kebutuhan yang telah diperoleh. Perancangan meliputi perancangan struktur basis data, hubungan antarentitas, arsitektur sistem, alur proses sistem, serta perancangan antarmuka pengguna. Pemodelan sistem dilakukan menggunakan diagram yang sesuai, seperti Use Case Diagram, Activity Diagram, Sequence Diagram, dan Entity Relationship Diagram (ERD). Pada tahap ini juga dilakukan perancangan alur algoritma QuickSort yang akan digunakan dalam proses pengurutan data pada aplikasi.
+
+Implementasi (Implementation)
+
+Pada tahap implementasi, hasil perancangan sistem diterjemahkan ke dalam bentuk aplikasi. Aplikasi dikembangkan menggunakan framework Flutter dengan bahasa pemrograman Dart untuk membangun aplikasi mobile. Implementasi mencakup pengembangan fitur manajemen kebiasaan, pencatatan penyelesaian habit, laporan performa, gamifikasi berupa poin dan badge, serta sistem rekomendasi. Algoritma QuickSort diimplementasikan untuk melakukan pengurutan data sesuai kebutuhan sistem.
+
+Tahap Pengujian (Testing)
+
+Tahap pengujian dilakukan untuk memastikan bahwa setiap fungsi pada aplikasi dapat berjalan sesuai dengan kebutuhan yang telah ditentukan. Pengujian fungsional dilakukan menggunakan metode Black-Box Testing dengan menguji input dan output dari setiap fitur utama aplikasi. Selain itu, dilakukan pengujian terhadap implementasi algoritma QuickSort untuk memastikan proses pengurutan menghasilkan urutan data yang sesuai.
+
+Tahap Pemeliharaan (Maintenance)
+
+Tahap pemeliharaan merupakan tahap pengembangan lanjutan setelah sistem selesai dibangun dan digunakan. Kegiatan pada tahap ini dapat meliputi perbaikan kesalahan, penyesuaian sistem, dan pengembangan fitur di masa mendatang. Tahap pemeliharaan tidak menjadi fokus utama dalam implementasi penelitian ini.
+
+Perancangan Sistem
+
+Berdasarkan kebutuhan sistem yang telah dianalisis pada tahap sebelumnya, dilakukan perancangan sistem sebagai acuan dalam proses implementasi aplikasi. Perancangan sistem meliputi perancangan basis data, pemodelan sistem menggunakan diagram, perancangan alur proses, perancangan algoritma QuickSort, perancangan arsitektur sistem, serta perancangan antarmuka pengguna.
+
+Use Case Diagram
+
+Untuk menggambarkan interaksi antara pengguna dengan aplikasi, digunakan Use Case Diagram. Diagram ini menunjukkan fungsi-fungsi utama yang tersedia pada aplikasi manajemen kebiasaan harian serta hubungan antara aktor dengan setiap fungsi tersebut.
+
+
+
+Aplikasi ini memiliki satu aktor utama, yaitu User. User dapat menggunakan berbagai fitur, seperti melihat habit hari ini, mengelola dan menyelesaikan habit, melihat laporan performa dan riwayat penyelesaian, melihat rekomendasi habit, melihat poin dan badge, serta mengelola profil dan pengaturan. Use Case Diagram aplikasi manajemen kebiasaan harian dapat dilihat pada gambar berikut:
+
+
+
+Gambar 3.2.1 Use Case Diagram
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pada Gambar 3.2.1 User berperan sebagai aktor utama yang berinteraksi secara langsung dengan aplikasi manajemen kebiasaan harian. Pada halaman utama, User dapat melihat daftar habit hari ini dan melakukan penyelesaian habit yang telah dijadwalkan. User juga dapat melakukan pengelolaan habit. Fitur ini mencakup proses menambahkan habit baru, mengubah data habit, menghentikan habit, dan menghapus habit. Selain itu, User dapat melihat detail habit untuk memperoleh informasi lebih lengkap mengenai habit yang telah dibuat. Dalam melakukan penambahan habit, User dapat menambahkan habit secara langsung maupun menambahkan habit berdasarkan rekomendasi yang diberikan oleh sistem. Rekomendasi habit ditampilkan kepada User berdasarkan data dan proses pemeringkatan yang diterapkan pada sistem. Sistem juga menyediakan fitur laporan yang memungkinkan User melihat laporan performa mingguan dan riwayat penyelesaian habit. Informasi tersebut digunakan untuk membantu User memantau aktivitas dan tingkat penyelesaian kebiasaan dalam periode tertentu. Selain fitur pengelolaan dan pelaporan habit, User dapat melihat poin dan badge yang diperoleh sebagai bagian dari penerapan elemen gamifikasi pada aplikasi. User juga dapat mengelola informasi profil serta melakukan pengaturan sesuai dengan kebutuhan penggunaan aplikasi.
+
+Entity Relationship Diagram (ERD)
+
+Aplikasi manajemen kebiasaan harian memerlukan basis data untuk menyimpan dan mengelola data yang digunakan oleh setiap fitur dalam sistem. Perancangan basis data dilakukan dengan menentukan entitas, atribut, serta relasi antar data yang saling berkaitan. Struktur basis data tersebut dimodelkan menggunakan Entity Relationship Diagram (ERD).
+
+
+
+ERD pada aplikasi ini mencakup data pengguna, kategori, habit, jadwal habit, riwayat penyelesaian, template habit, serta data yang mendukung fitur gamifikasi berupa poin dan badge. Rancangan ERD aplikasi manajemen kebiasaan harian ditunjukkan pada gambar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.2 Entity Relationship Diagram (ERD)
+
+
+
+Gambar 3.2.2 adalah ERD yang terdiri dari delapan entitas, yaitu users, categories, habits, habit_schedules, habit_completions, habit_templates, badges, dan user_badges. Entitas users digunakan untuk menyimpan data pengguna aplikasi. Setiap pengguna dapat memiliki beberapa habit yang disimpan pada entitas habits. Setiap habit terhubung dengan satu kategori melalui entitas categories dan dapat memiliki beberapa jadwal pengulangan yang disimpan pada habit_schedules. Riwayat penyelesaian habit disimpan pada entitas habit_completions. Data ini digunakan untuk mencatat waktu penyelesaian setiap habit dan menjadi sumber data dalam penyajian riwayat serta laporan performa mingguan. Entitas habit_templates digunakan untuk menyimpan data template habit yang disediakan oleh sistem sebagai sumber rekomendasi. Setiap template juga dikelompokkan ke dalam kategori tertentu. Data template selanjutnya dapat diproses menggunakan aturan yang telah ditentukan untuk menghasilkan skor relevansi sebelum rekomendasi diurutkan menggunakan algoritma QuickSort.
+
+
+
+Untuk mendukung fitur gamifikasi, sistem menggunakan entitas badges dan user_badges. Entitas badges menyimpan data badge beserta ketentuan untuk memperolehnya, sedangkan user_badges menyimpan data badge yang telah diperoleh oleh masing-masing pengguna. Data total poin pengguna disimpan pada entitas users.
+
+Flowchart
+
+Flowchart Sistem
+
+
+
+Gambar 3.2.3 Flowchart Sistem
+
+Flowchart di atas memberikan gambaran mengenai alur kerja aplikasi secara keseluruhan, dibuat flowchart sistem yang menunjukkan proses utama yang dilakukan pengguna saat menggunakan aplikasi. Flowchart ini dimulai dari proses autentikasi hingga pengguna mengakses fitur-fitur utama yang tersedia, kemudian kembali ke halaman utama untuk melanjutkan penggunaan aplikasi. Flowchart pada gambar menunjukkan alur umum penggunaan aplikasi. Proses dimulai ketika pengguna melakukan login atau registrasi. Setelah proses autentikasi berhasil, pengguna diarahkan ke halaman Home sebagai halaman utama aplikasi.
+
+Dari halaman Home, pengguna dapat memilih fitur yang tersedia, yaitu pengelolaan dan penyelesaian habit, melihat laporan performa, melihat rekomendasi habit, serta mengelola profil dan pengaturan. Setelah proses pada fitur yang dipilih selesai, pengguna kembali ke halaman Home dan dapat memilih fitur lainnya selama masih menggunakan aplikasi. Pengguna dapat mengakhiri penggunaan aplikasi dengan melakukan logout. Setelah logout, proses penggunaan aplikasi selesai.
+
+Flowchart Algoritma Quicksort
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.4 Flowchart Algoritma Quicksort
+
+Pada Gambar 3.2.4, proses QuickSort dimulai dengan menerima data array beserta nilai indeks low dan high. Sistem terlebih dahulu memeriksa apakah nilai low lebih kecil dari high. Jika kondisi tersebut tidak terpenuhi, proses pada bagian array tersebut selesai karena tidak terdapat data yang perlu dipartisi lebih lanjut.
+
+Jika low lebih kecil dari high, sistem menentukan nilai tengah (mid) kemudian memilih nilai median dari tiga elemen, yaitu elemen pada posisi low, mid, dan high, sebagai pivot. Pivot yang terpilih kemudian dipindahkan ke posisi high untuk digunakan dalam proses partisi menggunakan skema Lomuto.
+
+Selanjutnya, sistem melakukan perbandingan setiap elemen dari indeks low hingga sebelum posisi pivot. Elemen yang memiliki nilai sesuai dengan kondisi pengurutan ditempatkan pada bagian yang sesuai melalui proses pertukaran. Setelah seluruh elemen dibandingkan, pivot ditempatkan pada posisi akhirnya dan diperoleh nilai pivotIndex.
+
+Proses kemudian dilanjutkan secara rekursif pada bagian kiri dan kanan pivot hingga tidak ada lagi bagian array yang memenuhi kondisi low < high. Dengan demikian, seluruh data telah melalui proses pengurutan menggunakan algoritma QuickSort.
+
+Sequence Diagram
+
+Pengelolaan Habit
+
+
+
+Gambar 3.2.5 Sequence Diagram Pengelolaan Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.5 menunjukkan sequence diagram proses pengelolaan habit yang melibatkan interaksi antara pengguna, aplikasi Flutter, backend Express.js, dan basis data. Sequence Diagram digunakan untuk menunjukkan urutan interaksi tersebut ketika pengguna menambahkan data habit ke dalam sistem. Diagram ini juga menunjukkan proses validasi autentikasi menggunakan JWT sebelum data habit diproses dan disimpan. Pada proses ini, pengguna terlebih dahulu mengisi data habit pada aplikasi dan menekan tombol simpan. Aplikasi Flutter kemudian mengirimkan data habit beserta token JWT ke API Express.js melalui endpoint POST /habits. Token tersebut diperiksa oleh JWT Middleware untuk memastikan bahwa pengguna memiliki hak akses yang valid. Jika token tidak valid, sistem mengembalikan respons gagal dan aplikasi menampilkan pesan autentikasi kepada pengguna. Sebaliknya, jika token valid, informasi userId dari token digunakan dalam proses pembuatan habit. API meneruskan data tersebut ke Habit Service, kemudian data habit disimpan ke dalam basis data MySQL. Setelah proses penyimpanan berhasil, hasilnya dikembalikan melalui API ke aplikasi Flutter. Habit yang berhasil ditambahkan kemudian ditampilkan kepada pengguna.
+
+Penyelesaian Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.6 Sequence Diagram Penyelesaian Habit
+
+Penyelesaian habit merupakan proses ketika pengguna mencatat bahwa suatu kebiasaan telah berhasil dilakukan. Proses ini tidak hanya memperbarui status penyelesaian, tetapi juga mencatat riwayat penyelesaian dan mendukung penerapan fitur gamifikasi berupa poin dan badge. Interaksi antarbagian sistem dalam proses tersebut digambarkan menggunakan Sequence Diagram. Proses dimulai ketika pengguna memilih habit yang akan diselesaikan melalui aplikasi Flutter. Aplikasi kemudian mengirimkan permintaan penyelesaian habit beserta token JWT ke API Express.js. Token terlebih dahulu divalidasi oleh JWT Middleware. Jika token tidak valid, sistem menolak permintaan dan mengirimkan respons gagal ke aplikasi. Jika autentikasi berhasil, permintaan diteruskan ke Completion Service untuk memproses penyelesaian habit. Data penyelesaian kemudian disimpan ke dalam basis data sebagai riwayat habit completion. Setelah itu, sistem memperbarui jumlah poin pengguna sesuai dengan penyelesaian yang dilakukan. Selanjutnya, Completion Service meminta Badge Service untuk memeriksa apakah pencapaian pengguna telah memenuhi syarat memperoleh badge. Jika syarat terpenuhi, data badge pengguna disimpan ke dalam basis data. Setelah seluruh proses selesai, hasil dikembalikan melalui API ke aplikasi Flutter untuk memperbarui status habit, poin, dan informasi badge yang diperoleh.
+
+Rekomendasi Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.7 Sequence Diagram untuk Rekomendasi Habit
+
+
+
+
+
+Proses dimulai ketika pengguna membuka halaman rekomendasi. Aplikasi Flutter mengirimkan permintaan ke API Express.js dengan menyertakan token JWT. Setelah token berhasil divalidasi, permintaan diteruskan ke Recommendation Service. Selanjutnya, sistem mengambil data habit pengguna dan data habit template dari basis data. Data template kemudian disesuaikan dengan kondisi pengguna, termasuk menghilangkan template habit yang telah dimiliki pengguna. Setiap kandidat yang tersisa dihitung nilai relevance score-nya menggunakan aturan yang telah ditentukan.
+
+Setelah seluruh kandidat memiliki nilai relevansi, data dikirim ke modul QuickSort untuk diurutkan berdasarkan nilai tersebut. Hasil pengurutan dikembalikan ke Recommendation Service, kemudian dikirim melalui API ke aplikasi Flutter untuk ditampilkan pada halaman rekomendasi pengguna.
+
+
+
+
+
+Activity Diagram
+
+Pengelolaan Habit
+
+
+
+Gambar 3.2.8 Activity Diagram untuk pengelolaan Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar diatas merupakan Activity Diagram untuk menggambarkan alur aktivitas dalam pengelolaan habit serta pembagian proses antara pengguna, aplikasi Flutter, dan backend. Diagram ini menunjukkan proses utama ketika pengguna mengakses fitur habit, memilih aksi yang tersedia, hingga sistem memproses permintaan tersebut. Proses dimulai ketika pengguna membuka halaman habit dan memilih aksi yang ingin dilakukan. Pada proses penambahan habit, pengguna mengisi data habit kemudian menekan tombol simpan. Aplikasi Flutter mengirimkan permintaan ke backend untuk dilakukan validasi. Jika data yang dimasukkan valid, backend menyimpan data habit dan mengirimkan hasil proses kembali ke aplikasi untuk ditampilkan kepada pengguna. Apabila data tidak valid, aplikasi menampilkan pesan kesalahan.
+
+Selain menambahkan habit, pengguna juga dapat memilih habit untuk melihat detailnya. Aplikasi kemudian meminta data habit kepada backend, dan informasi yang diperoleh ditampilkan pada halaman detail habit. Alur ini menggambarkan proses utama pengelolaan habit yang menjadi dasar bagi pengguna dalam menggunakan fitur kebiasaan pada aplikasi.
+
+Penyelesaian Habit
+
+
+
+Gambar 3.2.9 Activity Diagram untuk Penyelesaian Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.9 adalah Activity Diagram penyelesaian habit menggambarkan proses ketika pengguna menyelesaikan kebiasaan yang telah dibuat. Proses ini melibatkan pengguna, aplikasi Flutter, dan backend, mulai dari pemilihan habit hingga sistem mencatat penyelesaian dan memperbarui poin maupun badge. Proses dimulai ketika pengguna membuka halaman Home, kemudian memilih habit yang ingin diselesaikan dan menandainya sebagai selesai. Aplikasi Flutter mengirimkan permintaan penyelesaian ke backend. Selanjutnya, backend memeriksa data habit dan jadwalnya untuk memastikan habit tersebut dapat diselesaikan. Jika habit dapat diselesaikan, sistem mencatat penyelesaian habit dan menambahkan poin kepada pengguna. Setelah itu, sistem memeriksa apakah penyelesaian tersebut memenuhi syarat untuk memperoleh badge baru. Jika terdapat badge yang berhasil diperoleh, badge tersebut disimpan sebelum hasil proses dikirim kembali ke aplikasi. Jika tidak ada badge baru, sistem langsung menyiapkan hasil proses. Setelah proses selesai, hasil penyelesaian ditampilkan kepada pengguna. Apabila habit tidak dapat diselesaikan, sistem tidak mencatat penyelesaian dan menampilkan hasil yang sesuai kepada pengguna.
+
+Rekomendasi Habit
+
+Gambar 3.2.10 Activity Diagram untuk Rekomendasi Habit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gambar 3.2.10 menunjukkan alur proses pemberian rekomendasi habit pada aplikasi. Proses dimulai ketika pengguna membuka halaman rekomendasi. Aplikasi Flutter kemudian meminta data rekomendasi kepada backend. Backend mengambil data yang diperlukan, kemudian menghitung skor relevansi untuk setiap rekomendasi yang tersedia. Setelah skor relevansi diperoleh, data rekomendasi diurutkan menggunakan algoritma QuickSort. Pengurutan dilakukan agar rekomendasi dengan tingkat relevansi yang lebih tinggi dapat ditempatkan pada urutan yang sesuai. Selanjutnya, sistem memeriksa apakah terdapat rekomendasi yang dapat ditampilkan.
+
+Jika rekomendasi tersedia, backend menyiapkan dan mengirimkan data rekomendasi ke aplikasi Flutter untuk ditampilkan kepada pengguna. Jika tidak terdapat rekomendasi, backend mengirimkan hasil kosong dan aplikasi menampilkan kondisi tersebut. Pengguna kemudian dapat melihat dan memilih rekomendasi yang ditampilkan.
+
+Desain Tampilan
+
+Login Page
+
+Sign up Page
+
+Home Page
+
+Recommendation Page
+
+Habit Page
+
+Add Habit Page
+
+Habit Detail Page
+
+Edit Habit Page
+
+Report Page
+
+Profile Page
+
+Edit Profile Page
+
+Settings Page
+
+Badges Page
+
+3.3 Metode Pengujian Algoritma QuickSort
+
+3.3.1 Tujuan Pengujian
+Pengujian ini bertujuan untuk mengevaluasi kinerja algoritma QuickSort dalam mengurutkan data rekomendasi berdasarkan skor relevansi (relevance score). Evaluasi difokuskan pada pengujian kebenaran hasil pengurutan (correctness), serta pengukuran metrik operasional berupa jumlah perbandingan (comparisons), jumlah pertukaran (swaps), dan waktu eksekusi (execution time).
+
+3.3.2 Dataset dan Distribusi Input
+Pengujian dilakukan menggunakan data sintetis dengan berbagai ukuran untuk mengukur kinerja algoritma pada berbagai skala beban kerja. Ukuran data (N) yang digunakan adalah 10, 50, 100, 500, 1.000, 5.000, dan 10.000 elemen.
+
+Data dibangkitkan ke dalam empat jenis distribusi input untuk menguji ketahanan algoritma terhadap pola data yang berbeda:
+1. Random: Data dengan nilai relevansi berupa angka desimal acak antara 0 hingga 100.
+2. Ascending: Distribusi data terurut dari nilai terkecil ke terbesar. Ascending dan Descending merupakan distribusi data terurut yang digunakan untuk mengevaluasi perilaku QuickSort pada data yang sudah memiliki keterurutan.
+3. Descending: Distribusi data terurut dari nilai terbesar ke terkecil.
+4. Duplicate-Heavy: Data dengan tingkat duplikasi tinggi, di mana 90% dari total elemen memiliki nilai relevansi identik (50.0), dan 10% sisanya bernilai acak.
+
+Untuk menjamin pengujian dapat direproduksi (reproducible), data dibangkitkan menggunakan pseudorandom number generator (PRNG) Mulberry32. Seed yang digunakan bersifat deterministik, dihasilkan dengan melakukan konversi (hashing) dari string label format `${size}_${distribution}_Phase7` menjadi bilangan bulat 32-bit.
+
+3.3.3 Skenario Pengulangan dan Lingkungan
+Setiap konfigurasi pengujian (kombinasi ukuran dan distribusi data) dieksekusi sebanyak 50 kali pengulangan secara independen. Nilai median (nilai tengah) dari 50 pengulangan tersebut digunakan sebagai parameter statistik utama untuk waktu eksekusi guna mengurangi pengaruh lonjakan anomali (outlier) yang disebabkan oleh aktivitas sistem operasi (runtime conditions).
+
+Pengujian dilakukan pada lingkungan dengan spesifikasi berikut:
+- Runtime: Node.js v22.11.0
+- Sistem Operasi: Windows (win32)
+- Prosesor (CPU): 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+- Memori (RAM): Tidak dicatat secara spesifik pada log benchmark (Requires Confirmation).
+
+3.3.4 Parameter yang Diukur
+Terdapat tiga parameter utama yang diukur selama proses pengurutan:
+1. Jumlah Perbandingan (Comparisons): Dihitung secara aktual setiap kali fungsi komparator membandingkan dua elemen array, baik pada saat pemilihan pivot maupun partisi Lomuto.
+2. Jumlah Pertukaran (Swaps): Dihitung secara aktual setiap kali dua elemen pada indeks yang berbeda saling bertukar posisi.
+3. Waktu Eksekusi (Execution Time): Diukur dalam milidetik (ms). Pengukuran waktu eksekusi dibatasi secara ketat hanya pada proses internal algoritma (membungkus fungsi rekursif QuickSort). Pengukuran ini mengecualikan waktu untuk pembuatan data (input generation), penggandaan array (array cloning), logika rule engine, perhitungan skor relevansi, akses basis data, dan latensi jaringan (HTTP/API).
+
+3.3.5 Validasi Kebenaran dan Trace Rekomendasi Riil
+Kebenaran (correctness) hasil pengurutan dievaluasi pada dua aspek:
+1. Validasi Urutan: Memastikan bahwa data telah terurut secara menurun (descending), yang divalidasi dengan memeriksa kondisi elemen saat ini harus lebih besar atau sama dengan elemen berikutnya.
+2. Validasi Mutasi Objek: Memastikan bahwa QuickSort hanya melakukan pertukaran posisi elemen pada array salinan (shallow copy), tanpa memodifikasi properti objek di dalamnya maupun panjang asli dari array.
+
+Pengujian pada data N=10.000 dengan distribusi Duplicate-Heavy mencatat batas operasional berupa RangeError (Maximum call stack size exceeded). Hasil ini menunjukkan keterbatasan runtime dari implementasi QuickSort rekursif yang diuji. Perilaku ini sejalan dengan sensitivitas skema partisi gaya Lomuto rekursif terhadap input yang sangat terduplikasi, dan tidak dikategorikan sebagai kegagalan logika algoritma (correctness failure).
+
+Selain pengujian data sintetis, dilakukan pula pengujian trace rekomendasi riil. Trace ini merupakan pengujian validasi fungsional terpisah yang mengeksekusi pipeline API getRecommendations untuk memproses kandidat rekomendasi asli dari basis data MySQL aktif. Pengujian ini tidak mewakili latensi API secara keseluruhan, melainkan hanya bertujuan memverifikasi bahwa algoritma pengurutan mampu beroperasi dengan benar saat diintegrasikan secara langsung pada sistem rekomendasi aktual.
+IMPLEMENTASI DAN PENGUJIAN
+
+Implementasi Sistem
+
+Spesifikasi Peralatan
+
+Spesifikasi Perangkat Keras
+
+Laptop			: ASUS TUF Gaming FX506HC
+
+Processor			: 11th Gen Intel(R) Core(TM) i7-11800H
+
+RAM			: 16 GB
+
+Spesifikasi Perangkat Lunak
+
+Sistem Operasi		: Windows 11
+
+Text Editor			: Visual Studio Code
+
+Dokumentasi		: Microsoft Word
+
+Perancangan Sistem		: Balsamiq
+
+Hasil Implementasi
+Implementasi sistem mencakup pembuatan pipeline rekomendasi. Rule Engine digunakan untuk memfilter kandidat, dilanjutkan dengan Scoring Engine untuk menghitung skor relevansi berdasarkan faktor pencapaian pengguna. Algoritma QuickSort diintegrasikan pada tahap akhir untuk mengurutkan kandidat rekomendasi secara menurun (descending) berdasarkan skor relevansi tersebut, sebelum data dikembalikan melalui API kepada pengguna.
+
+4.2 Pengujian Sistem
+Pengujian fungsional sistem secara keseluruhan (seperti manajemen kebiasaan dan fitur laporan) dilakukan menggunakan metode Black-Box Testing. [Gap Analisis: Hasil pengujian fungsional antarmuka dan interaksi pengguna belum disertakan secara spesifik dalam dokumentasi ini dan memerlukan pelengkapan pengujian sistem secara manual].
+
+4.3 Pengujian Algoritma QuickSort
+
+4.3.1 Skenario Pengujian
+Pengujian performa QuickSort dieksekusi menggunakan konfigurasi ukuran dataset (N) yang bervariasi: 10, 50, 100, 500, 1.000, 5.000, dan 10.000 elemen. Data dibangkitkan secara deterministik menggunakan PRNG ke dalam empat distribusi input: Random, Ascending, Descending, dan Duplicate-Heavy. Setiap kombinasi ukuran dan distribusi dieksekusi sebanyak 50 kali pengulangan (repetitions). Nilai median digunakan sebagai parameter utama waktu eksekusi untuk mengurangi pengaruh lonjakan anomali akibat aktivitas runtime sistem operasi.
+
+4.3.2 Kebenaran Hasil Pengurutan
+Evaluasi kebenaran memverifikasi bahwa pengurutan descending dan manipulasi keamanan objek (shallow copy) berjalan sesuai spesifikasi. Tercatat sebanyak 1.350 eksekusi yang selesai secara penuh, dan seluruh eksekusi tersebut (completed executions) berhasil melewati validasi kebenaran pengurutan (correctness validation). Kasus pengujian pada N=10.000 Duplicate-Heavy tidak selesai akibat RangeError dan murni diklasifikasikan sebagai keterbatasan runtime, bukan sebagai kegagalan validasi kebenaran.
+
+Selain pengujian terkontrol (benchmark), dilakukan pula pengujian trace rekomendasi riil. Pengujian terpisah ini memverifikasi integrasi algoritma QuickSort secara langsung di dalam pipeline rekomendasi API (getRecommendations) yang terhubung dengan basis data MySQL di lingkungan pengujian (test environment). Hasil trace mengonfirmasi integrasi berhasil. Pengujian trace ini hanya mengukur kinerja QuickSort selama pemanggilan API, dan waktu eksekusinya tidak merepresentasikan total latensi respons API secara keseluruhan.
+
+4.3.3 Jumlah Perbandingan
+Jumlah perbandingan (comparisons) diukur secara aktual pada internal fungsi QuickSort. Pertumbuhan jumlah operasi perbandingan seiring bertambahnya ukuran data (N) diobservasi pada keempat distribusi input (merujuk pada tabel comparison_table.json dan grafik comparison_count.png). Pola jumlah perbandingan dan waktu eksekusi yang diobservasi pada input yang memiliki keterurutan (Ascending dan Descending) dianalisis sehubungan dengan strategi pivot Median-of-Three yang diterapkan pada implementasi. Observasi empiris ini memperlihatkan pertumbuhan yang dapat didiskusikan batasannya sejalan dengan nilai kompleksitas teoretis yang dijabarkan di Bab 2.
+
+4.3.4 Jumlah Pertukaran
+Jumlah pertukaran (swaps) antar elemen dicatat setiap kali dua indeks berbeda saling bertukar posisi. Laporan data pada swap_table.json menunjukkan volume pertukaran element array di setiap distribusi input. Karakteristik ini merefleksikan pola internal dari skema partisi gaya Lomuto selama proses memilah data.
+
+4.3.5 Waktu Eksekusi
+Waktu eksekusi QuickSort diukur menggunakan nilai median dalam satuan milidetik (ms). Metrik ini diukur murni di dalam batasan pengukuran yang ketat (benchmark timing boundary) yang murni mencatat komputasi waktu eksekusi algoritma QuickSort itu sendiri. Waktu ini secara khusus mengecualikan latensi jaringan (API/network latency), akses basis data, proses scoring, logika rule engine, maupun duplikasi array tambahan di luar fungsi ukur. Berdasarkan tabel timing_table.json, waktu eksekusi yang diobservasi untuk ukuran data N <= 1000 menunjukkan waktu respon operasional yang sangat kecil dan stabil (berada di bawah 0.1 ms).
+
+4.3.6 Analisis Distribusi Input dan Keterbatasan
+Algoritma terbukti secara observasional menangani input Random maupun input terurut (Ascending, Descending) secara stabil. Distribusi Duplicate-Heavy, bagaimanapun, memperlihatkan lonjakan metrik operasi dan waktu secara drastis saat memproses konfigurasi pada N=5.000. 
+
+Konfigurasi ukuran N=10.000 pada distribusi Duplicate-Heavy tidak dapat diselesaikan karena memicu RangeError (Maximum call stack size exceeded). Fenomena ini diklasifikasikan sebagai sebuah keterbatasan runtime observasional (observed runtime limitation) dari implementasi QuickSort rekursif yang diuji. Perilaku ini sangat konsisten dengan kepekaan dan keterbatasan desain skema partisi gaya Lomuto yang bekerja secara rekursif ketika dihadapkan pada input data yang sangat terduplikasi dalam jumlah ekstrem.
+
+
+
+
+PENUTUP
+
+Kesimpulan
+
+Saran
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DAFTAR PUSTAKA
+

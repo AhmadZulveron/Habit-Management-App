@@ -1,0 +1,22 @@
+[
+  {
+    "Metric": "Successful executions",
+    "Result": 1350
+  },
+  {
+    "Metric": "Correctness failures",
+    "Result": 0
+  },
+  {
+    "Metric": "Mutation failures",
+    "Result": 0
+  },
+  {
+    "Metric": "Failed benchmark configurations",
+    "Result": 1
+  },
+  {
+    "Metric": "Runtime failure",
+    "Result": "RangeError (Call Stack Exceeded) at N=10000 Duplicate-Heavy"
+  }
+]
