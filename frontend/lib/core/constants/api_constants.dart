@@ -28,4 +28,7 @@ class ApiConstants {
 
   // Report endpoints
   static const String reports = '/reports';
+
+  // Badge endpoints
+  static const String badges = '/badges';
 }

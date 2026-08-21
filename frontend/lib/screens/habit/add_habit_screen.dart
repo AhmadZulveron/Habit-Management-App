@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
 import 'package:frontend/providers/category_provider.dart';
+import 'package:frontend/providers/recommendation_provider.dart';
 import 'package:frontend/widgets/common_widgets.dart';
 
 /// Add Habit Screen
@@ -22,6 +23,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   int? _categoryId;
   String _priority = 'medium';
   final List<int> _selectedDays = [];
+  bool _isInit = false;
 
   static const List<String> _dayLabels = [
     'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
@@ -33,6 +35,25 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInit) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args is RecommendationModel) {
+        _titleController.text = args.title;
+        _descriptionController.text = args.description;
+        _categoryId = args.categoryId;
+        
+        final priorityLower = args.priority.toLowerCase();
+        if (['high', 'medium', 'low'].contains(priorityLower)) {
+          _priority = priorityLower;
+        }
+      }
+      _isInit = true;
+    }
   }
 
   @override
@@ -127,7 +148,9 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                   // Category Dropdown
                   DropdownButtonFormField<int>(
-                    value: _categoryId,
+                    value: categoryProvider.categories.any((c) => c.id == _categoryId) 
+                        ? _categoryId 
+                        : null,
                     decoration: const InputDecoration(
                       labelText: 'Category',
                       border: OutlineInputBorder(),

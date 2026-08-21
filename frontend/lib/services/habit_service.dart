@@ -80,7 +80,7 @@ class HabitService {
   }
 
   /// Mark a habit as completed for today
-  Future<void> completeHabit(int id) async {
+  Future<Map<String, dynamic>> completeHabit(int id) async {
     final response = await _apiService.post(
       ApiConstants.completeHabit(id),
       body: {},
@@ -89,5 +89,7 @@ class HabitService {
     if (!response.success) {
       throw Exception(response.message);
     }
+    
+    return response.data ?? {};
   }
 }

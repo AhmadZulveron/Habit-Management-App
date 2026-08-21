@@ -8,6 +8,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const badgeRoutes = require('./routes/badgeRoutes');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/badges', badgeRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

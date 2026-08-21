@@ -4,6 +4,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/habit_provider.dart';
 import 'package:frontend/models/habit_model.dart';
+import 'package:frontend/models/badge_model.dart';
 import 'package:frontend/widgets/common_widgets.dart';
 
 /// Home Screen
@@ -50,26 +51,34 @@ class _HomeScreenState extends State<HomeScreen> {
       if (_processingCompletions.contains(habitId)) return;
       setState(() => _processingCompletions.add(habitId));
 
-      final success = await habitProvider.completeHabit(habitId);
+      final result = await habitProvider.completeHabit(habitId);
+      final success = result['success'] == true;
+      final earnedBadges = result['earnedBadges'] as List<BadgeModel>? ?? [];
 
       if (!mounted) return;
       
       if (mounted) {
         setState(() => _processingCompletions.remove(habitId));
         if (success) {
+          String subtitleText = '+10 Points';
+          if (earnedBadges.isNotEmpty) {
+            final badgeNames = earnedBadges.map((b) => b.name).join(', ');
+            subtitleText += '\n\n🏆 New Badge Earned: $badgeNames';
+          }
+          
           await showResultPopup(
             // ignore: use_build_context_synchronously
             context,
             true,
             'Habit Completed!',
-            subtitle: '+10 Points',
+            subtitle: subtitleText,
           );
         } else {
-          await showResultPopup(
+          showResultPopup(
             // ignore: use_build_context_synchronously
             context,
             false,
-            'Failed to Complete Habit',
+            'Failed to complete habit',
             subtitle: habitProvider.error,
           );
         }

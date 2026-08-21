@@ -67,6 +67,23 @@ class AuthService {
     }
   }
 
+  /// Update Profile
+  Future<UserModel> updateProfile(String name, String email) async {
+    final response = await _apiService.put(
+      ApiConstants.profile,
+      body: {
+        'name': name,
+        'email': email,
+      },
+    );
+
+    if (response.success && response.data != null) {
+      return UserModel.fromJson(response.data['profile']);
+    } else {
+      throw Exception(response.message.isNotEmpty ? response.message : 'Failed to update profile');
+    }
+  }
+
   /// Check if user is logged in (has stored token)
   Future<bool> isLoggedIn() async {
     return await _apiService.hasToken();

@@ -862,6 +862,188 @@ Menghasilkan dokumentasi lengkap pada setiap tahapan, sesuai dengan kebutuhan pe
 
 
 
+2.8 Unified Modeling Language (UML)
+
+2.8.1 Pengertian UML
+
+Unified Modeling Language (UML) merupakan bahasa pemodelan standar yang digunakan untuk memvisualisasikan, merancang, dan mendokumentasikan sistem perangkat lunak (Fowler, 2003).
+
+2.8.2 Fungsi UML dalam Penelitian
+
+Dalam penelitian ini, UML berfungsi untuk memodelkan arsitektur perangkat lunak sebelum tahap implementasi dilakukan. UML memberikan representasi visual mengenai interaksi antara pengguna (aktor) dengan fitur-fitur aplikasi manajemen kebiasaan harian. Selain itu, UML digunakan untuk menggambarkan urutan komunikasi data antara aplikasi Flutter dan backend, serta memodelkan alur proses sistem secara keseluruhan agar mudah dipahami.
+
+2.8.3 Use Case Diagram
+
+Use Case Diagram adalah diagram UML yang menggambarkan interaksi antara satu atau lebih aktor dengan fungsionalitas yang disediakan oleh sistem. Dalam penelitian ini, diagram ini digunakan untuk mendefinisikan batas ruang lingkup sistem dan fungsionalitas utama yang dapat dilakukan oleh pengguna, seperti mengelola habit dan melihat rekomendasi.
+
+Simbol Use Case Diagram yang digunakan dalam penelitian ini ditunjukkan pada tabel berikut:
+
+Simbol
+
+Nama Simbol
+
+Keterangan
+
+
+
+Actor
+
+Entitas eksternal (pengguna) yang berinteraksi dengan sistem.
+
+
+
+Use Case
+
+Fungsionalitas atau layanan spesifik yang disediakan sistem.
+
+
+
+Association
+
+Garis penghubung interaksi antara aktor dengan use case.
+
+
+
+2.8.4 Sequence Diagram
+
+Sequence Diagram adalah diagram UML yang memodelkan aliran pesan dan interaksi antar objek secara sekuensial berdasarkan urutan waktu. Diagram ini digunakan dalam penelitian untuk memperlihatkan bagaimana aplikasi, antarmuka pengguna, dan server (backend) saling bertukar data pada proses-proses spesifik seperti pengelolaan habit, penyelesaian habit, dan rekomendasi habit.
+
+Simbol Sequence Diagram yang digunakan dalam penelitian ini ditunjukkan pada tabel berikut:
+
+Simbol
+
+Nama Simbol
+
+Keterangan
+
+
+
+Actor / Object
+
+Pengguna atau komponen sistem yang berpartisipasi dalam interaksi.
+
+
+
+Lifeline
+
+Menggambarkan waktu hidup suatu objek selama proses berlangsung.
+
+
+
+Activation Box
+
+Masa aktif sebuah objek saat mengeksekusi operasi (Focus of Control).
+
+
+
+Message
+
+Pesan atau pemanggilan metode antar objek secara sinkron.
+
+
+
+Return Message
+
+Pesan balasan atau hasil operasi dari sebuah message.
+
+
+
+2.8.5 Activity Diagram
+
+Activity Diagram adalah diagram UML yang memodelkan alur aktivitas atau proses kerja dari sebuah sistem secara dinamis. Dalam penelitian ini, Activity Diagram digunakan untuk merinci setiap langkah komputasi sistem, mulai dari interaksi pengguna hingga proses penyimpanan data di backend.
+
+Simbol Activity Diagram yang digunakan dalam penelitian ini ditunjukkan pada tabel berikut:
+
+Simbol
+
+Nama Simbol
+
+Keterangan
+
+
+
+Initial Node
+
+Titik awal dimulainya sebuah aktivitas.
+
+
+
+Activity
+
+Tindakan atau komputasi yang dilakukan sistem.
+
+
+
+Control Flow
+
+Garis panah penunjuk arah eksekusi aktivitas.
+
+
+
+Decision Node
+
+Percabangan kondisi atau evaluasi (Yes/No).
+
+
+
+Final Node
+
+Titik akhir berhentinya seluruh aktivitas.
+
+
+
+2.9 Flowchart
+
+2.9.1 Pengertian Flowchart
+
+Flowchart adalah representasi grafis yang menggambarkan urutan proses, pengambilan keputusan, serta aliran input dan output dari sebuah sistem atau algoritma.
+
+2.9.2 Fungsi Flowchart dalam Penelitian
+
+Flowchart digunakan dalam penelitian ini untuk memvisualisasikan dua proses utama, yaitu alur kerja sistem secara keseluruhan (Flowchart Sistem) dan alur logika dari algoritma yang diterapkan (Flowchart Algoritma QuickSort). Visualisasi ini mempermudah pemahaman mengenai urutan instruksi prosedural yang dieksekusi oleh sistem (Kendall & Kendall, 2011).
+
+2.9.3 Simbol Flowchart
+
+Simbol Flowchart yang digunakan dalam penelitian ini ditunjukkan pada tabel berikut:
+
+Simbol
+
+Nama Simbol
+
+Keterangan
+
+
+
+Start
+
+Titik awal dimulainya sebuah proses atau alur sistem.
+
+
+
+End
+
+Titik akhir atau berhentinya sebuah proses atau alur sistem.
+
+
+
+Process
+
+Tindakan, instruksi komputasi, atau pengolahan data tunggal.
+
+
+
+Decision
+
+Percabangan kondisi atau evaluasi (pilihan Ya atau Tidak).
+
+
+
+Flow Line
+
+Garis panah penunjuk arah eksekusi aliran proses.
+
+
+
 METODOLOGI
 
 Analisis Sistem
@@ -1320,45 +1502,6 @@ Settings Page
 
 Badges Page
 
-3.3 Metode Pengujian Algoritma QuickSort
-
-3.3.1 Tujuan Pengujian
-Pengujian ini bertujuan untuk mengevaluasi kinerja algoritma QuickSort dalam mengurutkan data rekomendasi berdasarkan skor relevansi (relevance score). Evaluasi difokuskan pada pengujian kebenaran hasil pengurutan (correctness), serta pengukuran metrik operasional berupa jumlah perbandingan (comparisons), jumlah pertukaran (swaps), dan waktu eksekusi (execution time).
-
-3.3.2 Dataset dan Distribusi Input
-Pengujian dilakukan menggunakan data sintetis dengan berbagai ukuran untuk mengukur kinerja algoritma pada berbagai skala beban kerja. Ukuran data (N) yang digunakan adalah 10, 50, 100, 500, 1.000, 5.000, dan 10.000 elemen.
-
-Data dibangkitkan ke dalam empat jenis distribusi input untuk menguji ketahanan algoritma terhadap pola data yang berbeda:
-1. Random: Data dengan nilai relevansi berupa angka desimal acak antara 0 hingga 100.
-2. Ascending: Distribusi data terurut dari nilai terkecil ke terbesar. Ascending dan Descending merupakan distribusi data terurut yang digunakan untuk mengevaluasi perilaku QuickSort pada data yang sudah memiliki keterurutan.
-3. Descending: Distribusi data terurut dari nilai terbesar ke terkecil.
-4. Duplicate-Heavy: Data dengan tingkat duplikasi tinggi, di mana 90% dari total elemen memiliki nilai relevansi identik (50.0), dan 10% sisanya bernilai acak.
-
-Untuk menjamin pengujian dapat direproduksi (reproducible), data dibangkitkan menggunakan pseudorandom number generator (PRNG) Mulberry32. Seed yang digunakan bersifat deterministik, dihasilkan dengan melakukan konversi (hashing) dari string label format `${size}_${distribution}_Phase7` menjadi bilangan bulat 32-bit.
-
-3.3.3 Skenario Pengulangan dan Lingkungan
-Setiap konfigurasi pengujian (kombinasi ukuran dan distribusi data) dieksekusi sebanyak 50 kali pengulangan secara independen. Nilai median (nilai tengah) dari 50 pengulangan tersebut digunakan sebagai parameter statistik utama untuk waktu eksekusi guna mengurangi pengaruh lonjakan anomali (outlier) yang disebabkan oleh aktivitas sistem operasi (runtime conditions).
-
-Pengujian dilakukan pada lingkungan dengan spesifikasi berikut:
-- Runtime: Node.js v22.11.0
-- Sistem Operasi: Windows (win32)
-- Prosesor (CPU): 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
-- Memori (RAM): Tidak dicatat secara spesifik pada log benchmark (Requires Confirmation).
-
-3.3.4 Parameter yang Diukur
-Terdapat tiga parameter utama yang diukur selama proses pengurutan:
-1. Jumlah Perbandingan (Comparisons): Dihitung secara aktual setiap kali fungsi komparator membandingkan dua elemen array, baik pada saat pemilihan pivot maupun partisi Lomuto.
-2. Jumlah Pertukaran (Swaps): Dihitung secara aktual setiap kali dua elemen pada indeks yang berbeda saling bertukar posisi.
-3. Waktu Eksekusi (Execution Time): Diukur dalam milidetik (ms). Pengukuran waktu eksekusi dibatasi secara ketat hanya pada proses internal algoritma (membungkus fungsi rekursif QuickSort). Pengukuran ini mengecualikan waktu untuk pembuatan data (input generation), penggandaan array (array cloning), logika rule engine, perhitungan skor relevansi, akses basis data, dan latensi jaringan (HTTP/API).
-
-3.3.5 Validasi Kebenaran dan Trace Rekomendasi Riil
-Kebenaran (correctness) hasil pengurutan dievaluasi pada dua aspek:
-1. Validasi Urutan: Memastikan bahwa data telah terurut secara menurun (descending), yang divalidasi dengan memeriksa kondisi elemen saat ini harus lebih besar atau sama dengan elemen berikutnya.
-2. Validasi Mutasi Objek: Memastikan bahwa QuickSort hanya melakukan pertukaran posisi elemen pada array salinan (shallow copy), tanpa memodifikasi properti objek di dalamnya maupun panjang asli dari array.
-
-Pengujian pada data N=10.000 dengan distribusi Duplicate-Heavy mencatat batas operasional berupa RangeError (Maximum call stack size exceeded). Hasil ini menunjukkan keterbatasan runtime dari implementasi QuickSort rekursif yang diuji. Perilaku ini sejalan dengan sensitivitas skema partisi gaya Lomuto rekursif terhadap input yang sangat terduplikasi, dan tidak dikategorikan sebagai kegagalan logika algoritma (correctness failure).
-
-Selain pengujian data sintetis, dilakukan pula pengujian trace rekomendasi riil. Trace ini merupakan pengujian validasi fungsional terpisah yang mengeksekusi pipeline API getRecommendations untuk memproses kandidat rekomendasi asli dari basis data MySQL aktif. Pengujian ini tidak mewakili latensi API secara keseluruhan, melainkan hanya bertujuan memverifikasi bahwa algoritma pengurutan mampu beroperasi dengan benar saat diintegrasikan secara langsung pada sistem rekomendasi aktual.
 IMPLEMENTASI DAN PENGUJIAN
 
 Implementasi Sistem
@@ -1384,34 +1527,807 @@ Dokumentasi		: Microsoft Word
 Perancangan Sistem		: Balsamiq
 
 Hasil Implementasi
-Implementasi sistem mencakup pembuatan pipeline rekomendasi. Rule Engine digunakan untuk memfilter kandidat, dilanjutkan dengan Scoring Engine untuk menghitung skor relevansi berdasarkan faktor pencapaian pengguna. Algoritma QuickSort diintegrasikan pada tahap akhir untuk mengurutkan kandidat rekomendasi secara menurun (descending) berdasarkan skor relevansi tersebut, sebelum data dikembalikan melalui API kepada pengguna.
+
+Implementasi sistem mencakup pembuatan antarmuka aplikasi serta integrasi backend pipeline rekomendasi yang mengimplementasikan Rule Engine, Scoring Engine, dan algoritma QuickSort.
+
+
+
+Gambar 4.1 Halaman Login
+
+Halaman Login digunakan pengguna untuk melakukan autentikasi ke dalam sistem menggunakan kredensial yang telah didaftarkan.
+
+
+
+Gambar 4.2 Halaman Sign Up
+
+Halaman Sign Up merupakan antarmuka bagi pengguna baru untuk mendaftarkan akun ke dalam sistem.
+
+
+
+Gambar 4.3 Halaman Home
+
+Halaman Home menampilkan ringkasan aktivitas pengguna, progres harian, dan daftar kebiasaan (habit) yang dijadwalkan pada hari ini.
+
+
+
+Gambar 4.4 Halaman Create Habit
+
+Halaman Create Habit menyediakan form bagi pengguna untuk merancang kebiasaan baru, mengatur kategori, serta menentukan jadwal rutinitas.
+
+
+
+Gambar 4.5 Halaman Habit List
+
+Halaman Habit List merangkum seluruh kebiasaan yang dimiliki oleh pengguna dalam satu daftar yang dapat dikelola.
+
+
+
+Gambar 4.6 Halaman Habit Detail
+
+Halaman Habit Detail menyajikan rincian statistik dan pengaturan spesifik dari sebuah kebiasaan yang dipilih.
+
+
+
+Gambar 4.7 Halaman Edit Habit
+
+Halaman Edit Habit memberikan opsi bagi pengguna untuk memodifikasi parameter dari kebiasaan yang sudah ada.
+
+
+
+Gambar 4.8 Halaman Recommendation
+
+Halaman Recommendation menampilkan daftar rekomendasi kepada pengguna.
+
+
+
+Gambar 4.9 Halaman Report
+
+Halaman Report (Statistik) memberikan representasi visual dari tingkat keberhasilan pengguna dalam menyelesaikan kebiasaan.
+
+
+
+Gambar 4.10 Halaman Profile
+
+Halaman Profile menampilkan identitas pengguna dan ringkasan aktivitas akun.
+
+
+
+Gambar 4.11 Halaman Edit Profile
+
+Halaman Edit Profile merupakan antarmuka untuk mengubah data diri pengguna seperti nama dan kata sandi.
+
+
+
+Gambar 4.12 Halaman Badges
+
+Halaman Badges menampilkan kumpulan lencana atau penghargaan (gamifikasi) yang diperoleh pengguna berdasarkan pencapaian mereka.
+
+
+
+Gambar 4.13 Halaman Settings
+
+Halaman Settings memberikan kendali terhadap konfigurasi aplikasi dan akun pengguna.
 
 4.2 Pengujian Sistem
-Pengujian fungsional sistem secara keseluruhan (seperti manajemen kebiasaan dan fitur laporan) dilakukan menggunakan metode Black-Box Testing. [Gap Analisis: Hasil pengujian fungsional antarmuka dan interaksi pengguna belum disertakan secara spesifik dalam dokumentasi ini dan memerlukan pelengkapan pengujian sistem secara manual].
+
+Pengujian sistem dilakukan dengan mengamati respons aplikasi terhadap interaksi pengguna melalui antarmuka. Pengujian difokuskan pada fungsi utama yang dapat diamati secara langsung, seperti pengelolaan habit, penyelesaian habit, rekomendasi, dan fungsi pendukung lainnya.
+
+Pengujian Validasi Create Habit
+
+
+
+Gambar 4.16 Pesan Kesalahan Validasi Input pada Halaman Create Habit
+
+Pengujian dilakukan dengan mensimulasikan pengguna yang mengirimkan formulir pembuatan habit dengan data yang tidak lengkap atau tidak sesuai. Sistem memproses input tersebut dan merespons dengan menampilkan pesan kesalahan pada antarmuka (Gambar 4.16), menunjukkan bahwa validasi formulir memberikan respons sesuai dengan skenario pengujian.
+
+Pengujian Penambahan Habit ke Jadwal Hari Ini
+
+
+
+
+
+Gambar 4.17 Konfirmasi dan Pesan Sukses Penambahan Habit
+
+Pengujian fungsi penambahan habit ke dalam daftar kegiatan hari ini (Today's Habit) memicu dialog konfirmasi untuk memastikan intensi pengguna. Setelah dikonfirmasi, sistem merespons dengan pesan keberhasilan (Gambar 4.17), menunjukkan bahwa aliran antarmuka penambahan kegiatan dapat diamati berfungsi secara semestinya.
+
+Pengujian Penyelesaian Habit
+
+
+
+
+
+
+
+Gambar 4.18 Konfirmasi, Pesan Sukses, dan Status Penyelesaian Habit
+
+Pengujian fitur penyelesaian (Complete) habit diawali saat pengguna menekan tombol centang pada sebuah habit di halaman Home. Aplikasi akan merespons dengan dialog konfirmasi, diikuti pesan sukses, dan status habit pada layar secara visual berubah menjadi selesai (Gambar 4.18). Respons interaktif antarmuka ini mengonfirmasi fungsionalitas fitur tanpa harus menginspeksi mutasi basis data internal.
+
+Pengujian Deaktivasi Habit
+
+
+
+
+
+Gambar 4.19 Konfirmasi dan Pesan Sukses Deaktivasi Habit
+
+Pengujian deaktivasi habit dilakukan dari halaman detail. Antarmuka terbukti meminta konfirmasi secara eksplisit sebelum menonaktifkan kegiatan, kemudian melaporkan tindakan yang berhasil dengan pesan sukses yang sesuai (Gambar 4.19).
+
+Pengujian Perubahan Habit
+
+
+
+
+
+Gambar 4.20 Konfirmasi dan Pesan Sukses Pembaruan Habit
+
+Modifikasi data habit melalui fitur Edit memicu sistem untuk menghadirkan dialog penegasan. Ketika pengguna menyetujui, aplikasi merespons dengan pesan bahwa data telah berhasil diperbarui di sisi antarmuka (Gambar 4.20).
+
+Pengujian Penghapusan Habit
+
+
+
+
+
+Gambar 4.21 Konfirmasi dan Pesan Sukses Penghapusan Habit
+
+Penghapusan habit memicu tindakan perlindungan berupa dialog peringatan bahaya penghapusan data. Setelah interaksi penghapusan divalidasi pengguna, layar memberikan balasan visual berupa pesan keberhasilan (Gambar 4.21).
+
+Pengujian Recommendation
+
+
+
+Gambar 4.22 Tampilan Fitur Recommendation
+
+Pengujian dilakukan dengan membuka halaman Recommendation untuk memastikan fitur rekomendasi dapat diakses dan daftar rekomendasi dapat ditampilkan pada antarmuka aplikasi.
 
 4.3 Pengujian Algoritma QuickSort
 
 4.3.1 Skenario Pengujian
-Pengujian performa QuickSort dieksekusi menggunakan konfigurasi ukuran dataset (N) yang bervariasi: 10, 50, 100, 500, 1.000, 5.000, dan 10.000 elemen. Data dibangkitkan secara deterministik menggunakan PRNG ke dalam empat distribusi input: Random, Ascending, Descending, dan Duplicate-Heavy. Setiap kombinasi ukuran dan distribusi dieksekusi sebanyak 50 kali pengulangan (repetitions). Nilai median digunakan sebagai parameter utama waktu eksekusi untuk mengurangi pengaruh lonjakan anomali akibat aktivitas runtime sistem operasi.
+
+Pengujian performa QuickSort dieksekusi menggunakan konfigurasi ukuran dataset (N) yang bervariasi: 10, 50, 100, 500, 1.000, 5.000, dan 10.000 elemen. Data dibangkitkan secara deterministik menggunakan PRNG ke dalam empat distribusi input: Random, Ascending, Descending, dan Duplicate-Heavy. Setiap kombinasi ukuran dan distribusi dieksekusi sebanyak 50 kali pengulangan (repetitions). Nilai median digunakan sebagai parameter utama waktu eksekusi untuk mengurangi pengaruh lonjakan anomali akibat aktivitas runtime sistem operasi. Tabel 4.1 merangkum skenario tersebut.
+
+Tabel 4.1 Skenario Eksperimen Benchmark
+
+N
+
+Distribusi Input
+
+Successful Runs
+
+Failed Runs
+
+Keterangan
+
+10
+
+Random
+
+50
+
+0
+
+Passed
+
+10
+
+Ascending
+
+50
+
+0
+
+Passed
+
+10
+
+Descending
+
+50
+
+0
+
+Passed
+
+10
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+50
+
+Random
+
+50
+
+0
+
+Passed
+
+50
+
+Ascending
+
+50
+
+0
+
+Passed
+
+50
+
+Descending
+
+50
+
+0
+
+Passed
+
+50
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+100
+
+Random
+
+50
+
+0
+
+Passed
+
+100
+
+Ascending
+
+50
+
+0
+
+Passed
+
+100
+
+Descending
+
+50
+
+0
+
+Passed
+
+100
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+500
+
+Random
+
+50
+
+0
+
+Passed
+
+500
+
+Ascending
+
+50
+
+0
+
+Passed
+
+500
+
+Descending
+
+50
+
+0
+
+Passed
+
+500
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+1000
+
+Random
+
+50
+
+0
+
+Passed
+
+1000
+
+Ascending
+
+50
+
+0
+
+Passed
+
+1000
+
+Descending
+
+50
+
+0
+
+Passed
+
+1000
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+5000
+
+Random
+
+50
+
+0
+
+Passed
+
+5000
+
+Ascending
+
+50
+
+0
+
+Passed
+
+5000
+
+Descending
+
+50
+
+0
+
+Passed
+
+5000
+
+Duplicate-Heavy
+
+50
+
+0
+
+Passed
+
+10000
+
+Random
+
+50
+
+0
+
+Passed
+
+10000
+
+Ascending
+
+50
+
+0
+
+Passed
+
+10000
+
+Descending
+
+50
+
+0
+
+Passed
+
+10000
+
+Duplicate-Heavy
+
+0
+
+50
+
+Failed/Aborted
+
+
 
 4.3.2 Kebenaran Hasil Pengurutan
-Evaluasi kebenaran memverifikasi bahwa pengurutan descending dan manipulasi keamanan objek (shallow copy) berjalan sesuai spesifikasi. Tercatat sebanyak 1.350 eksekusi yang selesai secara penuh, dan seluruh eksekusi tersebut (completed executions) berhasil melewati validasi kebenaran pengurutan (correctness validation). Kasus pengujian pada N=10.000 Duplicate-Heavy tidak selesai akibat RangeError dan murni diklasifikasikan sebagai keterbatasan runtime, bukan sebagai kegagalan validasi kebenaran.
 
-Selain pengujian terkontrol (benchmark), dilakukan pula pengujian trace rekomendasi riil. Pengujian terpisah ini memverifikasi integrasi algoritma QuickSort secara langsung di dalam pipeline rekomendasi API (getRecommendations) yang terhubung dengan basis data MySQL di lingkungan pengujian (test environment). Hasil trace mengonfirmasi integrasi berhasil. Pengujian trace ini hanya mengukur kinerja QuickSort selama pemanggilan API, dan waktu eksekusinya tidak merepresentasikan total latensi respons API secara keseluruhan.
+Evaluasi kebenaran memverifikasi bahwa pengurutan descending dan manipulasi keamanan objek (shallow copy) berjalan sesuai spesifikasi. Tercatat sebanyak 1.350 eksekusi yang selesai secara penuh, dan seluruh eksekusi tersebut (completed executions) berhasil melewati validasi kebenaran pengurutan (correctness validation). Kasus pengujian pada N=10.000 Duplicate-Heavy tidak selesai akibat RangeError dan murni diklasifikasikan sebagai keterbatasan runtime, bukan sebagai kegagalan validasi kebenaran (Tabel 4.2).
+
+Tabel 4.2 Validasi Kebenaran (Correctness)
+
+Metric
+
+Result
+
+Successful executions
+
+1350
+
+Correctness failures
+
+0
+
+Mutation failures
+
+0
+
+Failed benchmark configurations
+
+1
+
+Runtime failure
+
+RangeError (Call Stack Exceeded) at N=10000 Duplicate-Heavy
+
+
+
+Selain pengujian terkontrol (benchmark), dilakukan pula pengujian trace rekomendasi riil. Pengujian terpisah ini memverifikasi integrasi algoritma QuickSort secara langsung di dalam pipeline rekomendasi API (getRecommendations) yang terhubung dengan basis data MySQL di lingkungan pengujian (test environment). Hasil trace mengonfirmasi integrasi berhasil. Pengujian trace ini hanya mengukur kinerja QuickSort selama pemanggilan API, dan waktu eksekusinya tidak merepresentasikan total latensi respons API secara keseluruhan (Tabel 4.3).
+
+Tabel 4.3 Trace Rekomendasi Riil
+
+Candidate Count
+
+Comparisons
+
+Swaps
+
+Sorting Time (ms)
+
+Correctness
+
+Input Source
+
+6
+
+30
+
+5
+
+0.025900000000092405
+
+Verified
+
+Realistic Recommendation DB Trace
+
+
 
 4.3.3 Jumlah Perbandingan
-Jumlah perbandingan (comparisons) diukur secara aktual pada internal fungsi QuickSort. Pertumbuhan jumlah operasi perbandingan seiring bertambahnya ukuran data (N) diobservasi pada keempat distribusi input (merujuk pada tabel comparison_table.json dan grafik comparison_count.png). Pola jumlah perbandingan dan waktu eksekusi yang diobservasi pada input yang memiliki keterurutan (Ascending dan Descending) dianalisis sehubungan dengan strategi pivot Median-of-Three yang diterapkan pada implementasi. Observasi empiris ini memperlihatkan pertumbuhan yang dapat didiskusikan batasannya sejalan dengan nilai kompleksitas teoretis yang dijabarkan di Bab 2.
+
+Jumlah perbandingan (comparisons) diukur secara aktual pada internal fungsi QuickSort. Pertumbuhan jumlah operasi perbandingan seiring bertambahnya ukuran data (N) diobservasi pada keempat distribusi input (Tabel 4.4 dan Gambar 4.1). Pola jumlah perbandingan dan waktu eksekusi yang diobservasi pada input yang memiliki keterurutan (Ascending dan Descending) dianalisis sehubungan dengan strategi pivot Median-of-Three yang diterapkan pada implementasi. Observasi empiris ini memperlihatkan pertumbuhan yang dapat didiskusikan batasannya sejalan dengan nilai kompleksitas teoretis yang dijabarkan di Bab 2.
+
+Tabel 4.4 Jumlah Perbandingan Median
+
+Ukuran (N)
+
+Random
+
+Ascending
+
+Descending
+
+Duplicate-Heavy
+
+10
+
+34
+
+34
+
+37
+
+72
+
+50
+
+309
+
+326
+
+286
+
+1268
+
+100
+
+681
+
+868
+
+669
+
+4184
+
+500
+
+5072
+
+6790
+
+4263
+
+104788
+
+1000
+
+11533
+
+15849
+
+9520
+
+409648
+
+5000
+
+66640
+
+106182
+
+60678
+
+10138001
+
+10000
+
+146010
+
+234923
+
+131343
+
+N/A — Runtime Error
+
+
+
+Gambar 4.1 Grafik Jumlah Perbandingan
+
+
 
 4.3.4 Jumlah Pertukaran
-Jumlah pertukaran (swaps) antar elemen dicatat setiap kali dua indeks berbeda saling bertukar posisi. Laporan data pada swap_table.json menunjukkan volume pertukaran element array di setiap distribusi input. Karakteristik ini merefleksikan pola internal dari skema partisi gaya Lomuto selama proses memilah data.
+
+Jumlah pertukaran (swaps) antar elemen dicatat setiap kali dua indeks berbeda saling bertukar posisi. Laporan data pada Tabel 4.5 menunjukkan volume pertukaran element array di setiap distribusi input. Karakteristik ini merefleksikan pola internal dari skema partisi gaya Lomuto selama proses memilah data.
+
+Tabel 4.5 Jumlah Pertukaran Median
+
+Ukuran (N)
+
+Random
+
+Ascending
+
+Descending
+
+Duplicate-Heavy
+
+10
+
+21
+
+21
+
+12
+
+11
+
+50
+
+174
+
+169
+
+62
+
+90
+
+100
+
+345
+
+420
+
+126
+
+163
+
+500
+
+2344
+
+3040
+
+510
+
+1060
+
+1000
+
+5727
+
+6970
+
+1022
+
+2201
+
+5000
+
+34499
+
+45496
+
+5904
+
+11666
+
+10000
+
+72167
+
+99730
+
+11808
+
+N/A — Runtime Error
+
+
 
 4.3.5 Waktu Eksekusi
-Waktu eksekusi QuickSort diukur menggunakan nilai median dalam satuan milidetik (ms). Metrik ini diukur murni di dalam batasan pengukuran yang ketat (benchmark timing boundary) yang murni mencatat komputasi waktu eksekusi algoritma QuickSort itu sendiri. Waktu ini secara khusus mengecualikan latensi jaringan (API/network latency), akses basis data, proses scoring, logika rule engine, maupun duplikasi array tambahan di luar fungsi ukur. Berdasarkan tabel timing_table.json, waktu eksekusi yang diobservasi untuk ukuran data N <= 1000 menunjukkan waktu respon operasional yang sangat kecil dan stabil (berada di bawah 0.1 ms).
+
+Waktu eksekusi QuickSort diukur menggunakan nilai median dalam satuan milidetik (ms). Pengukuran dilakukan dalam batas waktu (benchmark timing boundary) yang mengapit proses eksekusi algoritma QuickSort. Waktu ini secara khusus mengecualikan latensi jaringan (API/network latency), akses basis data, proses scoring, logika rule engine, maupun duplikasi array tambahan di luar fungsi ukur. Berdasarkan Tabel 4.6 dan Gambar 4.2, pada ukuran dataset N <= 1000, waktu eksekusi yang diamati sangat cepat dan stabil (di bawah 0.1 ms).
+
+Tabel 4.6 Waktu Eksekusi Median (ms)
+
+Ukuran (N)
+
+Random
+
+Ascending
+
+Descending
+
+Duplicate-Heavy
+
+10
+
+0.000350
+
+0.000300
+
+0.000300
+
+0.000400
+
+50
+
+0.001400
+
+0.001400
+
+0.001200
+
+0.004100
+
+100
+
+0.002500
+
+0.003100
+
+0.002300
+
+0.011900
+
+500
+
+0.017650
+
+0.023100
+
+0.013500
+
+0.272850
+
+1000
+
+0.052300
+
+0.048300
+
+0.026200
+
+1.015800
+
+5000
+
+0.468450
+
+0.325350
+
+0.168700
+
+22.921100
+
+10000
+
+1.038700
+
+0.660450
+
+0.352350
+
+N/A — Runtime Error
+
+
+
+Gambar 4.2 Grafik Waktu Eksekusi Median
+
+
 
 4.3.6 Analisis Distribusi Input dan Keterbatasan
-Algoritma terbukti secara observasional menangani input Random maupun input terurut (Ascending, Descending) secara stabil. Distribusi Duplicate-Heavy, bagaimanapun, memperlihatkan lonjakan metrik operasi dan waktu secara drastis saat memproses konfigurasi pada N=5.000. 
 
-Konfigurasi ukuran N=10.000 pada distribusi Duplicate-Heavy tidak dapat diselesaikan karena memicu RangeError (Maximum call stack size exceeded). Fenomena ini diklasifikasikan sebagai sebuah keterbatasan runtime observasional (observed runtime limitation) dari implementasi QuickSort rekursif yang diuji. Perilaku ini sangat konsisten dengan kepekaan dan keterbatasan desain skema partisi gaya Lomuto yang bekerja secara rekursif ketika dihadapkan pada input data yang sangat terduplikasi dalam jumlah ekstrem.
+Hasil pengujian menunjukkan bahwa algoritma mampu menangani input Random maupun input terurut (Ascending, Descending) secara stabil. Distribusi Duplicate-Heavy, bagaimanapun, memperlihatkan lonjakan metrik operasi dan waktu secara drastis saat memproses konfigurasi pada N=5.000 (Gambar 4.3).
+
+Gambar 4.3 Tekanan Eksekusi pada Input Duplicate-Heavy
+
+
+
+Konfigurasi ukuran N=10.000 pada distribusi Duplicate-Heavy tidak dapat diselesaikan karena memicu RangeError (Maximum call stack size exceeded). Fenomena ini diklasifikasikan secara tegas sebagai keterbatasan runtime observasional (observed runtime limitation) dari implementasi QuickSort rekursif yang diuji. Perilaku yang diamati konsisten dengan karakteristik partisi rekursif bergaya Lomuto ketika memproses input dengan tingkat duplikasi yang tinggi.
+
+
+
+
+
 
 
 

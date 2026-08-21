@@ -5,6 +5,7 @@ import 'package:frontend/providers/habit_provider.dart';
 import 'package:frontend/providers/category_provider.dart';
 import 'package:frontend/providers/report_provider.dart';
 import 'package:frontend/providers/recommendation_provider.dart';
+import 'package:frontend/providers/badge_provider.dart';
 
 // Import Screens
 import 'package:frontend/screens/auth/login_screen.dart';
@@ -18,7 +19,8 @@ import 'package:frontend/screens/recommendation/recommendation_screen.dart';
 import 'package:frontend/screens/report/report_screen.dart';
 import 'package:frontend/screens/profile/profile_screen.dart';
 import 'package:frontend/screens/profile/edit_profile_screen.dart';
-import 'package:frontend/screens/profile/settings_screen.dart';
+import 'package:frontend/screens/badges/badges_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ReportProvider()),
         ChangeNotifierProvider(create: (_) => RecommendationProvider()),
+        ChangeNotifierProvider(create: (_) => BadgeProvider()),
       ],
       child: MaterialApp(
         title: 'Habit Tracker Base',
@@ -81,7 +84,7 @@ class MyApp extends StatelessWidget {
           '/reports': (context) => const ReportScreen(),
           '/profile': (context) => const ProfileScreen(),
           '/edit-profile': (context) => const EditProfileScreen(),
-          '/settings': (context) => const SettingsScreen(),
+          '/badges': (context) => const BadgesScreen(),
         },
       ),
     );

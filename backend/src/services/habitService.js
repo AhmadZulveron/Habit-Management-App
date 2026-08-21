@@ -1,4 +1,12 @@
 const pool = require('../config/database');
+const badgeService = require('./badgeService');
+const { quickSort } = require('../engines/quickSort');
+
+const PRIORITY_RANKS = {
+  high: 3,
+  medium: 2,
+  low: 1
+};
 
 /**
  * Habit Service
@@ -68,12 +76,25 @@ class HabitService {
        LEFT JOIN categories c ON h.category_id = c.id
        LEFT JOIN habit_schedules hs ON h.id = hs.habit_id
        WHERE h.user_id = ?
-       GROUP BY h.id
-       ORDER BY h.created_at DESC`,
+       GROUP BY h.id`,
       [userId]
     );
 
-    return habits.map(this._formatHabit);
+    const formattedHabits = habits.map(this._formatHabit);
+
+    const { sortedArray } = quickSort(formattedHabits, (a, b) => {
+      const rankA = PRIORITY_RANKS[a.priority] || 0;
+      const rankB = PRIORITY_RANKS[b.priority] || 0;
+      
+      if (rankA !== rankB) {
+        return rankB - rankA; // Priority DESC
+      }
+      
+      // Tie-breaker: created_at DESC
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    return sortedArray;
   }
 
   /**
@@ -96,12 +117,25 @@ class HabitService {
        LEFT JOIN habit_schedules hs2 ON h.id = hs2.habit_id
        LEFT JOIN habit_completions hc ON h.id = hc.habit_id AND DATE(hc.completed_at) = CURDATE()
        WHERE h.user_id = ? AND h.status = 'active'
-       GROUP BY h.id
-       ORDER BY h.title`,
+       GROUP BY h.id`,
       [todayDayOfWeek, userId]
     );
 
-    return habits.map(this._formatHabit);
+    const formattedHabits = habits.map(this._formatHabit);
+
+    const { sortedArray } = quickSort(formattedHabits, (a, b) => {
+      const rankA = PRIORITY_RANKS[a.priority] || 0;
+      const rankB = PRIORITY_RANKS[b.priority] || 0;
+      
+      if (rankA !== rankB) {
+        return rankB - rankA; // Priority DESC
+      }
+      
+      // Tie-breaker: title ASC
+      return a.title.localeCompare(b.title);
+    });
+
+    return sortedArray;
   }
 
   /**
@@ -281,17 +315,29 @@ class HabitService {
       );
 
       await connection.commit();
+      connection.release();
+
+      // ==========================================
+      // BADGE EVALUATION (OUTSIDE TRANSACTION)
+      // ==========================================
+      let earnedBadges = [];
+      try {
+        earnedBadges = await badgeService.evaluateAndAwardBadges(userId);
+      } catch (badgeError) {
+        console.error('Badge evaluation failed after habit completion:', badgeError);
+        // Swallow error: habit completion succeeded, do not fail the request
+      }
 
       return {
         id: result.insertId,
         habitId,
         pointsEarned: pointsToAward,
+        earned_badges: earnedBadges,
       };
     } catch (error) {
       await connection.rollback();
+      if (connection) connection.release();
       throw error;
-    } finally {
-      connection.release();
     }
   }
 

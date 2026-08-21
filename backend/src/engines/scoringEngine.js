@@ -1,3 +1,5 @@
+const { calculateMaxStreak } = require('../utils/streakHelper');
+
 /**
  * Scoring Engine - Relevance Score v1.0
  * 
@@ -74,43 +76,7 @@ const calculateUserMetrics = (userContext, todayDate) => {
   }
 
   // --- 1. Streak Score (25%) ---
-  let maxStreak = 0;
-  for (const habit of activeHabits) {
-    let currentStreak = 0;
-    const habitSchedules = schedules.filter(s => s.habit_id === habit.id).map(s => s.day_of_week);
-    
-    // Evaluate starting from today
-    let evalDate = new Date(todayLocal);
-    let evalDateString = getLocalDateString(evalDate);
-    const hasTodayCompletion = completionsByHabit[habit.id] && completionsByHabit[habit.id].has(evalDateString);
-    
-    // If today is scheduled but NOT completed yet (pending), skip today
-    if (isScheduled(habitSchedules, evalDate) && !hasTodayCompletion) {
-      evalDate.setDate(evalDate.getDate() - 1);
-      evalDateString = getLocalDateString(evalDate);
-    }
-    
-    const habitCreatedDate = normalizeToLocalDate(habit.created_at);
-
-    // Walk backwards indefinitely through calendar days
-    // Stop when we reach before the habit was created
-    while (evalDate >= habitCreatedDate) {
-      if (isScheduled(habitSchedules, evalDate)) {
-        if (completionsByHabit[habit.id] && completionsByHabit[habit.id].has(evalDateString)) {
-          currentStreak++;
-        } else {
-          // Missed scheduled occurrence instantly terminates the streak
-          break;
-        }
-      }
-      evalDate.setDate(evalDate.getDate() - 1);
-      evalDateString = getLocalDateString(evalDate);
-    }
-    
-    if (currentStreak > maxStreak) {
-      maxStreak = currentStreak;
-    }
-  }
+  let maxStreak = calculateMaxStreak(activeHabits, completionHistory, schedules, todayDate);
   let streakScore = Math.min((maxStreak / 30.0) * 100, 100);
 
   // --- 2. Completion Score (30%) ---

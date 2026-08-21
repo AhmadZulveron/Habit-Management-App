@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/recommendation_provider.dart';
+import 'package:frontend/providers/habit_provider.dart';
 
 class RecommendationScreen extends StatefulWidget {
   const RecommendationScreen({super.key});
@@ -19,11 +20,27 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   }
 
   Future<void> _handleApproveRecommendation(RecommendationModel rec) async {
+    final habitProvider = Provider.of<HabitProvider>(context, listen: false);
+    final bool isDuplicate = habitProvider.habits.any((h) => h.title.toLowerCase() == rec.title.toLowerCase());
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add this habit to your habits?'),
-        content: Text('Would you like to add "${rec.title}" to your active routine?'),
+        title: const Text('Configure this habit?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Would you like to configure and add "${rec.title}" to your active routine?'),
+            if (isDuplicate) ...[
+              const SizedBox(height: 16),
+              const Text(
+                'Warning: You already have an active habit with the same name.',
+                style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -31,16 +48,14 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Add'),
+            child: const Text('Configure'),
           ),
         ],
       ),
     );
 
     if (confirmed == true && mounted) {
-      // Per user instructions, Add-to-Habit functionality is not implemented yet.
-      // Pressing Add must not create a real habit and no database write must occur.
-      // Logic for adding a habit goes here in a future phase.
+      Navigator.pushNamed(context, '/add-habit', arguments: rec);
     }
   }
 

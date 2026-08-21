@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/habit_model.dart';
+import 'package:frontend/models/badge_model.dart';
 import 'package:frontend/services/habit_service.dart';
 
 /// Habit Provider
@@ -137,16 +138,24 @@ class HabitProvider with ChangeNotifier {
   }
 
   /// Complete a habit for today
-  Future<bool> completeHabit(int id) async {
+  Future<Map<String, dynamic>> completeHabit(int id) async {
     try {
-      await _habitService.completeHabit(id);
+      final data = await _habitService.completeHabit(id);
       // Refresh today's habits to update completion status
       await fetchTodayHabits();
-      return true;
+      
+      // Parse badges if present
+      List<BadgeModel> earnedBadges = [];
+      if (data['completion'] != null && data['completion']['earned_badges'] != null) {
+        final badgesData = data['completion']['earned_badges'] as List;
+        earnedBadges = badgesData.map((b) => BadgeModel.fromJson(b)).toList();
+      }
+
+      return {'success': true, 'earnedBadges': earnedBadges};
     } catch (e) {
       _error = e.toString().replaceFirst('Exception: ', '');
       notifyListeners();
-      return false;
+      return {'success': false, 'earnedBadges': []};
     }
   }
 

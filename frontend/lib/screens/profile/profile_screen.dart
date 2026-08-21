@@ -103,26 +103,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  width: 1,
-                  height: 40,
-                  color: Colors.grey[300],
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      const Text(
-                        '0',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'My Badges',
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
+
               ],
             ),
           ],
@@ -143,11 +124,11 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/edit-profile'),
-                icon: const Icon(Icons.edit, color: Colors.black87),
-                label: const Text('Edit Profile', style: TextStyle(color: Colors.black87)),
+                icon: const Icon(Icons.edit, color: Colors.white),
+                label: const Text('Edit Profile', style: TextStyle(color: Colors.white, fontSize: 16)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
                   elevation: 1,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -157,12 +138,12 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () => Navigator.pushNamed(context, '/settings'),
-                icon: const Icon(Icons.settings, color: Colors.black87),
-                label: const Text('Settings', style: TextStyle(color: Colors.black87)),
+                onPressed: () => Navigator.pushNamed(context, '/badges'),
+                icon: const Icon(Icons.military_tech, color: Colors.white),
+                label: const Text('My Badges', style: TextStyle(color: Colors.white, fontSize: 16)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white,
                   elevation: 1,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

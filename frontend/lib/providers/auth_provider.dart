@@ -95,6 +95,26 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Update Profile
+  Future<bool> updateProfile(String name, String email) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final updatedUser = await _authService.updateProfile(name, email);
+      _user = updatedUser;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = e.toString().replaceFirst('Exception: ', '');
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   /// Clear error
   void clearError() {
     _error = null;
